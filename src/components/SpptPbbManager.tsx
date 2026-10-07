@@ -41,6 +41,37 @@ interface SpptPbbManagerProps {
 
 const STORAGE_KEY = 'madiun_sppt_pbb_records';
 
+/**
+ * Auto-format string ke standar 18-digit NOP PBB Indonesia:
+ * Pola: 2 angka . 2 angka . 3 angka . 3 angka . 3 angka - 4 angka . 1 angka/0
+ * Contoh: 35.77.010.001.005-0023.0
+ */
+export const formatNop = (input: string): string => {
+  const digits = input.replace(/\D/g, '').slice(0, 18);
+  if (!digits) return '';
+
+  let res = digits.slice(0, 2);
+  if (digits.length > 2) {
+    res += '.' + digits.slice(2, 4);
+  }
+  if (digits.length > 4) {
+    res += '.' + digits.slice(4, 7);
+  }
+  if (digits.length > 7) {
+    res += '.' + digits.slice(7, 10);
+  }
+  if (digits.length > 10) {
+    res += '.' + digits.slice(10, 13);
+  }
+  if (digits.length > 13) {
+    res += '-' + digits.slice(13, 17);
+  }
+  if (digits.length > 17) {
+    res += '.' + digits.slice(17, 18);
+  }
+  return res;
+};
+
 // Default tracking years: 2025 - 2035
 const DEFAULT_YEARS = [2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035];
 const CURRENT_YEAR = 2026;
@@ -460,11 +491,16 @@ export default function SpptPbbManager({ googleToken, googleUser }: SpptPbbManag
 
   // Filtered List
   const filteredList = useMemo(() => {
+    const queryTrimmed = searchQuery.trim().toLowerCase();
+    const queryDigits = queryTrimmed.replace(/\D/g, '');
+
     return spptList.filter(item => {
+      const itemNopDigits = item.nop.replace(/\D/g, '');
       const matchesSearch = 
-        item.namaWajibPajak.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.nop.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.lokasi.toLowerCase().includes(searchQuery.toLowerCase());
+        item.namaWajibPajak.toLowerCase().includes(queryTrimmed) ||
+        item.nop.toLowerCase().includes(queryTrimmed) ||
+        (queryDigits.length >= 2 && itemNopDigits.includes(queryDigits)) ||
+        item.lokasi.toLowerCase().includes(queryTrimmed);
 
       if (!matchesSearch) return false;
 
@@ -890,19 +926,34 @@ export default function SpptPbbManager({ googleToken, googleUser }: SpptPbbManag
 
             {/* 3. NOP (NOMOR OBJEK PAJAK) */}
             <div className="space-y-1.5">
-              <label className="text-xs font-black uppercase text-slate-800 tracking-wider flex items-center gap-2">
-                <span className="w-5 h-5 rounded-full bg-amber-100 text-amber-850 flex items-center justify-center text-[10px] font-black">3</span>
-                <span>NOP (Nomor Objek Pajak) *</span>
-              </label>
+              <div className="flex items-center justify-between">
+                <label className="text-xs font-black uppercase text-slate-800 tracking-wider flex items-center gap-2">
+                  <span className="w-5 h-5 rounded-full bg-amber-100 text-amber-850 flex items-center justify-center text-[10px] font-black">3</span>
+                  <span>NOP (Nomor Objek Pajak) *</span>
+                </label>
+                {formNop && (
+                  <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-md ${
+                    formNop.replace(/\D/g, '').length === 18 
+                      ? 'bg-emerald-100 text-emerald-800' 
+                      : 'bg-amber-100 text-amber-800'
+                  }`}>
+                    {formNop.replace(/\D/g, '').length} / 18 Digit
+                  </span>
+                )}
+              </div>
               <input
                 type="text"
                 required
+                maxLength={24}
                 value={formNop}
-                onChange={(e) => setFormNop(e.target.value)}
+                onChange={(e) => setFormNop(formatNop(e.target.value))}
                 placeholder="Contoh: 35.77.010.001.005-0023.0"
-                className="w-full bg-slate-50 border-2 border-slate-200 rounded-2xl p-3 font-mono font-bold text-sky-900 text-sm focus:bg-white focus:border-sky-700 focus:outline-none transition-colors"
+                className="w-full bg-slate-50 border-2 border-slate-200 rounded-2xl p-3 font-mono font-bold text-sky-900 text-sm focus:bg-white focus:border-sky-700 focus:outline-none transition-colors tracking-wide"
               />
-              <p className="text-[11px] text-slate-400 pl-1">Nomor 18 digit resmi NOP yang tertera di bagian atas SPPT.</p>
+              <p className="text-[11px] text-slate-400 pl-1 flex items-center justify-between">
+                <span>Format otomatis: <strong>2.2.3.3.3-4.1</strong> (18 digit NOP SPPT)</span>
+                <span className="font-mono text-[10px] text-slate-400">XX.XX.XXX.XXX.XXX-XXXX.X</span>
+              </p>
             </div>
 
             {/* 4 & 5: PAJAK TERUTANG & TOTAL BAYAR YAYASAN */}
