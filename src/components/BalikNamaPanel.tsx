@@ -784,6 +784,8 @@ export default function BalikNamaPanel({ assets, onSaveAsset, userRole, onNaviga
                                 <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[10px] font-black text-slate-400">Rp</span>
                                 <input 
                                   type="number" 
+                                  step="any"
+                                  min="0"
                                   placeholder="Biaya (Opsional)"
                                   value={draftProgressBiaya}
                                   onChange={(e) => setDraftProgressBiaya(e.target.value)}

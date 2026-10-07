@@ -561,10 +561,16 @@ export default function SpptPbbManager({ googleToken, googleUser }: SpptPbbManag
   const grandTotalSisa = Math.max(0, grandTotalTarget - grandTotalTerbayar);
   const grandTotalPersen = grandTotalTarget > 0 ? Math.round((grandTotalTerbayar / grandTotalTarget) * 100) : 0;
 
-  // Format currency
+  // Format currency (mendukung desimal / bilangan berapapun)
   const formatRupiah = (val?: number) => {
     if (val === undefined || isNaN(val)) return 'Rp 0';
-    return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(val);
+    const hasDecimal = val % 1 !== 0;
+    return new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+      minimumFractionDigits: hasDecimal ? 2 : 0,
+      maximumFractionDigits: hasDecimal ? 2 : 0
+    }).format(val);
   };
 
   // Export CSV (Detailed NOP Records)
@@ -912,17 +918,19 @@ export default function SpptPbbManager({ googleToken, googleUser }: SpptPbbManag
                   <input
                     type="number"
                     min="0"
+                    step="any"
                     required
                     value={formPajakTerutang}
                     onChange={(e) => {
-                      const val = e.target.value === '' ? '' : Number(e.target.value);
-                      setFormPajakTerutang(val);
+                      const raw = e.target.value;
+                      const val = raw === '' ? '' : (isNaN(Number(raw)) ? raw : Number(raw));
+                      setFormPajakTerutang(val as any);
                       // Auto-sync if total bayar yayasan is empty
                       if (formTotalBayarYayasan === '') {
-                        setFormTotalBayarYayasan(val);
+                        setFormTotalBayarYayasan(val as any);
                       }
                     }}
-                    placeholder="385000"
+                    placeholder="Contoh: 385000 atau 385000.50"
                     className="w-full pl-11 pr-3 py-2.5 bg-white border-2 border-slate-300 rounded-xl font-bold text-slate-900 text-sm focus:border-sky-700 focus:outline-none"
                   />
                 </div>
@@ -949,10 +957,14 @@ export default function SpptPbbManager({ googleToken, googleUser }: SpptPbbManag
                   <input
                     type="number"
                     min="0"
+                    step="any"
                     required
                     value={formTotalBayarYayasan}
-                    onChange={(e) => setFormTotalBayarYayasan(e.target.value === '' ? '' : Number(e.target.value))}
-                    placeholder="385000"
+                    onChange={(e) => {
+                      const raw = e.target.value;
+                      setFormTotalBayarYayasan(raw === '' ? '' : (isNaN(Number(raw)) ? raw : Number(raw)) as any);
+                    }}
+                    placeholder="Contoh: 385000 atau 385000.50"
                     className="w-full pl-11 pr-3 py-2.5 bg-white border-2 border-emerald-300 rounded-xl font-black text-emerald-900 text-sm focus:border-emerald-600 focus:outline-none"
                   />
                 </div>
@@ -1068,11 +1080,12 @@ export default function SpptPbbManager({ googleToken, googleUser }: SpptPbbManag
                         <input
                           type="number"
                           min="0"
-                          step="1000"
+                          step="any"
                           placeholder={fallbackNominal > 0 ? `Bawaan: ${formatRupiah(fallbackNominal)}` : 'Nominal tahunan...'}
                           value={customNominal !== undefined ? customNominal : ''}
                           onChange={(e) => {
-                            const val = e.target.value === '' ? undefined : Number(e.target.value);
+                            const raw = e.target.value;
+                            const val = raw === '' ? undefined : (isNaN(Number(raw)) ? undefined : Number(raw));
                             setFormRiwayatPembayaran({
                               ...formRiwayatPembayaran,
                               [yr]: {
@@ -1914,10 +1927,13 @@ export default function SpptPbbManager({ googleToken, googleUser }: SpptPbbManag
                     <input
                       type="number"
                       min="0"
-                      step="1000"
+                      step="any"
                       required
                       value={quickPayNominal}
-                      onChange={(e) => setQuickPayNominal(e.target.value === '' ? '' : Number(e.target.value))}
+                      onChange={(e) => {
+                        const raw = e.target.value;
+                        setQuickPayNominal(raw === '' ? '' : (isNaN(Number(raw)) ? raw : Number(raw)) as any);
+                      }}
                       placeholder="Nominal rupiah yang dibayarkan..."
                       className="w-full pl-9 pr-3 py-2 bg-white border-2 border-emerald-300 rounded-xl font-black font-mono text-emerald-900 text-sm focus:border-emerald-600 focus:outline-none"
                     />

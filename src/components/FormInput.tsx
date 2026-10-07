@@ -535,6 +535,7 @@ export default function FormInput({ onSaveAsset, editingAsset, onCancelEdit, ass
                 <input
                   type="number"
                   min="0"
+                  step="any"
                   placeholder="Contoh: 150 (kosongkan jika tidak tahu)"
                   className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-xs focus:ring-2 focus:ring-sky-500 focus:bg-white transition-all focus:outline-none h-11"
                   value={luasTanah}
@@ -768,6 +769,7 @@ export default function FormInput({ onSaveAsset, editingAsset, onCancelEdit, ass
                   type="number"
                   required
                   min={0}
+                  step="any"
                   placeholder="Luas dalam Meter Persegi (angka)"
                   className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-xs focus:ring-2 focus:ring-amber-500 focus:bg-white transition-all focus:outline-none h-11"
                   value={luasBangunan || ''}
