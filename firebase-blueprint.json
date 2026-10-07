@@ -1,0 +1,47 @@
+{
+  "entities": {
+    "Asset": {
+      "title": "Asset",
+      "description": "Informasi aset yayasan berupa tanah, kendaraan, atau bangunan",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "ID unik aset" },
+        "type": { "type": "string", "enum": ["tanah", "kendaraan", "bangunan"], "description": "Tipe aset" },
+        "jenisSertifikat": { "type": "string", "description": "Jenis sertifikat tanah (SHM, WAQAF, dll)" },
+        "nomerSertifikat": { "type": "string", "description": "Nomor sertifikat tanah" },
+        "atasNamaSertifikat": { "type": "string", "description": "Atas nama sertifikat tanah" },
+        "lokasi": { "type": "string", "description": "Lokasi aset" },
+        "penggunaan": { "type": "string", "description": "Tujuan penggunaan aset" },
+        "tempatSimpanBerkas": { "type": "string", "description": "Tempat penyimpanan fisik berkas" },
+        "luasTanah": { "type": "integer", "description": "Luas tanah dalam m2" },
+        "createdAt": { "type": "integer", "description": "Timestamp pembuatan aset" },
+        "sedangBalikNama": { "type": "boolean", "description": "Status proses balik nama" },
+        "namaPemilikBaru": { "type": "string", "description": "Nama calon pemilik baru" },
+        "catatanBalikNama": { "type": "string", "description": "Catatan tambahan proses balik nama" },
+        "tanggalMulaiBalikNama": { "type": "string", "description": "Tanggal mulai proses balik nama" },
+        "jenisKendaraan": { "type": "string", "description": "Jenis kendaraan (MOTOR, MOBIL, ELF, BUS)" },
+        "nomorPolisi": { "type": "string", "description": "Nomor polisi kendaraan" },
+        "merk": { "type": "string", "description": "Merk/Brand kendaraan" },
+        "atasNama": { "type": "string", "description": "Atas nama kepemilikan kendaraan" },
+        "tahunPembuatan": { "type": "integer", "description": "Tahun pembuatan kendaraan" },
+        "kondisiKendaraan": { "type": "string", "description": "Kondisi kendaraan" },
+        "tanggalBulanPajak": { "type": "string", "description": "Tanggal & bulan jatuh tempo/pajak" },
+        "penanggungJawabDaerah": { "type": "string", "description": "Nama penanggung jawab daerah" },
+        "namaBangunan": { "type": "string", "description": "Nama bangunan" },
+        "luasBangunan": { "type": "integer", "description": "Luas bangunan dalam m2" },
+        "penggunaanBangunan": { "type": "string", "description": "Fungsi penggunaan bangunan" },
+        "nomerPBG": { "type": "string", "description": "Nomor Persetujuan Bangunan Gedung" },
+        "nomerSLF": { "type": "string", "description": "Nomor Sertifikat Laik Fungsi" },
+        "kondisi": { "type": "string", "description": "Kondisi bangunan" },
+        "keteranganKerusakan": { "type": "string", "description": "Detail kerusakan jika ada" }
+      },
+      "required": ["id", "type", "createdAt"]
+    }
+  },
+  "firestore": {
+    "assets/{assetId}": {
+      "schema": "Asset",
+      "description": "Koleksi aset yayasan"
+    }
+  }
+}

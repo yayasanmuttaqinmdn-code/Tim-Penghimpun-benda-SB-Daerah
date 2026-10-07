@@ -1,0 +1,74 @@
+[
+  {
+    "id": "sppt_sample_1",
+    "namaWajibPajak": "YAYASAN MUTTAQIN JOSENAN",
+    "lokasi": "Jl. Nogososro No. 26, Kel. Josenan, Kec. Taman, Kota Madiun",
+    "nop": "35.77.010.001.005-0023.0",
+    "pajakTerutang": 385000,
+    "totalBayarYayasanTahunan": 385000,
+    "riwayatPembayaran": {
+      "2025": {
+        "tahun": 2025,
+        "lunas": true,
+        "nominalBayar": 350000,
+        "tanggalBayar": "2025-06-20",
+        "keterangan": "Lunas via Mobile Banking"
+      },
+      "2026": {
+        "tahun": 2026,
+        "lunas": true,
+        "tanggalBayar": "2026-10-06",
+        "nominalBayar": 60000,
+        "keterangan": "Ketetapan SPPT 2026"
+      },
+      "2027": {
+        "tahun": 2027,
+        "lunas": false,
+        "nominalBayar": 385000
+      },
+      "2028": {
+        "tahun": 2028,
+        "lunas": false,
+        "nominalBayar": 385000
+      },
+      "2029": {
+        "tahun": 2029,
+        "lunas": false,
+        "nominalBayar": 385000
+      },
+      "2030": {
+        "tahun": 2030,
+        "lunas": false,
+        "nominalBayar": 385000
+      },
+      "2031": {
+        "tahun": 2031,
+        "lunas": false,
+        "nominalBayar": 385000
+      },
+      "2032": {
+        "tahun": 2032,
+        "lunas": false,
+        "nominalBayar": 385000
+      },
+      "2033": {
+        "tahun": 2033,
+        "lunas": false,
+        "nominalBayar": 385000
+      },
+      "2034": {
+        "tahun": 2034,
+        "lunas": false,
+        "nominalBayar": 385000
+      },
+      "2035": {
+        "tahun": 2035,
+        "lunas": false,
+        "nominalBayar": 385000
+      }
+    },
+    "keteranganTambahan": "",
+    "createdAt": 1791254114599,
+    "updatedAt": 1791254114599
+  }
+]

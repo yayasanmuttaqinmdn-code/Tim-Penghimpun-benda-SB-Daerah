@@ -1,0 +1,37 @@
+[
+  {
+    "id": "samp-2",
+    "type": "tanah",
+    "jenisKendaraan": "MOBIL",
+    "nomorPolisi": "AE 1045 AP",
+    "merk": "Toyota Avanza Veloz",
+    "atasNama": "Dinas Perhubungan Kabupaten Madiun",
+    "tahunPembuatan": 2021,
+    "kondisiKendaraan": "BAIK",
+    "createdAt": 1791254118461,
+    "jenisSertifikat": "SHM",
+    "nomerSertifikat": "",
+    "atasNamaSertifikat": "",
+    "lokasi": "",
+    "penggunaan": "",
+    "tempatSimpanBerkas": ""
+  },
+  {
+    "id": "samp-3",
+    "type": "tanah",
+    "namaBangunan": "Gedung Diklat Madiun",
+    "lokasi": "Taman",
+    "luasBangunan": 540,
+    "penggunaanBangunan": "Pendidikan dan Pelatihan Pegawai",
+    "nomerPBG": "PBG-357701-20230214-01",
+    "nomerSLF": "SLF-357701-15032023-001",
+    "kondisi": "BAIK",
+    "keteranganKerusakan": "-",
+    "createdAt": 1791254118461,
+    "jenisSertifikat": "SHM",
+    "nomerSertifikat": "",
+    "atasNamaSertifikat": "",
+    "penggunaan": "",
+    "tempatSimpanBerkas": ""
+  }
+]

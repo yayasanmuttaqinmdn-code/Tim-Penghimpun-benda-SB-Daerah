@@ -1,0 +1,6 @@
+{
+  "name": "Daftar Aset Daerah Madiun",
+  "description": "Aplikasi pendataan aset daerah Madiun meliputi tanah, kendaraan, dan bangunan dengan dukungan input mobile, pencarian interaktif, dan ekspor format Google Sheets.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
