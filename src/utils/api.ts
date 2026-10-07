@@ -91,6 +91,34 @@ export const fetchAssetsFromAppsScript = async (scriptUrl: string): Promise<Asse
   }
 };
 
+export const deleteAssetFromAppsScript = async (scriptUrl: string, id: string): Promise<boolean> => {
+  try {
+    await fetch(scriptUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ action: 'deleteAsset', id })
+    });
+    return true;
+  } catch (err) {
+    console.error('Failed to send deleteAsset to Apps Script:', err);
+    return false;
+  }
+};
+
+export const deleteSpptFromAppsScript = async (scriptUrl: string, id: string): Promise<boolean> => {
+  try {
+    await fetch(scriptUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ action: 'deleteSppt', id })
+    });
+    return true;
+  } catch (err) {
+    console.error('Failed to send deleteSppt to Apps Script:', err);
+    return false;
+  }
+};
+
 export const syncAssetsToAppsScript = async (scriptUrl: string, assets: Asset[], spptRecords?: SpptPbbRecord[]): Promise<boolean> => {
   try {
     const mapped = assets.map(a => ({
@@ -115,7 +143,7 @@ export const syncAssetsToAppsScript = async (scriptUrl: string, assets: Asset[],
       assets: mapped
     };
 
-    if (spptRecords && spptRecords.length > 0) {
+    if (spptRecords !== undefined) {
       payload.sppt = spptRecords.map(r => ({
         id: r.id,
         nop: r.nop,
@@ -264,21 +292,26 @@ export const deleteAsset = async (id: string, googleToken?: string | null): Prom
   const scriptUrl = getStoredSpreadsheetUrl();
 
   try {
-    const res = await fetch(`/api/assets/${encodeURIComponent(id)}`, {
+    await fetch(`/api/assets/${encodeURIComponent(id)}`, {
       method: 'DELETE',
       headers: getHeaders(googleToken),
     });
-    if (res.ok) return;
   } catch (err) {}
+
+  if (scriptUrl && scriptUrl.includes('script.google.com')) {
+    deleteAssetFromAppsScript(scriptUrl, id).catch(console.error);
+  }
 
   try {
     const cached = localStorage.getItem(ASSETS_CACHE_KEY);
-    if (cached) {
+    if (cached !== null) {
       let list: Asset[] = JSON.parse(cached);
       list = list.filter(a => a.id !== id);
       localStorage.setItem(ASSETS_CACHE_KEY, JSON.stringify(list));
       if (scriptUrl && scriptUrl.includes('script.google.com')) {
-        syncAssetsToAppsScript(scriptUrl, list);
+        const spptCached = localStorage.getItem(SPPT_CACHE_KEY);
+        const spptList = spptCached ? JSON.parse(spptCached) : [];
+        syncAssetsToAppsScript(scriptUrl, list, spptList);
       }
     }
   } catch (e) {}
@@ -497,23 +530,18 @@ export const deleteSpptRecord = async (id: string, googleToken?: string | null):
   const scriptUrl = getStoredSpreadsheetUrl();
 
   try {
-    const res = await fetch(`/api/sppt/${encodeURIComponent(id)}`, {
+    await fetch(`/api/sppt/${encodeURIComponent(id)}`, {
       method: 'DELETE',
       headers: getHeaders(googleToken),
     });
-
-    if (res.ok) {
-      const data = await safeParseJson(res);
-      const updatedRecords = data.records || [];
-      try {
-        localStorage.setItem(SPPT_CACHE_KEY, JSON.stringify(updatedRecords));
-      } catch (e) {}
-      return updatedRecords;
-    }
   } catch (err) {}
 
+  if (scriptUrl && scriptUrl.includes('script.google.com')) {
+    deleteSpptFromAppsScript(scriptUrl, id).catch(console.error);
+  }
+
   const cached = localStorage.getItem(SPPT_CACHE_KEY);
-  let records: SpptPbbRecord[] = cached ? JSON.parse(cached) : [];
+  let records: SpptPbbRecord[] = cached !== null ? JSON.parse(cached) : [];
   records = records.filter(r => r.id !== id);
   try {
     localStorage.setItem(SPPT_CACHE_KEY, JSON.stringify(records));
@@ -521,7 +549,7 @@ export const deleteSpptRecord = async (id: string, googleToken?: string | null):
 
   if (scriptUrl && scriptUrl.includes('script.google.com')) {
     const assetsCached = localStorage.getItem(ASSETS_CACHE_KEY);
-    const assetsList = assetsCached ? JSON.parse(assetsCached) : [];
+    const assetsList = assetsCached !== null ? JSON.parse(assetsCached) : [];
     syncAssetsToAppsScript(scriptUrl, assetsList, records);
   }
 

@@ -37,9 +37,9 @@ export default function App() {
   const [assets, setAssets] = useState<Asset[]>(() => {
     try {
       const cached = localStorage.getItem('madiun_assets_cache');
-      if (cached) {
+      if (cached !== null) {
         const parsed = JSON.parse(cached);
-        if (Array.isArray(parsed) && parsed.length > 0) {
+        if (Array.isArray(parsed)) {
           return parsed;
         }
       }
@@ -109,7 +109,7 @@ export default function App() {
     const token = tokenOverride !== undefined ? tokenOverride : googleToken;
     try {
       const serverData = await fetchAssets(token);
-      if (Array.isArray(serverData) && serverData.length > 0) {
+      if (serverData !== null && Array.isArray(serverData)) {
         setAssets(serverData);
       }
       setSyncStatus('synced');
@@ -117,7 +117,7 @@ export default function App() {
       console.warn('Gagal memuat data dari server, menggunakan cache lokal:', err);
       try {
         const cached = localStorage.getItem('madiun_assets_cache');
-        if (cached) {
+        if (cached !== null) {
           setAssets(JSON.parse(cached));
         }
       } catch (e) {}
