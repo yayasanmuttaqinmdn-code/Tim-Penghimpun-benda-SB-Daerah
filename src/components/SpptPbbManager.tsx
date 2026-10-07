@@ -46,29 +46,72 @@ const STORAGE_KEY = 'madiun_sppt_pbb_records';
  * Pola: 2 angka . 2 angka . 3 angka . 3 angka . 3 angka - 4 angka . 1 angka/0
  * Contoh: 35.77.010.001.005-0023.0
  */
-export const formatNop = (input: string): string => {
+export const formatNop = (input: string, isDeleting: boolean = false): string => {
   const digits = input.replace(/\D/g, '').slice(0, 18);
   if (!digits) return '';
 
   let res = digits.slice(0, 2);
-  if (digits.length > 2) {
-    res += '.' + digits.slice(2, 4);
+
+  // Segmen 1 (2 angka) -> titik
+  if (digits.length >= 2) {
+    if (digits.length === 2 && !isDeleting) {
+      return res + '.';
+    }
+    if (digits.length > 2) {
+      res += '.' + digits.slice(2, 4);
+    }
   }
-  if (digits.length > 4) {
-    res += '.' + digits.slice(4, 7);
+
+  // Segmen 2 (2 angka) -> titik
+  if (digits.length >= 4) {
+    if (digits.length === 4 && !isDeleting) {
+      return res + '.';
+    }
+    if (digits.length > 4) {
+      res += '.' + digits.slice(4, 7);
+    }
   }
-  if (digits.length > 7) {
-    res += '.' + digits.slice(7, 10);
+
+  // Segmen 3 (3 angka) -> titik
+  if (digits.length >= 7) {
+    if (digits.length === 7 && !isDeleting) {
+      return res + '.';
+    }
+    if (digits.length > 7) {
+      res += '.' + digits.slice(7, 10);
+    }
   }
-  if (digits.length > 10) {
-    res += '.' + digits.slice(10, 13);
+
+  // Segmen 4 (3 angka) -> titik
+  if (digits.length >= 10) {
+    if (digits.length === 10 && !isDeleting) {
+      return res + '.';
+    }
+    if (digits.length > 10) {
+      res += '.' + digits.slice(10, 13);
+    }
   }
-  if (digits.length > 13) {
-    res += '-' + digits.slice(13, 17);
+
+  // Segmen 5 (3 angka) -> strip (-)
+  if (digits.length >= 13) {
+    if (digits.length === 13 && !isDeleting) {
+      return res + '-';
+    }
+    if (digits.length > 13) {
+      res += '-' + digits.slice(13, 17);
+    }
   }
-  if (digits.length > 17) {
-    res += '.' + digits.slice(17, 18);
+
+  // Segmen 6 (4 angka) -> titik
+  if (digits.length >= 17) {
+    if (digits.length === 17 && !isDeleting) {
+      return res + '.';
+    }
+    if (digits.length > 17) {
+      res += '.' + digits.slice(17, 18);
+    }
   }
+
   return res;
 };
 
@@ -204,6 +247,22 @@ export default function SpptPbbManager({ googleToken, googleUser }: SpptPbbManag
   const [formKeterangan, setFormKeterangan] = useState('');
   const [availableYears, setAvailableYears] = useState<number[]>(DEFAULT_YEARS);
   const [newYearInput, setNewYearInput] = useState('');
+
+  // Handle NOP input changes with real-time auto formatting
+  const handleNopChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputVal = e.target.value;
+    const prevVal = formNop;
+    const isDeleting = inputVal.length < prevVal.length;
+
+    let cleanInput = inputVal;
+    if (isDeleting && (prevVal.endsWith('.') || prevVal.endsWith('-')) && !inputVal.endsWith('.') && !inputVal.endsWith('-')) {
+      const prevDigits = prevVal.replace(/\D/g, '');
+      cleanInput = prevDigits.slice(0, -1);
+    }
+
+    const formatted = formatNop(cleanInput, isDeleting);
+    setFormNop(formatted);
+  };
 
   // Quick payment detail modal from table
   const [quickPayRecord, setQuickPayRecord] = useState<{
@@ -946,7 +1005,7 @@ export default function SpptPbbManager({ googleToken, googleUser }: SpptPbbManag
                 required
                 maxLength={24}
                 value={formNop}
-                onChange={(e) => setFormNop(formatNop(e.target.value))}
+                onChange={handleNopChange}
                 placeholder="Contoh: 35.77.010.001.005-0023.0"
                 className="w-full bg-slate-50 border-2 border-slate-200 rounded-2xl p-3 font-mono font-bold text-sky-900 text-sm focus:bg-white focus:border-sky-700 focus:outline-none transition-colors tracking-wide"
               />
