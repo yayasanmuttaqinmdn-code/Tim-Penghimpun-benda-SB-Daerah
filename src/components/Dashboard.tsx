@@ -432,21 +432,12 @@ export default function Dashboard({
           onClick={() => onNavigateToTab('database')}
           className="bg-white p-3.5 rounded-2xl shadow-sm border-2 border-slate-200 flex flex-col justify-between cursor-pointer hover:border-sky-300 hover:shadow-md transition-all duration-200 active:scale-95"
         >
-          <div className="flex items-center justify-between">
-            <div className="p-2 bg-sky-100 text-sky-700 rounded-xl w-9 h-9 flex items-center justify-center">
-              <span className="text-lg">🏘️</span>
-            </div>
-            <span className="text-[10px] font-extrabold text-sky-800 bg-sky-50 border border-sky-200 px-2 py-0.5 rounded-full hidden sm:inline-block">
-              {formatLuas(totalLuasTanah)}
-            </span>
+          <div className="p-2 bg-sky-100 text-sky-700 rounded-xl w-9 h-9 flex items-center justify-center">
+            <span className="text-lg">🏘️</span>
           </div>
           <div className="mt-3">
             <p className="text-[10px] font-bold text-slate-500 uppercase leading-tight">Tanah</p>
             <p className="text-lg font-black text-slate-900 mt-1">{tanahCount} <span className="text-[10px] font-normal text-slate-400">Unit</span></p>
-            <p className="text-[10px] font-black text-sky-700 mt-1 truncate flex items-center gap-1 sm:hidden">
-              <LandPlot className="w-3 h-3 shrink-0" />
-              <span>{formatLuas(totalLuasTanah)}</span>
-            </p>
           </div>
         </motion.div>
 
@@ -504,7 +495,7 @@ export default function Dashboard({
                   Status Sertifikat Tanah
                 </h3>
                 <span className="bg-sky-100 text-sky-800 text-[10px] font-black px-2.5 py-0.5 rounded-full">
-                  Total {countSemua} Bidang ({formatLuas(totalLuasTanah)})
+                  Total {countSemua} Bidang
                 </span>
               </div>
             </div>
@@ -577,9 +568,6 @@ export default function Dashboard({
                         <span>{item.count}</span>
                         <span className="text-[9px] font-medium hidden sm:inline">unit</span>
                       </span>
-                      <span className="text-[9px] font-extrabold text-slate-600 block mt-0.5 truncate max-w-[56px] text-center">
-                        {formatLuas(item.luas)}
-                      </span>
                     </div>
 
                     {/* The Vertical Bar */}
@@ -638,9 +626,6 @@ export default function Dashboard({
                       <span className="text-[10px] text-slate-400 font-normal hidden sm:inline">({item.category})</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-[11px] font-bold text-slate-500 bg-white px-2 py-0.5 rounded-md border border-slate-200">
-                        📐 {formatLuas(item.luas)}
-                      </span>
                       <span className={`px-2.5 py-0.5 rounded-full text-xs font-black border ${item.badgeBg}`}>
                         {item.count} Unit ({item.percentOfTotal}%)
                       </span>
@@ -675,7 +660,7 @@ export default function Dashboard({
                   Progres Sertifikasi Yayasan PP Muttaqin Josenan
                 </h4>
                 <p className="text-[11px] text-sky-700">
-                  {totalSertifikatYayasan} dari {countSemua} sertifikat tanah resmi a.n. Yayasan ({persentaseYayasan}%) • Total Luas Yayasan: <strong>{formatLuas(totalLuasYayasan)}</strong> dari {formatLuas(totalLuasTanah)} ({persentaseLuasYayasan}%)
+                  {totalSertifikatYayasan} dari {countSemua} sertifikat tanah resmi a.n. Yayasan ({persentaseYayasan}%)
                 </p>
               </div>
             </div>
