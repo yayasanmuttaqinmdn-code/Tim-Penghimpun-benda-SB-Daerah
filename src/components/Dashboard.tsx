@@ -305,11 +305,65 @@ export default function Dashboard({
         }
       />
 
+      {/* Stats Bento Grid */}
+      <div className="grid grid-cols-3 gap-3">
+        {/* Card Tanah */}
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.08 }}
+          onClick={() => onNavigateToTab('database')}
+          className="bg-white p-3.5 rounded-2xl shadow-sm border-2 border-slate-200 flex flex-col justify-between cursor-pointer hover:border-sky-300 hover:shadow-md transition-all duration-200 active:scale-95"
+        >
+          <div className="p-2 bg-sky-100 text-sky-700 rounded-xl w-9 h-9 flex items-center justify-center">
+            <span className="text-lg">🏘️</span>
+          </div>
+          <div className="mt-3">
+            <p className="text-[10px] font-bold text-slate-500 uppercase leading-tight">Tanah</p>
+            <p className="text-lg font-black text-slate-900 mt-1">{tanahCount} <span className="text-[10px] font-normal text-slate-400">Unit</span></p>
+          </div>
+        </motion.div>
+
+        {/* Card Kendaraan */}
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.12 }}
+          onClick={() => onNavigateToTab('database')}
+          className="bg-white p-3.5 rounded-2xl shadow-sm border-2 border-slate-200 flex flex-col justify-between cursor-pointer hover:border-amber-300 hover:shadow-md transition-all duration-200 active:scale-95"
+        >
+          <div className="p-2 bg-amber-100 text-amber-600 rounded-xl w-9 h-9 flex items-center justify-center">
+            <span className="text-lg">🚐</span>
+          </div>
+          <div className="mt-3">
+            <p className="text-[10px] font-bold text-slate-500 uppercase leading-tight">Kendaraan</p>
+            <p className="text-lg font-black text-slate-900 mt-1">{kendaraanCount} <span className="text-[10px] font-normal text-slate-400">Unit</span></p>
+          </div>
+        </motion.div>
+
+        {/* Card Bangunan */}
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.16 }}
+          onClick={() => onNavigateToTab('database')}
+          className="bg-white p-3.5 rounded-2xl shadow-sm border-2 border-slate-200 flex flex-col justify-between cursor-pointer hover:border-purple-300 hover:shadow-md transition-all duration-200 active:scale-95"
+        >
+          <div className="p-2 bg-purple-100 text-purple-600 rounded-xl w-9 h-9 flex items-center justify-center">
+            <span className="text-lg">🏢</span>
+          </div>
+          <div className="mt-3">
+            <p className="text-[10px] font-bold text-slate-500 uppercase leading-tight">Bangunan</p>
+            <p className="text-lg font-black text-slate-900 mt-1">{bangunanCount} <span className="text-[10px] font-normal text-slate-400">Unit</span></p>
+          </div>
+        </motion.div>
+      </div>
+
       {/* CARD UTAMA: REKAPITULASI TOTAL LUAS TANAH */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.08 }}
+        transition={{ delay: 0.2 }}
         onClick={() => onNavigateToTab('database')}
         className="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-6 shadow-sm border-2 border-slate-200 hover:border-sky-300 hover:shadow-md transition-all duration-200 cursor-pointer space-y-4"
       >
@@ -421,60 +475,6 @@ export default function Dashboard({
           </div>
         </div>
       </motion.div>
-
-      {/* Stats Bento Grid */}
-      <div className="grid grid-cols-3 gap-3">
-        {/* Card Tanah */}
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.1 }}
-          onClick={() => onNavigateToTab('database')}
-          className="bg-white p-3.5 rounded-2xl shadow-sm border-2 border-slate-200 flex flex-col justify-between cursor-pointer hover:border-sky-300 hover:shadow-md transition-all duration-200 active:scale-95"
-        >
-          <div className="p-2 bg-sky-100 text-sky-700 rounded-xl w-9 h-9 flex items-center justify-center">
-            <span className="text-lg">🏘️</span>
-          </div>
-          <div className="mt-3">
-            <p className="text-[10px] font-bold text-slate-500 uppercase leading-tight">Tanah</p>
-            <p className="text-lg font-black text-slate-900 mt-1">{tanahCount} <span className="text-[10px] font-normal text-slate-400">Unit</span></p>
-          </div>
-        </motion.div>
-
-        {/* Card Kendaraan */}
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.15 }}
-          onClick={() => onNavigateToTab('database')}
-          className="bg-white p-3.5 rounded-2xl shadow-sm border-2 border-slate-200 flex flex-col justify-between cursor-pointer hover:border-amber-300 hover:shadow-md transition-all duration-200 active:scale-95"
-        >
-          <div className="p-2 bg-amber-100 text-amber-600 rounded-xl w-9 h-9 flex items-center justify-center">
-            <span className="text-lg">🚐</span>
-          </div>
-          <div className="mt-3">
-            <p className="text-[10px] font-bold text-slate-500 uppercase leading-tight">Kendaraan</p>
-            <p className="text-lg font-black text-slate-900 mt-1">{kendaraanCount} <span className="text-[10px] font-normal text-slate-400">Unit</span></p>
-          </div>
-        </motion.div>
-
-        {/* Card Bangunan */}
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.2 }}
-          onClick={() => onNavigateToTab('database')}
-          className="bg-white p-3.5 rounded-2xl shadow-sm border-2 border-slate-200 flex flex-col justify-between cursor-pointer hover:border-purple-300 hover:shadow-md transition-all duration-200 active:scale-95"
-        >
-          <div className="p-2 bg-purple-100 text-purple-600 rounded-xl w-9 h-9 flex items-center justify-center">
-            <span className="text-lg">🏢</span>
-          </div>
-          <div className="mt-3">
-            <p className="text-[10px] font-bold text-slate-500 uppercase leading-tight">Bangunan</p>
-            <p className="text-lg font-black text-slate-900 mt-1">{bangunanCount} <span className="text-[10px] font-normal text-slate-400">Unit</span></p>
-          </div>
-        </motion.div>
-      </div>
 
       {/* DIAGRAM BATANG STATUS SERTIFIKAT TANAH */}
       <motion.div 
