@@ -18,7 +18,9 @@ import {
   Sparkles,
   Info,
   Clock,
-  Award
+  Award,
+  LandPlot,
+  Ruler
 } from 'lucide-react';
 import { motion } from 'motion/react';
 import { Asset, AsetTanah } from '../types';
@@ -74,23 +76,76 @@ export default function Dashboard({
     );
   };
 
+  // Helper to safely parse land area
+  const parseLuas = (val: any): number => {
+    if (val === undefined || val === null || val === '') return 0;
+    if (typeof val === 'number') return isNaN(val) ? 0 : val;
+    const str = String(val).trim();
+    if (str.includes(',') && str.includes('.')) {
+      if (str.lastIndexOf(',') > str.lastIndexOf('.')) {
+        const clean = str.replace(/\./g, '').replace(',', '.');
+        const num = parseFloat(clean);
+        return isNaN(num) ? 0 : num;
+      } else {
+        const clean = str.replace(/,/g, '');
+        const num = parseFloat(clean);
+        return isNaN(num) ? 0 : num;
+      }
+    } else if (str.includes(',')) {
+      const clean = str.replace(',', '.');
+      const num = parseFloat(clean);
+      return isNaN(num) ? 0 : num;
+    }
+    const clean = str.replace(/[^0-9.-]/g, '');
+    const num = parseFloat(clean);
+    return isNaN(num) ? 0 : num;
+  };
+
+  // Helper to format land area
+  const formatLuas = (luas: number) => {
+    if (!luas || isNaN(luas)) return '0 m²';
+    const hasDecimal = luas % 1 !== 0;
+    return new Intl.NumberFormat('id-ID', {
+      minimumFractionDigits: hasDecimal ? 1 : 0,
+      maximumFractionDigits: 2,
+    }).format(luas) + ' m²';
+  };
+
+  const formatHektar = (luasInM2: number) => {
+    if (!luasInM2 || isNaN(luasInM2) || luasInM2 < 100) return null;
+    const ha = luasInM2 / 10000;
+    return new Intl.NumberFormat('id-ID', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 3,
+    }).format(ha) + ' Hektar (Ha)';
+  };
+
+  // Luas Tanah Aggregations
+  const tanahWithLuasCount = tanahAssets.filter(a => parseLuas(a.luasTanah) > 0).length;
+  const totalLuasTanah = tanahAssets.reduce((sum, a) => sum + parseLuas(a.luasTanah), 0);
+  const avgLuasTanah = tanahWithLuasCount > 0 ? totalLuasTanah / tanahWithLuasCount : 0;
+
   // 1. Total Semua Sertifikat Tanah
   const countSemua = tanahCount;
 
   // 2. SHM a.n. Yayasan Pondok Pesantren Muttaqin Josenan
-  const countSHMYayasan = tanahAssets.filter(a => {
+  const shmAssetsYayasan = tanahAssets.filter(a => {
     const jenis = (a.jenisSertifikat || '').toUpperCase().trim();
     return (jenis === 'SHM' || jenis.includes('MILIK')) && isAtasNamaYayasan(a.atasNamaSertifikat);
-  }).length;
+  });
+  const countSHMYayasan = shmAssetsYayasan.length;
+  const luasSHMYayasan = shmAssetsYayasan.reduce((sum, a) => sum + parseLuas(a.luasTanah), 0);
 
   // 3. SHGB a.n. Yayasan Pondok Pesantren Muttaqin Josenan
-  const countSHGBYayasan = tanahAssets.filter(a => {
+  const shgbAssetsYayasan = tanahAssets.filter(a => {
     const jenis = (a.jenisSertifikat || '').toUpperCase().trim();
     return (jenis === 'SHGB' || jenis === 'HGB' || jenis.includes('BANGUNAN')) && isAtasNamaYayasan(a.atasNamaSertifikat);
-  }).length;
+  });
+  const countSHGBYayasan = shgbAssetsYayasan.length;
+  const luasSHGBYayasan = shgbAssetsYayasan.reduce((sum, a) => sum + parseLuas(a.luasTanah), 0);
 
   // 4. SERTIFIKAT WAQAF a.n. Yayasan Pondok Pesantren Muttaqin Josenan
-  const countWakafYayasan = tanahAssets.filter(a => {
+  const wakafAssetsYayasan = tanahAssets.filter(a => {
     const jenis = (a.jenisSertifikat || '').toUpperCase().trim();
     return (
       jenis.includes('WAKAF') || 
@@ -98,14 +153,20 @@ export default function Dashboard({
       jenis.includes('AIW') || 
       jenis.includes('APAIW')
     ) && isAtasNamaYayasan(a.atasNamaSertifikat);
-  }).length;
+  });
+  const countWakafYayasan = wakafAssetsYayasan.length;
+  const luasWakafYayasan = wakafAssetsYayasan.reduce((sum, a) => sum + parseLuas(a.luasTanah), 0);
 
   // 5. Sertifikat yang belum atas nama yayasan (misal masih perorangan, pemilik lama, letter C)
-  const countBelumYayasan = tanahAssets.filter(a => !isAtasNamaYayasan(a.atasNamaSertifikat)).length;
+  const belumYayasanAssets = tanahAssets.filter(a => !isAtasNamaYayasan(a.atasNamaSertifikat));
+  const countBelumYayasan = belumYayasanAssets.length;
+  const luasBelumYayasan = belumYayasanAssets.reduce((sum, a) => sum + parseLuas(a.luasTanah), 0);
 
   // Total sertifikat resmi atas nama Yayasan PP Muttaqin Josenan
   const totalSertifikatYayasan = countSHMYayasan + countSHGBYayasan + countWakafYayasan;
+  const totalLuasYayasan = luasSHMYayasan + luasSHGBYayasan + luasWakafYayasan;
   const persentaseYayasan = countSemua > 0 ? Math.round((totalSertifikatYayasan / countSemua) * 100) : 0;
+  const persentaseLuasYayasan = totalLuasTanah > 0 ? Math.round((totalLuasYayasan / totalLuasTanah) * 100) : 0;
   const maxChartVal = Math.max(countSemua, 1);
 
   const certChartItems = [
@@ -115,6 +176,7 @@ export default function Dashboard({
       shortTitle: 'Semua',
       category: 'Total Database',
       count: countSemua,
+      luas: totalLuasTanah,
       percentOfTotal: 100,
       gradient: 'from-sky-600 to-sky-800',
       barColor: 'bg-sky-600',
@@ -128,6 +190,7 @@ export default function Dashboard({
       shortTitle: 'SHM Yayasan',
       category: 'Hak Milik Yayasan',
       count: countSHMYayasan,
+      luas: luasSHMYayasan,
       percentOfTotal: countSemua > 0 ? Math.round((countSHMYayasan / countSemua) * 100) : 0,
       gradient: 'from-emerald-500 to-emerald-700',
       barColor: 'bg-emerald-600',
@@ -141,6 +204,7 @@ export default function Dashboard({
       shortTitle: 'SHGB Yayasan',
       category: 'Guna Bangunan Yayasan',
       count: countSHGBYayasan,
+      luas: luasSHGBYayasan,
       percentOfTotal: countSemua > 0 ? Math.round((countSHGBYayasan / countSemua) * 100) : 0,
       gradient: 'from-blue-600 to-indigo-700',
       barColor: 'bg-indigo-600',
@@ -154,6 +218,7 @@ export default function Dashboard({
       shortTitle: 'Waqaf Yayasan',
       category: 'Waqaf a.n. Yayasan',
       count: countWakafYayasan,
+      luas: luasWakafYayasan,
       percentOfTotal: countSemua > 0 ? Math.round((countWakafYayasan / countSemua) * 100) : 0,
       gradient: 'from-teal-500 to-teal-700',
       barColor: 'bg-teal-600',
@@ -167,6 +232,7 @@ export default function Dashboard({
       shortTitle: 'Belum Balik Nama',
       category: 'Perlu Balik Nama',
       count: countBelumYayasan,
+      luas: luasBelumYayasan,
       percentOfTotal: countSemua > 0 ? Math.round((countBelumYayasan / countSemua) * 100) : 0,
       gradient: 'from-amber-500 to-rose-600',
       barColor: 'bg-rose-500',
@@ -239,6 +305,104 @@ export default function Dashboard({
         }
       />
 
+      {/* CARD UTAMA: TOTAL LUAS TANAH TERINPUT */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.08 }}
+        onClick={() => onNavigateToTab('database')}
+        className="bg-gradient-to-br from-emerald-800 via-teal-800 to-sky-900 text-white rounded-3xl p-5 sm:p-6 shadow-md border-2 border-emerald-500/30 relative overflow-hidden cursor-pointer hover:shadow-lg transition-all duration-300 group"
+      >
+        {/* Background decorative watermark */}
+        <div className="absolute -right-6 -bottom-6 text-white/5 pointer-events-none select-none">
+          <LandPlot className="w-48 h-48" />
+        </div>
+
+        <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-5">
+          {/* Sisi Kiri: Angka Utama Total Luas */}
+          <div className="space-y-2">
+            <div className="flex items-center gap-2">
+              <span className="p-2 bg-emerald-500/20 border border-emerald-400/40 rounded-xl text-emerald-300 shadow-inner">
+                <LandPlot className="w-5 h-5" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-emerald-300 bg-emerald-950/60 px-2.5 py-0.5 rounded-full border border-emerald-500/30">
+                  REKAPITULASI ASET TANAH
+                </span>
+                <h2 className="text-sm sm:text-base font-black text-white mt-0.5">
+                  Total Luas Tanah Terinput
+                </h2>
+              </div>
+            </div>
+
+            <div className="pt-1">
+              <div className="flex flex-wrap items-baseline gap-2 sm:gap-3">
+                <span className="text-3xl sm:text-4xl font-black text-emerald-300 tracking-tight drop-shadow-xs">
+                  {formatLuas(totalLuasTanah)}
+                </span>
+                {formatHektar(totalLuasTanah) && (
+                  <span className="text-xs sm:text-sm font-bold text-emerald-100/90 bg-emerald-900/60 px-2.5 py-1 rounded-xl border border-emerald-400/30">
+                    ≈ {formatHektar(totalLuasTanah)}
+                  </span>
+                )}
+              </div>
+              <p className="text-xs text-emerald-100/80 mt-1 font-medium">
+                Tercatat dari <strong>{tanahCount} Bidang Tanah</strong> di database{' '}
+                {tanahWithLuasCount < tanahCount && (
+                  <span className="text-amber-200">
+                    ({tanahWithLuasCount} bidang terisi luas, {tanahCount - tanahWithLuasCount} belum diisi)
+                  </span>
+                )}
+                {tanahWithLuasCount > 0 && ` • Rata-rata ${formatLuas(avgLuasTanah)} / bidang`}
+              </p>
+            </div>
+          </div>
+
+          {/* Sisi Kanan: Mini Grid Breakdown per Status Sertifikat */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-2 gap-2 sm:gap-2.5 lg:min-w-[340px] bg-black/25 p-3 rounded-2xl border border-white/10 backdrop-blur-xs">
+            <div className="bg-white/10 rounded-xl p-2.5 border border-white/10">
+              <div className="flex items-center justify-between text-[10px] font-bold text-emerald-200">
+                <span>📗 SHM Yayasan</span>
+                <span>{countSHMYayasan} unit</span>
+              </div>
+              <p className="text-xs sm:text-sm font-black text-white mt-1">
+                {formatLuas(luasSHMYayasan)}
+              </p>
+            </div>
+
+            <div className="bg-white/10 rounded-xl p-2.5 border border-white/10">
+              <div className="flex items-center justify-between text-[10px] font-bold text-teal-200">
+                <span>🕌 Wakaf Yayasan</span>
+                <span>{countWakafYayasan} unit</span>
+              </div>
+              <p className="text-xs sm:text-sm font-black text-white mt-1">
+                {formatLuas(luasWakafYayasan)}
+              </p>
+            </div>
+
+            <div className="bg-white/10 rounded-xl p-2.5 border border-white/10">
+              <div className="flex items-center justify-between text-[10px] font-bold text-sky-200">
+                <span>📘 SHGB Yayasan</span>
+                <span>{countSHGBYayasan} unit</span>
+              </div>
+              <p className="text-xs sm:text-sm font-black text-white mt-1">
+                {formatLuas(luasSHGBYayasan)}
+              </p>
+            </div>
+
+            <div className="bg-white/10 rounded-xl p-2.5 border border-white/10">
+              <div className="flex items-center justify-between text-[10px] font-bold text-amber-200">
+                <span>⏳ Belum Balik Nama</span>
+                <span>{countBelumYayasan} unit</span>
+              </div>
+              <p className="text-xs sm:text-sm font-black text-white mt-1">
+                {formatLuas(luasBelumYayasan)}
+              </p>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+
       {/* Stats Bento Grid */}
       <div className="grid grid-cols-3 gap-3">
         {/* Card Tanah */}
@@ -249,12 +413,21 @@ export default function Dashboard({
           onClick={() => onNavigateToTab('database')}
           className="bg-white p-3.5 rounded-2xl shadow-sm border-2 border-slate-200 flex flex-col justify-between cursor-pointer hover:border-sky-300 hover:shadow-md transition-all duration-200 active:scale-95"
         >
-          <div className="p-2 bg-sky-100 text-sky-700 rounded-xl w-9 h-9 flex items-center justify-center">
-            <span className="text-lg">🏘️</span>
+          <div className="flex items-center justify-between">
+            <div className="p-2 bg-sky-100 text-sky-700 rounded-xl w-9 h-9 flex items-center justify-center">
+              <span className="text-lg">🏘️</span>
+            </div>
+            <span className="text-[10px] font-extrabold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full hidden sm:inline-block">
+              {formatLuas(totalLuasTanah)}
+            </span>
           </div>
           <div className="mt-3">
             <p className="text-[10px] font-bold text-slate-500 uppercase leading-tight">Tanah</p>
             <p className="text-lg font-black text-slate-900 mt-1">{tanahCount} <span className="text-[10px] font-normal text-slate-400">Unit</span></p>
+            <p className="text-[10px] font-black text-emerald-700 mt-1 truncate flex items-center gap-1 sm:hidden">
+              <LandPlot className="w-3 h-3 shrink-0" />
+              <span>{formatLuas(totalLuasTanah)}</span>
+            </p>
           </div>
         </motion.div>
 
@@ -312,7 +485,7 @@ export default function Dashboard({
                   Status Sertifikat Tanah
                 </h3>
                 <span className="bg-sky-100 text-sky-800 text-[10px] font-black px-2.5 py-0.5 rounded-full">
-                  Total {countSemua} Bidang
+                  Total {countSemua} Bidang ({formatLuas(totalLuasTanah)})
                 </span>
               </div>
             </div>
@@ -380,10 +553,13 @@ export default function Dashboard({
                     className="flex flex-col items-center h-full justify-end group cursor-pointer"
                   >
                     {/* Floating Value Pill */}
-                    <div className={`mb-2 transition-all duration-200 ${isSelected ? 'scale-110' : 'group-hover:scale-105'}`}>
+                    <div className={`mb-2 transition-all duration-200 text-center ${isSelected ? 'scale-110' : 'group-hover:scale-105'}`}>
                       <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] sm:text-xs font-black shadow-2xs border ${item.badgeBg}`}>
                         <span>{item.count}</span>
                         <span className="text-[9px] font-medium hidden sm:inline">unit</span>
+                      </span>
+                      <span className="text-[9px] font-extrabold text-slate-600 block mt-0.5 truncate max-w-[56px] text-center">
+                        {formatLuas(item.luas)}
                       </span>
                     </div>
 
@@ -443,6 +619,9 @@ export default function Dashboard({
                       <span className="text-[10px] text-slate-400 font-normal hidden sm:inline">({item.category})</span>
                     </div>
                     <div className="flex items-center gap-2">
+                      <span className="text-[11px] font-bold text-slate-500 bg-white px-2 py-0.5 rounded-md border border-slate-200">
+                        📐 {formatLuas(item.luas)}
+                      </span>
                       <span className={`px-2.5 py-0.5 rounded-full text-xs font-black border ${item.badgeBg}`}>
                         {item.count} Unit ({item.percentOfTotal}%)
                       </span>
@@ -477,7 +656,7 @@ export default function Dashboard({
                   Progres Sertifikasi Yayasan PP Muttaqin Josenan
                 </h4>
                 <p className="text-[11px] text-sky-700">
-                  {totalSertifikatYayasan} dari {countSemua} sertifikat tanah telah resmi atas nama Yayasan ({persentaseYayasan}%)
+                  {totalSertifikatYayasan} dari {countSemua} sertifikat tanah resmi a.n. Yayasan ({persentaseYayasan}%) • Total Luas Yayasan: <strong>{formatLuas(totalLuasYayasan)}</strong> dari {formatLuas(totalLuasTanah)} ({persentaseLuasYayasan}%)
                 </p>
               </div>
             </div>
@@ -640,6 +819,8 @@ export default function Dashboard({
                     </h4>
                     <span className="text-[10px] text-slate-400 font-mono">
                       Lokasi: {asset.type === 'kendaraan' ? (asset as any).atasNama : asset.lokasi}
+                      {asset.type === 'tanah' && (asset as any).luasTanah ? ` • Luas: ${Number((asset as any).luasTanah).toLocaleString('id-ID')} m²` : ''}
+                      {asset.type === 'bangunan' && (asset as any).luasBangunan ? ` • Luas: ${Number((asset as any).luasBangunan).toLocaleString('id-ID')} m²` : ''}
                     </span>
                   </div>
                 </div>
