@@ -26,7 +26,7 @@ interface BalikNamaPanelProps {
   googleUser?: any;
 }
 
-export default function BalikNamaPanel({ assets, onSaveAsset, userRole, onNavigateToTab, googleUser }: BalikNamaPanelProps) {
+export default function BalikNamaPanel({ assets, onSaveAsset, userRole = 'viewer', onNavigateToTab, googleUser }: BalikNamaPanelProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [showAddQueue, setShowAddQueue] = useState(false);
   const [editingCardId, setEditingCardId] = useState<string | null>(null);
@@ -319,19 +319,30 @@ export default function BalikNamaPanel({ assets, onSaveAsset, userRole, onNaviga
 
       {/* Queued Action Box */}
       {activeSubTab === 'progress' && (
-        <div className="bg-white rounded-xl border-2 border-sky-200 overflow-hidden">
-          <button 
-            onClick={() => setShowAddQueue(!showAddQueue)}
-            className="w-full p-3.5 bg-sky-50/60 hover:bg-sky-50 text-sky-800 font-black text-xs flex items-center justify-between focus:outline-none transition-colors"
-          >
-            <span className="flex items-center gap-2">
-              <PlusCircle className="w-4 h-4 text-sky-600" />
-              Masukkan Aset ke Antrean Balik Nama
-            </span>
-            <span className="text-[10px] bg-sky-100 px-2 py-0.5 rounded font-bold">
-              {showAddQueue ? 'Sembunyikan' : 'Buka'}
-            </span>
-          </button>
+        <div className="bg-white dark:bg-slate-900 rounded-xl border-2 border-sky-200 dark:border-slate-800 overflow-hidden">
+          {userRole === 'admin' ? (
+            <button 
+              onClick={() => setShowAddQueue(!showAddQueue)}
+              className="w-full p-3.5 bg-sky-50/60 dark:bg-slate-800 hover:bg-sky-50 dark:hover:bg-slate-700/80 text-sky-800 dark:text-sky-300 font-black text-xs flex items-center justify-between focus:outline-none transition-colors cursor-pointer"
+            >
+              <span className="flex items-center gap-2">
+                <PlusCircle className="w-4 h-4 text-sky-600" />
+                Masukkan Aset ke Antrean Balik Nama
+              </span>
+              <span className="text-[10px] bg-sky-100 dark:bg-slate-700 px-2 py-0.5 rounded font-bold">
+                {showAddQueue ? 'Sembunyikan' : 'Buka'}
+              </span>
+            </button>
+          ) : (
+            <div className="p-3.5 bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs flex items-center justify-between font-medium">
+              <span className="flex items-center gap-2 font-bold">
+                <span>🔒</span> Mode Tamu: Memantau Progres Mutasi Balik Nama Sertifikat
+              </span>
+              <span className="text-[10px] text-slate-500 font-bold bg-white dark:bg-slate-700 px-2.5 py-1 rounded-full border border-slate-200 dark:border-slate-600">
+                Pendaftaran Khusus Admin
+              </span>
+            </div>
+          )}
 
           <AnimatePresence>
             {showAddQueue && (
@@ -906,7 +917,7 @@ export default function BalikNamaPanel({ assets, onSaveAsset, userRole, onNaviga
                             </button>
                           </div>
                         </div>
-                      ) : (
+                      ) : userRole === 'admin' ? (
                         <div className="flex items-center justify-between gap-2">
                           <div className="flex gap-1.5">
                             <button
@@ -939,6 +950,10 @@ export default function BalikNamaPanel({ assets, onSaveAsset, userRole, onNaviga
                           >
                             <UserCheck className="w-3 h-3" /> Selesai BN
                           </button>
+                        </div>
+                      ) : (
+                        <div className="p-2 bg-slate-50 dark:bg-slate-800 rounded-lg text-center text-[10px] text-slate-500 dark:text-slate-400 font-bold border border-slate-200 dark:border-slate-700">
+                          🔒 Mode Tamu: Memantau Log Mutasi (Khusus Admin untuk Mengubah)
                         </div>
                       )}
                     </div>

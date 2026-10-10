@@ -25,7 +25,7 @@ interface DatabaseListProps {
   userRole?: 'admin' | 'viewer';
 }
 
-export default function DatabaseList({ assets, onEditAsset, onDeleteAsset }: DatabaseListProps) {
+export default function DatabaseList({ assets, onEditAsset, onDeleteAsset, userRole = 'viewer' }: DatabaseListProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedType, setSelectedType] = useState<AssetType | 'all'>('tanah');
   const [showFilters, setShowFilters] = useState(false);
@@ -723,22 +723,33 @@ export default function DatabaseList({ assets, onEditAsset, onDeleteAsset }: Dat
 
               {/* Action Buttons inside Drawer */}
               <div className="space-y-3">
-                <div className="flex gap-2.5">
-                  <button
-                    onClick={(e) => handleEdit(activeInspectAsset, e)}
-                    className="flex-1 py-3 border border-sky-600 bg-sky-600 hover:bg-sky-700 text-white rounded-xl text-xs font-black transition-all flex items-center justify-center gap-1.5 focus:outline-none cursor-pointer active:scale-95 shadow-xs"
-                  >
-                    <Edit className="w-4 h-4 text-sky-100" />
-                    Edit / Sunting Data
-                  </button>
+                {userRole === 'admin' ? (
+                  <div className="flex gap-2.5">
+                    <button
+                      onClick={(e) => handleEdit(activeInspectAsset, e)}
+                      className="flex-1 py-3 border border-sky-600 bg-sky-600 hover:bg-sky-700 text-white rounded-xl text-xs font-black transition-all flex items-center justify-center gap-1.5 focus:outline-none cursor-pointer active:scale-95 shadow-xs"
+                    >
+                      <Edit className="w-4 h-4 text-sky-100" />
+                      Edit / Sunting Data
+                    </button>
 
-                  <button
-                    onClick={(e) => handleTriggerDelete(activeInspectAsset.id, e)}
-                    className="flex-1 py-3 border border-rose-200 text-rose-700 bg-rose-50 hover:bg-rose-100/80 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 focus:outline-none cursor-pointer active:scale-95 shadow-2xs"
-                  >
-                    <Trash2 className="w-4 h-4 text-rose-500" /> Hapus Aset
-                  </button>
-                </div>
+                    <button
+                      onClick={(e) => handleTriggerDelete(activeInspectAsset.id, e)}
+                      className="flex-1 py-3 border border-rose-200 text-rose-700 bg-rose-50 hover:bg-rose-100/80 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 focus:outline-none cursor-pointer active:scale-95 shadow-2xs"
+                    >
+                      <Trash2 className="w-4 h-4 text-rose-500" /> Hapus Aset
+                    </button>
+                  </div>
+                ) : (
+                  <div className="p-3 bg-slate-100 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 text-center space-y-1">
+                    <p className="text-[11px] font-bold text-slate-700 dark:text-slate-300">
+                      🔒 Mode Tamu (Hanya Melihat Rincian)
+                    </p>
+                    <p className="text-[10px] text-slate-500 dark:text-slate-400">
+                      Untuk menyunting atau menghapus data aset ini, silakan beralih ke Mode Admin.
+                    </p>
+                  </div>
+                )}
               </div>
             </motion.div>
           </div>

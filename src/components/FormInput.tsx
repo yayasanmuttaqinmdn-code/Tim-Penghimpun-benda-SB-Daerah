@@ -28,11 +28,19 @@ interface FormInputProps {
   editingAsset?: Asset | null;
   onCancelEdit?: () => void;
   userRole?: 'admin' | 'viewer';
+  onSwitchToAdmin?: () => void;
   assets?: Asset[];
 }
 
-export default function FormInput({ onSaveAsset, editingAsset, onCancelEdit, assets = [] }: FormInputProps) {
-  const [activeType, setActiveType] = useState<AssetType>('tanah');
+export default function FormInput({ 
+  onSaveAsset, 
+  editingAsset, 
+  onCancelEdit, 
+  userRole = 'viewer', 
+  onSwitchToAdmin,
+  assets = [] 
+}: FormInputProps) {
+  const [activeType, setActiveType] = useState<AssetType>(() => userRole === 'viewer' ? 'kendaraan' : 'tanah');
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
 
   // States for Land Asset
@@ -76,6 +84,13 @@ export default function FormInput({ onSaveAsset, editingAsset, onCancelEdit, ass
   const [nomerSLF, setNomerSLF] = useState('');
   const [kondisiBangunan, setKondisiBangunan] = useState<KondisiType>('BAIK');
   const [keteranganKerusakan, setKeteranganKerusakan] = useState('');
+
+  // Ensure viewer role defaults to 'kendaraan'
+  useEffect(() => {
+    if (userRole === 'viewer' && !editingAsset) {
+      setActiveType('kendaraan');
+    }
+  }, [userRole, editingAsset]);
 
   // Pre-populate if editing
   useEffect(() => {
@@ -210,6 +225,13 @@ export default function FormInput({ onSaveAsset, editingAsset, onCancelEdit, ass
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Guard: Mode Tamu only allowed to input kendaraan
+    if (userRole === 'viewer' && activeType !== 'kendaraan') {
+      alert('Mode Tamu hanya diizinkan untuk mendaftarkan aset kendaraan. Untuk tanah atau bangunan, silakan masuk ke Mode Admin.');
+      if (onSwitchToAdmin) onSwitchToAdmin();
+      return;
+    }
 
     if (activeType === 'tanah' && nomerSertifikat) {
       const exists = assets.some(a => a.type === 'tanah' && a.nomerSertifikat?.toLowerCase().trim() === nomerSertifikat.toLowerCase().trim() && a.id !== editingAsset?.id);
@@ -359,56 +381,102 @@ export default function FormInput({ onSaveAsset, editingAsset, onCancelEdit, ass
         }
       />
 
-      {/* Selector Tabs (Only enabled if not in edit mode to preserve consistency of type) */}
+      {/* Mode Tamu Info Notice if userRole === 'viewer' */}
+      {userRole === 'viewer' && !editingAsset && (
+        <div className="bg-amber-50/80 dark:bg-amber-950/30 border-2 border-amber-200 dark:border-amber-800/60 rounded-2xl p-4 flex items-start gap-3 shadow-2xs">
+          <div className="p-2 bg-amber-500 text-slate-950 font-black rounded-xl text-xs shrink-0 mt-0.5">
+            🚐 TAMU
+          </div>
+          <div>
+            <h4 className="text-xs font-black text-amber-900 dark:text-amber-200 uppercase tracking-wide">
+              Mode Tamu Aktif: Input Khusus Aset Kendaraan
+            </h4>
+            <p className="text-[11px] text-amber-800 dark:text-amber-300/90 mt-0.5 leading-relaxed font-medium">
+              Pada <strong>Mode Tamu</strong>, Anda memiliki hak akses untuk mendaftarkan aset operasional <strong>Kendaraan</strong> baru. Hak akses pendataan aset Tanah &amp; Bangunan dibatasi khusus untuk <strong>Admin</strong> guna menjaga keamanan dokumen sertifikat.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* Selector Tabs: When Admin, freely switchable. When Viewer, Kendaraan is active while Tanah & Bangunan indicate Admin-only */}
       {!editingAsset && (
-        <div className="flex bg-slate-100 p-1 rounded-2xl border-2 border-slate-200 shadow-sm animate-fade-in">
+        <div className="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-2xl border-2 border-slate-200 dark:border-slate-700 shadow-sm animate-fade-in">
           <button
             type="button"
-            onClick={() => setActiveType('tanah')}
+            onClick={() => {
+              if (userRole === 'viewer') {
+                if (onSwitchToAdmin) {
+                  onSwitchToAdmin();
+                } else {
+                  alert('Pendaftaran aset Tanah khusus untuk Administrator. Silakan masuk dengan PIN Admin.');
+                }
+                return;
+              }
+              setActiveType('tanah');
+            }}
             className={`flex-1 py-2.5 rounded-xl text-xs font-black tracking-wide transition-all flex items-center justify-center gap-1.5 touch-manipulation focus:outline-none cursor-pointer ${
               activeType === 'tanah'
                 ? 'bg-sky-600 text-white shadow-sm border border-sky-700'
-                : 'text-slate-600 hover:text-slate-950 hover:bg-slate-50'
+                : 'text-slate-600 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-700/60'
             }`}
           >
-            🏘️ Tanah
+            <span>🏘️ Tanah</span>
+            {userRole === 'viewer' && (
+              <span className="text-[9px] bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 px-1.5 py-0.5 rounded font-bold">🔒 Admin</span>
+            )}
           </button>
           <button
             type="button"
             onClick={() => setActiveType('kendaraan')}
             className={`flex-1 py-2.5 rounded-xl text-xs font-black tracking-wide transition-all flex items-center justify-center gap-1.5 touch-manipulation focus:outline-none cursor-pointer ${
               activeType === 'kendaraan'
-                ? 'bg-amber-550 text-slate-950 shadow-sm border border-amber-600'
-                : 'text-slate-600 hover:text-slate-950 hover:bg-slate-50'
+                ? 'bg-amber-500 text-slate-950 shadow-sm border border-amber-600 font-black'
+                : 'text-slate-600 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-700/60'
             }`}
           >
-            🚐 Kendaraan
+            <span>🚐 Kendaraan</span>
+            {userRole === 'viewer' && (
+              <span className="text-[9px] bg-emerald-600 text-white px-1.5 py-0.5 rounded font-bold">✓ Buka</span>
+            )}
           </button>
           <button
             type="button"
-            onClick={() => setActiveType('bangunan')}
+            onClick={() => {
+              if (userRole === 'viewer') {
+                if (onSwitchToAdmin) {
+                  onSwitchToAdmin();
+                } else {
+                  alert('Pendaftaran aset Bangunan khusus untuk Administrator. Silakan masuk dengan PIN Admin.');
+                }
+                return;
+              }
+              setActiveType('bangunan');
+            }}
             className={`flex-1 py-2.5 rounded-xl text-xs font-black tracking-wide transition-all flex items-center justify-center gap-1.5 touch-manipulation focus:outline-none cursor-pointer ${
               activeType === 'bangunan'
                 ? 'bg-purple-600 text-white shadow-sm border border-purple-700'
-                : 'text-slate-600 hover:text-slate-950 hover:bg-slate-50'
+                : 'text-slate-600 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-700/60'
             }`}
           >
-            🏢 Bangunan
+            <span>🏢 Bangunan</span>
+            {userRole === 'viewer' && (
+              <span className="text-[9px] bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 px-1.5 py-0.5 rounded font-bold">🔒 Admin</span>
+            )}
           </button>
         </div>
       )}
 
       {/* Editing Info Tag */}
       {editingAsset && (
-        <div className="bg-amber-50 border-2 border-amber-200 text-amber-905 rounded-xl p-3.5 text-xs flex items-center justify-between shadow-sm animate-pulse">
+        <div className="bg-amber-50 dark:bg-amber-950/40 border-2 border-amber-200 dark:border-amber-800 text-amber-900 dark:text-amber-200 rounded-xl p-3.5 text-xs flex items-center justify-between shadow-sm animate-pulse">
           <div className="flex items-center gap-2">
-            <AlertTriangle className="w-4 h-4 text-amber-600" />
+            <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400" />
             <span>Sedang mengedit tipe aset: <strong>{editingAsset.type.toUpperCase()}</strong></span>
           </div>
           <button 
             type="button" 
             onClick={onCancelEdit}
-            className="text-xs font-bold text-amber-700 underline focus:outline-none cursor-pointer"
+            className="text-xs font-bold text-amber-700 dark:text-amber-400 underline focus:outline-none cursor-pointer"
           >
             Batal
           </button>
@@ -416,7 +484,7 @@ export default function FormInput({ onSaveAsset, editingAsset, onCancelEdit, ass
       )}
 
       {/* Form Area */}
-      <form onSubmit={handleSubmit} className="bg-white p-5 rounded-2xl border-2 border-slate-200 shadow-sm space-y-4">
+      <form onSubmit={handleSubmit} className="bg-white dark:bg-slate-900 p-5 rounded-2xl border-2 border-slate-200 dark:border-slate-800 shadow-sm space-y-4 transition-colors duration-200">
           
           {/* SUCCESS ALERTS */}
           <AnimatePresence>

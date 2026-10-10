@@ -33,7 +33,7 @@ interface PinjamBerkasPanelProps {
 
 type SubTab = 'active' | 'new-loan' | 'history';
 
-export default function PinjamBerkasPanel({ assets, userRole, onSaveAsset, googleUser }: PinjamBerkasPanelProps) {
+export default function PinjamBerkasPanel({ assets, userRole = 'viewer', onSaveAsset, googleUser }: PinjamBerkasPanelProps) {
   const [activeTab, setActiveTab] = useState<SubTab>('active');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'tanah' | 'kendaraan' | 'bangunan'>('tanah');
@@ -310,6 +310,10 @@ export default function PinjamBerkasPanel({ assets, userRole, onSaveAsset, googl
           <button
             type="button"
             onClick={() => {
+              if (userRole === 'viewer') {
+                alert('Mode Tamu hanya memiliki hak akses untuk melihat sirkulasi berkas. Peminjaman berkas fisik baru khusus diproses oleh Admin.');
+                return;
+              }
               setActiveTab('new-loan');
               setSearchTerm('');
             }}
@@ -320,6 +324,11 @@ export default function PinjamBerkasPanel({ assets, userRole, onSaveAsset, googl
             }`}
           >
             <PlusCircle className="w-4 h-4" /> Pinjam Berkas Baru
+            {userRole === 'viewer' && (
+              <span className="text-[9px] bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 px-1.5 py-0.2 rounded font-bold">
+                🔒 Admin
+              </span>
+            )}
           </button>
 
           <button
@@ -541,7 +550,7 @@ export default function PinjamBerkasPanel({ assets, userRole, onSaveAsset, googl
                               </button>
                             </div>
                           </form>
-                        ) : (
+                        ) : userRole === 'admin' ? (
                           <button
                             type="button"
                             onClick={() => {
@@ -553,6 +562,10 @@ export default function PinjamBerkasPanel({ assets, userRole, onSaveAsset, googl
                             <CheckCircle2 className="w-3.5 h-3.5" />
                             Kembalikan Berkas
                           </button>
+                        ) : (
+                          <span className="text-[10px] text-slate-500 dark:text-slate-400 font-bold px-2.5 py-1 bg-slate-100 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">
+                            🔒 Sedang Dipinjam
+                          </span>
                         )}
                       </div>
                     </div>

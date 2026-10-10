@@ -453,6 +453,7 @@ interface SettingsPanelProps {
   syncStatus: 'synced' | 'pending' | 'offline';
   userRole?: 'admin' | 'viewer';
   onSwitchToAdmin?: () => void;
+  onSwitchToViewer?: () => void;
   adminPassword?: string;
   onUpdateAdminPassword?: (newPassword: string) => Promise<void>;
   onResetAdminPassword?: () => Promise<string>;
@@ -487,6 +488,7 @@ export default function SettingsPanel({
   syncStatus,
   userRole,
   onSwitchToAdmin,
+  onSwitchToViewer,
   onUpdateAdminPassword,
   onResetAdminPassword,
 }: SettingsPanelProps) {
@@ -680,6 +682,197 @@ export default function SettingsPanel({
         </div>
       </motion.div>
 
+      {/* SECTION: MODE HAK AKSES PENGGUNA (TAMU VS ADMIN) */}
+      <motion.div 
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="bg-white dark:bg-slate-900 border-2 border-sky-200/90 dark:border-slate-800 rounded-3xl p-6 shadow-sm space-y-5 transition-colors duration-200"
+      >
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800 gap-3">
+          <div className="flex items-center gap-2.5">
+            <div className="p-2 bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 rounded-xl">
+              <ShieldCheck className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="text-sm font-black text-slate-800 dark:text-white uppercase tracking-wide">
+                Hak Akses Pengguna: {userRole === 'admin' ? 'Mode Admin (Penuh)' : 'Mode Tamu (Terbatas)'}
+              </h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400">
+                Atur peran sistem antara Mode Tamu (hanya input kendaraan &amp; melihat data) dan Mode Admin (akses penuh kelola semua data).
+              </p>
+            </div>
+          </div>
+
+          <div>
+            {userRole === 'admin' ? (
+              <span className="bg-amber-100 dark:bg-amber-950/80 text-amber-900 dark:text-amber-300 text-xs font-black px-3.5 py-1.5 rounded-full flex items-center gap-1.5 border border-amber-300 dark:border-amber-700">
+                <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+                <span>Admin Aktif</span>
+              </span>
+            ) : (
+              <span className="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-black px-3.5 py-1.5 rounded-full flex items-center gap-1.5 border border-slate-200 dark:border-slate-700">
+                <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                <span>Mode Tamu</span>
+              </span>
+            )}
+          </div>
+        </div>
+
+        {/* Status description boxes */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className={`p-4 rounded-2xl border transition-all ${
+            userRole === 'viewer' 
+              ? 'border-sky-500 bg-sky-50/60 dark:bg-sky-950/40 shadow-xs' 
+              : 'border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40'
+          }`}>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="text-base">👤</span>
+                <span className="text-xs font-black uppercase text-slate-800 dark:text-white">Mode Tamu (Viewer)</span>
+              </div>
+              {userRole === 'viewer' && (
+                <span className="text-[10px] font-bold text-sky-700 dark:text-sky-300 bg-white dark:bg-slate-800 px-2 py-0.5 rounded-full">
+                  Peran Saat Ini
+                </span>
+              )}
+            </div>
+            <ul className="text-[11px] text-slate-600 dark:text-slate-300 space-y-1 mt-2.5 font-medium list-disc pl-4">
+              <li>Melihat seluruh dashboard statistik, database, SPPT PBB, &amp; berkas.</li>
+              <li><strong>Hanya bisa menginput aset Kendaraan</strong> (Mobil/Motor).</li>
+              <li>Input Tanah, Bangunan, Edit &amp; Hapus data <strong>terkunci aman</strong>.</li>
+            </ul>
+          </div>
+
+          <div className={`p-4 rounded-2xl border transition-all ${
+            userRole === 'admin' 
+              ? 'border-amber-500 bg-amber-50/60 dark:bg-amber-950/40 shadow-xs' 
+              : 'border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40'
+          }`}>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="text-base">🔑</span>
+                <span className="text-xs font-black uppercase text-slate-800 dark:text-white">Mode Admin</span>
+              </div>
+              {userRole === 'admin' && (
+                <span className="text-[10px] font-bold text-amber-800 dark:text-amber-300 bg-white dark:bg-slate-800 px-2 py-0.5 rounded-full">
+                  Peran Saat Ini
+                </span>
+              )}
+            </div>
+            <ul className="text-[11px] text-slate-600 dark:text-slate-300 space-y-1 mt-2.5 font-medium list-disc pl-4">
+              <li>Akses tak terbatas untuk menginput aset Tanah, Bangunan, &amp; Kendaraan.</li>
+              <li>Bisa mengedit dan menghapus data yang salah input.</li>
+              <li>Mengatur ceklis SPPT PBB, peminjaman berkas, &amp; tautan Sheets.</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Switch Button */}
+        <div className="pt-1 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="text-xs text-slate-500 dark:text-slate-400">
+            {userRole === 'admin'
+              ? 'Selesai bertugas? Anda dapat kembali ke Mode Tamu kapan saja.'
+              : 'Perlu mengedit data atau mendaftarkan aset tanah? Masukkan PIN/Sandi Admin.'}
+          </div>
+
+          <div>
+            {userRole === 'admin' ? (
+              <button
+                type="button"
+                onClick={onSwitchToViewer ? () => onSwitchToViewer() : undefined}
+                className="w-full sm:w-auto px-4 py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+              >
+                <LogOut className="w-3.5 h-3.5" />
+                <span>Keluar dari Mode Admin</span>
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={onSwitchToAdmin}
+                className="w-full sm:w-auto px-5 py-2.5 bg-amber-500 hover:bg-amber-600 active:scale-98 text-slate-950 text-xs font-black rounded-xl transition-all shadow-xs flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <Lock className="w-3.5 h-3.5" />
+                <span>Masuk sebagai Admin</span>
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* Change Admin Password (Only visible in admin mode) */}
+        {userRole === 'admin' && (
+          <div className="pt-4 border-t border-slate-100 dark:border-slate-800 space-y-3">
+            <div className="flex items-center gap-2">
+              <KeyRound className="w-4 h-4 text-sky-700 dark:text-sky-300" />
+              <h4 className="text-xs font-black uppercase text-slate-800 dark:text-white">
+                Ubah Kata Sandi Admin (PIN Pengaman)
+              </h4>
+            </div>
+
+            <form onSubmit={handleChangePassword} className="space-y-3 max-w-md">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <div>
+                  <label className="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1">
+                    Sandi Baru:
+                  </label>
+                  <input
+                    type="password"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    placeholder="Sandi baru..."
+                    className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs text-slate-900 dark:text-white focus:outline-none focus:border-sky-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1">
+                    Ulangi Sandi:
+                  </label>
+                  <input
+                    type="password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    placeholder="Konfirmasi..."
+                    className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs text-slate-900 dark:text-white focus:outline-none focus:border-sky-500"
+                  />
+                </div>
+              </div>
+
+              {passwordError && (
+                <div className="text-[11px] font-bold text-rose-600 bg-rose-50 dark:bg-rose-950/40 p-2.5 rounded-xl border border-rose-200 dark:border-rose-900">
+                  {passwordError}
+                </div>
+              )}
+
+              {passwordSuccess && (
+                <div className="text-[11px] font-bold text-emerald-700 bg-emerald-50 dark:bg-emerald-950/40 p-2.5 rounded-xl border border-emerald-200 dark:border-emerald-900 flex items-center gap-1.5">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>Sandi admin berhasil diperbarui!</span>
+                </div>
+              )}
+
+              <div className="flex items-center gap-2">
+                <button
+                  type="submit"
+                  disabled={isSavingPassword}
+                  className="px-4 py-2 bg-sky-800 hover:bg-sky-900 text-white rounded-xl text-xs font-bold transition-all disabled:opacity-50 cursor-pointer shadow-2xs"
+                >
+                  {isSavingPassword ? 'Menyimpan...' : 'Simpan Sandi Baru'}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleResetPassword}
+                  disabled={isResettingPassword}
+                  className="px-3 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-xl text-xs font-semibold transition-all cursor-pointer"
+                  title="Kembalikan ke kata sandi bawaan: muttaqin"
+                >
+                  {isResettingPassword ? 'Mereset...' : 'Reset Bawaan (muttaqin)'}
+                </button>
+              </div>
+            </form>
+          </div>
+        )}
+      </motion.div>
+
       {/* SECTION 1: Google Spreadsheet Linking (MAIN USER FEATURE) */}
       <motion.div 
         initial={{ opacity: 0, y: 10 }}
@@ -852,14 +1045,28 @@ export default function SettingsPanel({
 
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row items-center gap-3 pt-2">
-            <button
-              type="submit"
-              disabled={isSavingSheet}
-              className="w-full sm:w-auto px-5 py-3 bg-sky-800 hover:bg-sky-900 active:scale-98 disabled:opacity-50 text-white rounded-2xl text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2 shadow-sm transition-all cursor-pointer"
-            >
-              {isSavingSheet ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-              <span>{isSavingSheet ? 'Menyimpan Tautan...' : 'Simpan Tautan Spreadsheet'}</span>
-            </button>
+            {userRole === 'admin' ? (
+              <button
+                type="submit"
+                disabled={isSavingSheet}
+                className="w-full sm:w-auto px-5 py-3 bg-sky-800 hover:bg-sky-900 active:scale-98 disabled:opacity-50 text-white rounded-2xl text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2 shadow-sm transition-all cursor-pointer"
+              >
+                {isSavingSheet ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+                <span>{isSavingSheet ? 'Menyimpan Tautan...' : 'Simpan Tautan Spreadsheet'}</span>
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={() => {
+                  alert('Pengubahan tautan Google Spreadsheet khusus untuk Administrator.');
+                  if (onSwitchToAdmin) onSwitchToAdmin();
+                }}
+                className="w-full sm:w-auto px-5 py-3 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 rounded-2xl text-xs font-bold flex items-center justify-center gap-2 transition-all cursor-pointer"
+              >
+                <Lock className="w-4 h-4 text-amber-500" />
+                <span>Simpan Tautan (Khusus Admin)</span>
+              </button>
+            )}
 
             <button
               type="button"

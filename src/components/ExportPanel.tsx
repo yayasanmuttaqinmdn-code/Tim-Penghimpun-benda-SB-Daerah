@@ -21,7 +21,8 @@ interface ExportPanelProps {
 
 export default function ExportPanel({ 
   assets, 
-  onImportBackup
+  onImportBackup,
+  userRole = 'viewer'
 }: ExportPanelProps) {
   const [copyAck, setCopyAck] = useState<string | null>(null);
   const [importError, setImportError] = useState<string | null>(null);
@@ -246,22 +247,28 @@ export default function ExportPanel({
             <Download className="w-4 h-4 text-slate-500" /> Ekspor Berkas Cadangan (.json)
           </button>
 
-          <div className="relative">
-            <input
-              type="file"
-              ref={fileInputRef}
-              accept=".json"
-              onChange={handleFileUpload}
-              className="hidden"
-              id="json-file-input"
-            />
-            <label
-              htmlFor="json-file-input"
-              className="w-full py-2.5 bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer focus:outline-none border-b-2 border-slate-950 block text-center"
-            >
-              <Upload className="w-4 h-4 text-amber-400 inline-block mr-1" /> Impor &amp; Gabungkan Cadangan
-            </label>
-          </div>
+          {userRole === 'admin' ? (
+            <div className="relative">
+              <input
+                type="file"
+                ref={fileInputRef}
+                accept=".json"
+                onChange={handleFileUpload}
+                className="hidden"
+                id="json-file-input"
+              />
+              <label
+                htmlFor="json-file-input"
+                className="w-full py-2.5 bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer focus:outline-none border-b-2 border-slate-950 block text-center"
+              >
+                <Upload className="w-4 h-4 text-amber-400 inline-block mr-1" /> Impor &amp; Gabungkan Cadangan
+              </label>
+            </div>
+          ) : (
+            <div className="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl text-center text-[10px] text-slate-500 font-bold border border-slate-200 dark:border-slate-700">
+              🔒 Impor &amp; pemulihan basis data dibatasi khusus untuk Akun Admin.
+            </div>
+          )}
           
           {importSuccess && (
             <span className="text-[11px] font-medium text-sky-700 bg-sky-50 px-3 py-2 rounded-xl border border-sky-100 text-center block">

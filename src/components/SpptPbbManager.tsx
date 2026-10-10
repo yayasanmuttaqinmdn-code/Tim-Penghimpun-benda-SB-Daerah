@@ -147,7 +147,7 @@ const INITIAL_SAMPLE_SPPT: SpptPbbRecord[] = [
   }
 ];
 
-export default function SpptPbbManager({ googleToken, googleUser }: SpptPbbManagerProps) {
+export default function SpptPbbManager({ userRole = 'viewer', googleToken, googleUser }: SpptPbbManagerProps) {
   const [isSyncing, setIsSyncing] = useState(false);
 
   // 1. Centralized Storage State (with localStorage cache fallback)
@@ -311,6 +311,10 @@ export default function SpptPbbManager({ googleToken, googleUser }: SpptPbbManag
 
   // Switch to Input Tab for New Record
   const handleOpenNewInput = () => {
+    if (userRole === 'viewer') {
+      alert('Mode Tamu hanya memiliki hak akses untuk melihat data SPPT PBB. Pendaftaran SPPT baru khusus untuk Admin.');
+      return;
+    }
     resetForm();
     setActiveSubTab('input');
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -318,6 +322,10 @@ export default function SpptPbbManager({ googleToken, googleUser }: SpptPbbManag
 
   // Switch to Input Tab for Editing Existing Record
   const handleEditRecord = (rec: SpptPbbRecord) => {
+    if (userRole === 'viewer') {
+      alert('Mode Tamu hanya bisa melihat data SPPT PBB. Penyuntingan data khusus untuk Admin.');
+      return;
+    }
     setEditingRecord(rec);
     setFormNamaWajibPajak(rec.namaWajibPajak);
     setFormLokasi(rec.lokasi);
@@ -442,6 +450,10 @@ export default function SpptPbbManager({ googleToken, googleUser }: SpptPbbManag
 
   // Quick toggle year status directly from table
   const handleQuickTogglePayment = (record: SpptPbbRecord, tahun: number) => {
+    if (userRole === 'viewer') {
+      alert('Mode Tamu hanya bisa melihat. Pembaharuan status pelunasan SPPT PBB memerlukan Mode Admin.');
+      return;
+    }
     const currentYearData = record.riwayatPembayaran?.[tahun];
     const isCurrentlyLunas = currentYearData?.lunas ?? false;
     const defaultNominal = (currentYearData?.nominalBayar !== undefined && currentYearData.nominalBayar > 0)
@@ -821,6 +833,11 @@ export default function SpptPbbManager({ googleToken, googleUser }: SpptPbbManag
           >
             <PlusCircle className="w-3.5 h-3.5 stroke-[2.5]" />
             <span>Form Input</span>
+            {userRole === 'viewer' && (
+              <span className="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-[9px] px-1.5 py-0.2 rounded font-bold">
+                🔒 Admin
+              </span>
+            )}
             {editingRecord && (
               <span className="bg-amber-400 text-sky-950 text-[9px] px-1.5 py-0.2 rounded-full font-bold">
                 Edit
@@ -1573,21 +1590,29 @@ export default function SpptPbbManager({ googleToken, googleUser }: SpptPbbManag
                           {/* Actions */}
                           <td className="py-3.5 px-3 sm:px-4 text-center whitespace-nowrap">
                             <div className="flex items-center justify-center gap-1">
-                              <button
-                                onClick={() => handleEditRecord(item)}
-                                className="p-1.5 hover:bg-sky-50 text-sky-700 rounded-lg transition-colors cursor-pointer"
-                                title="Edit data di Form Input"
-                              >
-                                <Edit3 className="w-4 h-4" />
-                              </button>
-                              <button
-                                type="button"
-                                onClick={() => handleDeleteRecord(item)}
-                                className="p-1.5 hover:bg-rose-50 text-rose-600 rounded-lg transition-colors cursor-pointer"
-                                title="Hapus SPPT PBB"
-                              >
-                                <Trash2 className="w-4 h-4" />
-                              </button>
+                              {userRole === 'admin' ? (
+                                <>
+                                  <button
+                                    onClick={() => handleEditRecord(item)}
+                                    className="p-1.5 hover:bg-sky-50 text-sky-700 rounded-lg transition-colors cursor-pointer"
+                                    title="Edit data di Form Input"
+                                  >
+                                    <Edit3 className="w-4 h-4" />
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={() => handleDeleteRecord(item)}
+                                    className="p-1.5 hover:bg-rose-50 text-rose-600 rounded-lg transition-colors cursor-pointer"
+                                    title="Hapus SPPT PBB"
+                                  >
+                                    <Trash2 className="w-4 h-4" />
+                                  </button>
+                                </>
+                              ) : (
+                                <span className="text-[10px] text-slate-400 font-bold px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800" title="Mode Tamu (Hanya Melihat)">
+                                  🔒 Lihat
+                                </span>
+                              )}
                             </div>
                           </td>
                         </tr>

@@ -38,7 +38,10 @@ export default function SidebarNav({
   isOpen,
   setIsOpen,
   isCollapsed,
-  setIsCollapsed
+  setIsCollapsed,
+  userRole = 'viewer',
+  onSwitchToAdmin,
+  onSwitchToViewer
 }: SidebarNavProps) {
   const tabs = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -120,7 +123,42 @@ export default function SidebarNav({
       </div>
 
       {/* LOWER PART / FOOTER SECTION */}
-      <div className="p-3 border-t border-sky-700/40 dark:border-slate-800 bg-sky-900/40 dark:bg-slate-950/60">
+      <div className="p-3 border-t border-sky-700/40 dark:border-slate-800 bg-sky-900/40 dark:bg-slate-950/60 space-y-2.5">
+        {/* Role Status and Quick Switch */}
+        <div className="p-2 rounded-xl bg-sky-950/60 dark:bg-slate-900/80 border border-sky-700/50 dark:border-slate-800 flex items-center justify-between gap-1.5">
+          <div className="flex items-center gap-1.5 min-w-0">
+            <div className={`w-2 h-2 rounded-full shrink-0 ${userRole === 'admin' ? 'bg-amber-400 animate-pulse' : 'bg-emerald-400'}`} />
+            <div className="truncate">
+              <span className="block text-[9px] font-black uppercase text-sky-200 dark:text-slate-400 leading-none">
+                {userRole === 'admin' ? 'Mode Admin' : 'Mode Tamu'}
+              </span>
+              <span className="text-[8px] text-sky-300/70 dark:text-slate-500 font-medium">
+                {userRole === 'admin' ? 'Akses Penuh' : 'Input Kendaraan & Lihat'}
+              </span>
+            </div>
+          </div>
+
+          {userRole === 'admin' ? (
+            <button
+              type="button"
+              onClick={onSwitchToViewer}
+              className="px-2 py-1 bg-white/10 hover:bg-white/20 text-white rounded-lg text-[9px] font-black uppercase tracking-wider transition-colors cursor-pointer shrink-0"
+              title="Kembali ke Mode Tamu"
+            >
+              Keluar
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={onSwitchToAdmin}
+              className="px-2 py-1 bg-amber-400 hover:bg-amber-500 text-sky-950 rounded-lg text-[9px] font-black uppercase tracking-wider transition-colors cursor-pointer shadow-xs shrink-0"
+              title="Masuk sebagai Administrator"
+            >
+              Masuk PIN
+            </button>
+          )}
+        </div>
+
         <div className="space-y-1 w-full">
           <div className="flex items-center justify-between text-[10px] text-sky-300 dark:text-sky-400 leading-tight">
             <span className="font-semibold">Sistem Status</span>

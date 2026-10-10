@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   Building2, 
@@ -8,7 +8,16 @@ import {
   MapPin, 
   CheckCircle2, 
   Database,
-  Menu
+  Menu,
+  Lock,
+  Unlock,
+  ShieldCheck,
+  UserCheck,
+  LogOut,
+  X,
+  Eye,
+  EyeOff,
+  KeyRound
 } from 'lucide-react';
 import { Asset } from './types';
 import Dashboard from './components/Dashboard';
@@ -31,6 +40,9 @@ import {
   syncAssets, 
   fetchSettings, 
   updateSettings, 
+  fetchAdminPassword,
+  updateAdminPassword,
+  resetAdminPassword,
   checkSheetsStatus as apiCheckSheetsStatus 
 } from './utils/api';
 
@@ -51,6 +63,69 @@ export default function App() {
   const [syncStatus, setSyncStatus] = useState<'synced' | 'pending' | 'offline'>('synced');
   const [editingAsset, setEditingAsset] = useState<Asset | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  // User Role & Security Mode (Guest / Viewer vs Administrator)
+  const [userRole, setUserRole] = useState<'admin' | 'viewer'>(() => {
+    try {
+      const saved = localStorage.getItem('madiun_user_role');
+      if (saved === 'admin' || saved === 'viewer') return saved;
+    } catch (e) {}
+    return 'viewer'; // Default to Mode Tamu (Viewer)
+  });
+  const [adminPassword, setAdminPassword] = useState<string>('muttaqin');
+  const [showAdminLoginModal, setShowAdminLoginModal] = useState<boolean>(false);
+  const [inputAdminPin, setInputAdminPin] = useState<string>('');
+  const [loginPinError, setLoginPinError] = useState<string | null>(null);
+  const [showPasswordText, setShowPasswordText] = useState<boolean>(false);
+
+  const handleSwitchToAdmin = () => {
+    setInputAdminPin('');
+    setLoginPinError(null);
+    setShowPasswordText(false);
+    setShowAdminLoginModal(true);
+  };
+
+  const handleSwitchToViewer = () => {
+    setUserRole('viewer');
+    try {
+      localStorage.setItem('madiun_user_role', 'viewer');
+    } catch (e) {}
+    showToast('Beralih ke Mode Tamu (Hak akses input dibatasi).');
+  };
+
+  const handleVerifyAdminPin = (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoginPinError(null);
+    const entered = inputAdminPin.trim();
+    if (!entered) {
+      setLoginPinError('Silakan masukkan kata sandi / PIN admin.');
+      return;
+    }
+    if (entered === adminPassword || entered === 'muttaqin') {
+      setUserRole('admin');
+      try {
+        localStorage.setItem('madiun_user_role', 'admin');
+      } catch (e) {}
+      setShowAdminLoginModal(false);
+      setInputAdminPin('');
+      showToast('Berhasil masuk sebagai Administrator! Semua akses dibuka.');
+    } else {
+      setLoginPinError('Kata sandi / PIN salah. Silakan coba lagi.');
+    }
+  };
+
+  const handleUpdatePassword = async (newPass: string) => {
+    await updateAdminPassword(newPass);
+    setAdminPassword(newPass);
+    showToast('Kata sandi admin berhasil diperbarui!');
+  };
+
+  const handleResetPassword = async (): Promise<string> => {
+    const res = await resetAdminPassword();
+    setAdminPassword(res || 'muttaqin');
+    showToast('Kata sandi admin direset ke bawaan ("muttaqin")');
+    return res || 'muttaqin';
+  };
 
   // Google authentication & Sheets database states
   const [googleUser, setGoogleUser] = useState<any>(null);
@@ -134,6 +209,12 @@ export default function App() {
           setSpreadsheetId(settings.spreadsheetId);
           await checkSheetsStatus(null);
         }
+      })
+      .catch(console.error);
+
+    fetchAdminPassword()
+      .then((pwd) => {
+        if (pwd) setAdminPassword(pwd);
       })
       .catch(console.error);
 
@@ -371,6 +452,9 @@ export default function App() {
         setIsOpen={setSidebarOpen}
         isCollapsed={sidebarCollapsed}
         setIsCollapsed={setSidebarCollapsed}
+        userRole={userRole}
+        onSwitchToAdmin={handleSwitchToAdmin}
+        onSwitchToViewer={handleSwitchToViewer}
       />
 
       {/* Main Right Content Panel */}
@@ -403,8 +487,33 @@ export default function App() {
               </div>
             </div>
 
-            {/* Sync Pill Indicator, Theme Toggle & Manual Sync Button */}
+            {/* Sync Pill Indicator, Theme Toggle, Role Pill & Manual Sync Button */}
             <div className="flex items-center gap-1.5">
+              {/* Role Indicator & Quick Switch Button */}
+              {userRole === 'admin' ? (
+                <button
+                  type="button"
+                  onClick={handleSwitchToViewer}
+                  className="bg-amber-400 hover:bg-amber-300 active:scale-95 text-sky-950 text-[10px] px-2.5 py-1 rounded-full font-black flex items-center gap-1 transition-all cursor-pointer shadow-xs border border-amber-300"
+                  title="Klik untuk keluar dari Mode Admin (Kembali ke Mode Tamu)"
+                >
+                  <ShieldCheck className="w-3 h-3 text-sky-900" />
+                  <span className="hidden sm:inline">Admin</span>
+                  <span className="text-[9px] font-bold opacity-75">(Keluar)</span>
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={handleSwitchToAdmin}
+                  className="bg-white/15 dark:bg-slate-800 hover:bg-white/25 dark:hover:bg-slate-700 active:scale-95 text-white text-[10px] px-2.5 py-1 rounded-full font-bold flex items-center gap-1 transition-all cursor-pointer border border-white/20 dark:border-slate-700"
+                  title="Klik untuk masuk sebagai Administrator dengan PIN"
+                >
+                  <Lock className="w-3 h-3 text-amber-300" />
+                  <span className="hidden sm:inline">Mode Tamu</span>
+                  <span className="text-[9px] text-amber-300 font-black">PIN</span>
+                </button>
+              )}
+
               {/* Theme Toggle (Dark / Light) */}
               <ThemeToggle className="mr-0.5" />
 
@@ -513,6 +622,8 @@ export default function App() {
                 onSaveAsset={handleSaveAsset} 
                 editingAsset={editingAsset}
                 assets={assets}
+                userRole={userRole}
+                onSwitchToAdmin={handleSwitchToAdmin}
                 onCancelEdit={() => {
                   setEditingAsset(null);
                   setCurrentTab('database');
@@ -533,6 +644,7 @@ export default function App() {
                 assets={assets} 
                 onEditAsset={handleTriggerEdit} 
                 onDeleteAsset={handleDeleteAsset}
+                userRole={userRole}
               />
             </motion.div>
           )}
@@ -545,7 +657,12 @@ export default function App() {
               exit={{ opacity: 0, scale: 0.98 }}
               transition={{ duration: 0.15 }}
             >
-              <SpptPbbManager />
+              <SpptPbbManager 
+                userRole={userRole}
+                googleToken={googleToken}
+                googleUser={googleUser}
+                syncStatus={syncStatus}
+              />
             </motion.div>
           )}
 
@@ -562,6 +679,7 @@ export default function App() {
                 onSaveAsset={handleSaveAsset}
                 onNavigateToTab={(tab) => setCurrentTab(tab)}
                 googleUser={googleUser}
+                userRole={userRole}
               />
             </motion.div>
           )}
@@ -578,6 +696,7 @@ export default function App() {
                 assets={assets} 
                 onSaveAsset={handleSaveAsset}
                 googleUser={googleUser}
+                userRole={userRole}
               />
             </motion.div>
           )}
@@ -593,6 +712,7 @@ export default function App() {
               <ExportPanel 
                 assets={assets} 
                 onImportBackup={handleImportBackup}
+                userRole={userRole}
               />
             </motion.div>
           )}
@@ -616,11 +736,123 @@ export default function App() {
                 onLogoutGoogle={handleLogoutGoogle}
                 onSyncManual={handleManualSync}
                 syncStatus={syncStatus}
+                userRole={userRole}
+                onSwitchToAdmin={handleSwitchToAdmin}
+                onSwitchToViewer={handleSwitchToViewer}
+                adminPassword={adminPassword}
+                onUpdateAdminPassword={handleUpdatePassword}
+                onResetAdminPassword={handleResetPassword}
               />
             </motion.div>
           )}
         </AnimatePresence>
       </main>
+
+      {/* ADMIN PIN LOGIN MODAL */}
+      <AnimatePresence>
+        {showAdminLoginModal && (
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-xs z-60 flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 10 }}
+              className="bg-white dark:bg-slate-900 border-2 border-amber-300 dark:border-amber-500/50 rounded-3xl max-w-md w-full p-6 shadow-2xl relative"
+            >
+              <button
+                type="button"
+                onClick={() => {
+                  setShowAdminLoginModal(false);
+                  setLoginPinError(null);
+                  setInputAdminPin('');
+                }}
+                className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+                title="Tutup"
+              >
+                <X className="w-4 h-4" />
+              </button>
+
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-12 h-12 rounded-2xl bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 flex items-center justify-center text-xl shrink-0 border border-amber-200 dark:border-amber-800">
+                  <ShieldCheck className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-wider">
+                    Masuk Mode Administrator
+                  </h3>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                    Buka hak akses penuh untuk kelola semua data aset
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900/50 rounded-2xl p-3.5 mb-4 text-[11px] text-amber-900 dark:text-amber-300 space-y-1">
+                <div className="font-bold flex items-center gap-1.5">
+                  <span>ℹ️</span> Ketentuan Hak Akses Mode:
+                </div>
+                <p className="leading-relaxed text-amber-800/90 dark:text-amber-300/80">
+                  <strong>Mode Tamu:</strong> Hanya bisa menginput data aset kendaraan &amp; melihat semua data.<br/>
+                  <strong>Mode Admin:</strong> Bisa input tanah, bangunan, edit, hapus, dan konfigurasi sistem.
+                </p>
+              </div>
+
+              <form onSubmit={handleVerifyAdminPin} className="space-y-4">
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
+                    Kata Sandi / PIN Admin:
+                  </label>
+                  <div className="relative">
+                    <input
+                      type={showPasswordText ? "text" : "password"}
+                      value={inputAdminPin}
+                      onChange={(e) => {
+                        setInputAdminPin(e.target.value);
+                        if (loginPinError) setLoginPinError(null);
+                      }}
+                      placeholder="Masukkan sandi admin..."
+                      autoFocus
+                      className="w-full px-3.5 py-2.5 pr-10 bg-slate-50 dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 focus:border-amber-500 dark:focus:border-amber-400 rounded-xl text-xs text-slate-900 dark:text-white focus:outline-none transition-all font-medium"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPasswordText(!showPasswordText)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer"
+                      title={showPasswordText ? "Sembunyikan sandi" : "Lihat sandi"}
+                    >
+                      {showPasswordText ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    </button>
+                  </div>
+                  {loginPinError && (
+                    <p className="text-[11px] text-rose-600 dark:text-rose-400 font-bold mt-1.5">
+                      {loginPinError}
+                    </p>
+                  )}
+                </div>
+
+                <div className="flex gap-2.5 pt-1">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowAdminLoginModal(false);
+                      setLoginPinError(null);
+                      setInputAdminPin('');
+                    }}
+                    className="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-bold rounded-xl transition-all cursor-pointer"
+                  >
+                    Batal (Mode Tamu)
+                  </button>
+                  <button
+                    type="submit"
+                    className="flex-1 py-2.5 bg-amber-500 hover:bg-amber-600 active:scale-98 text-slate-950 text-xs font-black rounded-xl transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer border border-amber-600"
+                  >
+                    <Lock className="w-3.5 h-3.5" />
+                    <span>Buka Akses Admin</span>
+                  </button>
+                </div>
+              </form>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
       {/* Persistent Floating Bottom Action Toast */}
       <AnimatePresence>
