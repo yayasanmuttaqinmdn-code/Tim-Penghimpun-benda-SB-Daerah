@@ -123,7 +123,6 @@ export default function Dashboard({
   // Luas Tanah Aggregations
   const tanahWithLuasCount = tanahAssets.filter(a => parseLuas(a.luasTanah) > 0).length;
   const totalLuasTanah = tanahAssets.reduce((sum, a) => sum + parseLuas(a.luasTanah), 0);
-  const avgLuasTanah = tanahWithLuasCount > 0 ? totalLuasTanah / tanahWithLuasCount : 0;
 
   // 1. Total Semua Sertifikat Tanah
   const countSemua = tanahCount;
@@ -406,18 +405,11 @@ export default function Dashboard({
               </span>
             )}
           </div>
-          <div className="text-xs text-slate-500 font-medium">
-            {tanahWithLuasCount < tanahCount ? (
-              <span>
-                <strong className="text-slate-700">{tanahWithLuasCount}</strong> dari {tanahCount} bidang terisi luas
-                {tanahWithLuasCount > 0 && ` • Rata-rata ${formatLuas(avgLuasTanah)} / bidang`}
-              </span>
-            ) : (
-              <span>
-                Rata-rata <strong className="text-slate-700">{formatLuas(avgLuasTanah)}</strong> per bidang tanah
-              </span>
-            )}
-          </div>
+          {tanahWithLuasCount < tanahCount && (
+            <div className="text-xs text-slate-500 font-medium">
+              <strong className="text-slate-700">{tanahWithLuasCount}</strong> dari {tanahCount} bidang terisi luas
+            </div>
+          )}
         </div>
 
         {/* 4 Clean Metric Blocks Matching App Theme */}
