@@ -305,100 +305,119 @@ export default function Dashboard({
         }
       />
 
-      {/* CARD UTAMA: TOTAL LUAS TANAH TERINPUT */}
+      {/* CARD UTAMA: REKAPITULASI TOTAL LUAS TANAH */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.08 }}
         onClick={() => onNavigateToTab('database')}
-        className="bg-gradient-to-br from-emerald-800 via-teal-800 to-sky-900 text-white rounded-3xl p-5 sm:p-6 shadow-md border-2 border-emerald-500/30 relative overflow-hidden cursor-pointer hover:shadow-lg transition-all duration-300 group"
+        className="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-6 shadow-sm border-2 border-slate-200 hover:border-sky-300 hover:shadow-md transition-all duration-200 cursor-pointer space-y-4"
       >
-        {/* Background decorative watermark */}
-        <div className="absolute -right-6 -bottom-6 text-white/5 pointer-events-none select-none">
-          <LandPlot className="w-48 h-48" />
-        </div>
-
-        <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-5">
-          {/* Sisi Kiri: Angka Utama Total Luas */}
-          <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <span className="p-2 bg-emerald-500/20 border border-emerald-400/40 rounded-xl text-emerald-300 shadow-inner">
-                <LandPlot className="w-5 h-5" />
-              </span>
-              <div>
-                <span className="text-[10px] font-black uppercase tracking-wider text-emerald-300 bg-emerald-950/60 px-2.5 py-0.5 rounded-full border border-emerald-500/30">
-                  REKAPITULASI ASET TANAH
-                </span>
-                <h2 className="text-sm sm:text-base font-black text-white mt-0.5">
-                  Total Luas Tanah Terinput
-                </h2>
-              </div>
+        {/* Header Row */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-sky-50 text-sky-800 border border-sky-100 flex items-center justify-center shadow-2xs shrink-0">
+              <LandPlot className="w-5 h-5" />
             </div>
-
-            <div className="pt-1">
-              <div className="flex flex-wrap items-baseline gap-2 sm:gap-3">
-                <span className="text-3xl sm:text-4xl font-black text-emerald-300 tracking-tight drop-shadow-xs">
-                  {formatLuas(totalLuasTanah)}
+            <div>
+              <div className="flex items-center gap-2">
+                <h3 className="text-sm sm:text-base font-black text-slate-800 uppercase tracking-wide">
+                  Total Luas Tanah Terinput
+                </h3>
+                <span className="bg-sky-100 text-sky-800 text-[10px] font-black px-2.5 py-0.5 rounded-full">
+                  {tanahCount} Bidang
                 </span>
-                {formatHektar(totalLuasTanah) && (
-                  <span className="text-xs sm:text-sm font-bold text-emerald-100/90 bg-emerald-900/60 px-2.5 py-1 rounded-xl border border-emerald-400/30">
-                    ≈ {formatHektar(totalLuasTanah)}
-                  </span>
-                )}
               </div>
-              <p className="text-xs text-emerald-100/80 mt-1 font-medium">
-                Tercatat dari <strong>{tanahCount} Bidang Tanah</strong> di database{' '}
-                {tanahWithLuasCount < tanahCount && (
-                  <span className="text-amber-200">
-                    ({tanahWithLuasCount} bidang terisi luas, {tanahCount - tanahWithLuasCount} belum diisi)
-                  </span>
-                )}
-                {tanahWithLuasCount > 0 && ` • Rata-rata ${formatLuas(avgLuasTanah)} / bidang`}
+              <p className="text-xs text-slate-500 mt-0.5 font-medium">
+                Akumulasi seluruh bidang tanah yang tercatat di database Madiun
               </p>
             </div>
           </div>
 
-          {/* Sisi Kanan: Mini Grid Breakdown per Status Sertifikat */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-2 gap-2 sm:gap-2.5 lg:min-w-[340px] bg-black/25 p-3 rounded-2xl border border-white/10 backdrop-blur-xs">
-            <div className="bg-white/10 rounded-xl p-2.5 border border-white/10">
-              <div className="flex items-center justify-between text-[10px] font-bold text-emerald-200">
-                <span>📗 SHM Yayasan</span>
-                <span>{countSHMYayasan} unit</span>
-              </div>
-              <p className="text-xs sm:text-sm font-black text-white mt-1">
-                {formatLuas(luasSHMYayasan)}
-              </p>
-            </div>
+          <div className="flex items-center gap-1.5 self-start sm:self-auto text-xs font-bold text-sky-800 bg-sky-50 hover:bg-sky-100 px-3 py-1.5 rounded-xl border border-sky-100 transition-colors">
+            <span>Buka Database</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </div>
+        </div>
 
-            <div className="bg-white/10 rounded-xl p-2.5 border border-white/10">
-              <div className="flex items-center justify-between text-[10px] font-bold text-teal-200">
-                <span>🕌 Wakaf Yayasan</span>
-                <span>{countWakafYayasan} unit</span>
-              </div>
-              <p className="text-xs sm:text-sm font-black text-white mt-1">
-                {formatLuas(luasWakafYayasan)}
-              </p>
-            </div>
+        {/* Main Number & Quick Stats */}
+        <div className="flex flex-col md:flex-row md:items-baseline justify-between gap-2 pt-1">
+          <div className="flex flex-wrap items-baseline gap-2.5">
+            <span className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+              {formatLuas(totalLuasTanah)}
+            </span>
+            {formatHektar(totalLuasTanah) && (
+              <span className="text-xs sm:text-sm font-bold text-slate-700 bg-slate-100 px-2.5 py-1 rounded-xl border border-slate-200">
+                ≈ {formatHektar(totalLuasTanah)}
+              </span>
+            )}
+          </div>
+          <div className="text-xs text-slate-500 font-medium">
+            {tanahWithLuasCount < tanahCount ? (
+              <span>
+                <strong className="text-slate-700">{tanahWithLuasCount}</strong> dari {tanahCount} bidang terisi luas
+                {tanahWithLuasCount > 0 && ` • Rata-rata ${formatLuas(avgLuasTanah)} / bidang`}
+              </span>
+            ) : (
+              <span>
+                Rata-rata <strong className="text-slate-700">{formatLuas(avgLuasTanah)}</strong> per bidang tanah
+              </span>
+            )}
+          </div>
+        </div>
 
-            <div className="bg-white/10 rounded-xl p-2.5 border border-white/10">
-              <div className="flex items-center justify-between text-[10px] font-bold text-sky-200">
-                <span>📘 SHGB Yayasan</span>
-                <span>{countSHGBYayasan} unit</span>
-              </div>
-              <p className="text-xs sm:text-sm font-black text-white mt-1">
-                {formatLuas(luasSHGBYayasan)}
-              </p>
+        {/* 4 Clean Metric Blocks Matching App Theme */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-1">
+          <div className="p-3 bg-slate-50 rounded-xl border border-slate-200/80 hover:bg-slate-100/60 transition-colors">
+            <div className="flex items-center justify-between text-[11px] font-bold text-slate-600">
+              <span className="flex items-center gap-1">
+                <span>📗</span>
+                <span>SHM Yayasan</span>
+              </span>
+              <span className="text-[10px] text-slate-400 font-semibold">{countSHMYayasan} unit</span>
             </div>
+            <p className="text-sm sm:text-base font-black text-slate-900 mt-1.5">
+              {formatLuas(luasSHMYayasan)}
+            </p>
+          </div>
 
-            <div className="bg-white/10 rounded-xl p-2.5 border border-white/10">
-              <div className="flex items-center justify-between text-[10px] font-bold text-amber-200">
-                <span>⏳ Belum Balik Nama</span>
-                <span>{countBelumYayasan} unit</span>
-              </div>
-              <p className="text-xs sm:text-sm font-black text-white mt-1">
-                {formatLuas(luasBelumYayasan)}
-              </p>
+          <div className="p-3 bg-slate-50 rounded-xl border border-slate-200/80 hover:bg-slate-100/60 transition-colors">
+            <div className="flex items-center justify-between text-[11px] font-bold text-slate-600">
+              <span className="flex items-center gap-1">
+                <span>🕌</span>
+                <span>Wakaf Yayasan</span>
+              </span>
+              <span className="text-[10px] text-slate-400 font-semibold">{countWakafYayasan} unit</span>
             </div>
+            <p className="text-sm sm:text-base font-black text-slate-900 mt-1.5">
+              {formatLuas(luasWakafYayasan)}
+            </p>
+          </div>
+
+          <div className="p-3 bg-slate-50 rounded-xl border border-slate-200/80 hover:bg-slate-100/60 transition-colors">
+            <div className="flex items-center justify-between text-[11px] font-bold text-slate-600">
+              <span className="flex items-center gap-1">
+                <span>📘</span>
+                <span>SHGB Yayasan</span>
+              </span>
+              <span className="text-[10px] text-slate-400 font-semibold">{countSHGBYayasan} unit</span>
+            </div>
+            <p className="text-sm sm:text-base font-black text-slate-900 mt-1.5">
+              {formatLuas(luasSHGBYayasan)}
+            </p>
+          </div>
+
+          <div className="p-3 bg-slate-50 rounded-xl border border-slate-200/80 hover:bg-slate-100/60 transition-colors">
+            <div className="flex items-center justify-between text-[11px] font-bold text-slate-600">
+              <span className="flex items-center gap-1">
+                <span>⏳</span>
+                <span>Belum Yayasan</span>
+              </span>
+              <span className="text-[10px] text-slate-400 font-semibold">{countBelumYayasan} unit</span>
+            </div>
+            <p className="text-sm sm:text-base font-black text-slate-900 mt-1.5">
+              {formatLuas(luasBelumYayasan)}
+            </p>
           </div>
         </div>
       </motion.div>
@@ -417,14 +436,14 @@ export default function Dashboard({
             <div className="p-2 bg-sky-100 text-sky-700 rounded-xl w-9 h-9 flex items-center justify-center">
               <span className="text-lg">🏘️</span>
             </div>
-            <span className="text-[10px] font-extrabold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full hidden sm:inline-block">
+            <span className="text-[10px] font-extrabold text-sky-800 bg-sky-50 border border-sky-200 px-2 py-0.5 rounded-full hidden sm:inline-block">
               {formatLuas(totalLuasTanah)}
             </span>
           </div>
           <div className="mt-3">
             <p className="text-[10px] font-bold text-slate-500 uppercase leading-tight">Tanah</p>
             <p className="text-lg font-black text-slate-900 mt-1">{tanahCount} <span className="text-[10px] font-normal text-slate-400">Unit</span></p>
-            <p className="text-[10px] font-black text-emerald-700 mt-1 truncate flex items-center gap-1 sm:hidden">
+            <p className="text-[10px] font-black text-sky-700 mt-1 truncate flex items-center gap-1 sm:hidden">
               <LandPlot className="w-3 h-3 shrink-0" />
               <span>{formatLuas(totalLuasTanah)}</span>
             </p>
