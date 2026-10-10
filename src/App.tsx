@@ -21,6 +21,7 @@ import PinjamBerkasPanel from './components/PinjamBerkasPanel';
 import SettingsPanel from './components/SettingsPanel';
 import SpptPbbManager from './components/SpptPbbManager';
 import PondokLogo from './components/PondokLogo';
+import ThemeToggle from './components/ThemeToggle';
 import { INITIAL_SAMPLE_ASSETS } from './data';
 import { initAuth, googleSignIn, logout, getAccessToken } from './utils/auth';
 import { 
@@ -353,7 +354,7 @@ export default function App() {
   const activeTabInfo = getTabInfo(currentTab);
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans flex overflow-hidden">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans flex overflow-hidden transition-colors duration-200">
       {/* Visual Government-Inspired Left Sidebar Navigation */}
       <SidebarNav 
         currentTab={currentTab} 
@@ -373,37 +374,40 @@ export default function App() {
       />
 
       {/* Main Right Content Panel */}
-      <div className="flex-1 min-w-0 flex flex-col h-screen overflow-y-auto">
+      <div className="flex-1 min-w-0 flex flex-col h-screen overflow-y-auto bg-slate-50 dark:bg-slate-950 transition-colors duration-200">
         {/* Visual Government-Inspired Top Header */}
-        <header className="bg-sky-800 border-b-4 border-sky-900 text-white py-2.5 px-4 sticky top-0 z-45 shadow-md">
+        <header className="bg-sky-800 dark:bg-slate-900 border-b-4 border-sky-900 dark:border-sky-800 text-white py-2.5 px-4 sticky top-0 z-45 shadow-md transition-colors duration-200">
           <div className="w-full max-w-5xl mx-auto flex items-center justify-between">
             <div className="flex items-center gap-2.5">
               {/* Menu Toggle Button */}
               <button
                 onClick={() => setSidebarOpen(!sidebarOpen)}
-                className="p-1.5 hover:bg-sky-700/80 rounded-lg text-sky-100 hover:text-white transition-all cursor-pointer flex items-center justify-center mr-0.5"
+                className="p-1.5 hover:bg-sky-700/80 dark:hover:bg-slate-800 rounded-lg text-sky-100 hover:text-white transition-all cursor-pointer flex items-center justify-center mr-0.5"
                 title={sidebarOpen ? "Sembunyikan Menu" : "Tampilkan Menu"}
               >
                 <Menu className="w-4.5 h-4.5" />
               </button>
 
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center text-sky-800 font-black text-md shadow-sm">
+                <div className="w-8 h-8 bg-white dark:bg-slate-100 rounded-lg flex items-center justify-center text-sky-800 dark:text-sky-900 font-black text-md shadow-sm">
                   T
                 </div>
                 <div>
                   <h1 className="text-xs font-black tracking-wide text-white leading-none uppercase">
                     {sidebarOpen ? activeTabInfo.title : "TIM PENGHIMPUN BENDA SB"}
                   </h1>
-                  <p className="text-[9px] text-sky-300 uppercase tracking-widest font-extrabold mt-1 leading-none">
+                  <p className="text-[9px] text-sky-300 dark:text-sky-400 uppercase tracking-widest font-extrabold mt-1 leading-none">
                     {sidebarOpen ? activeTabInfo.subtitle : "DAERAH MADIUN"}
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* Sync Pill Indicator & Manual Sync Button */}
+            {/* Sync Pill Indicator, Theme Toggle & Manual Sync Button */}
             <div className="flex items-center gap-1.5">
+              {/* Theme Toggle (Dark / Light) */}
+              <ThemeToggle className="mr-0.5" />
+
               <button
                 type="button"
                 onClick={async () => {
@@ -412,7 +416,7 @@ export default function App() {
                   await loadAssets(googleToken);
                   showToast('Data berhasil disinkronkan!');
                 }}
-                className="bg-white/15 hover:bg-white/25 active:scale-95 text-white border border-white/20 text-[10px] px-2.5 py-1 rounded-full font-black flex items-center gap-1.5 transition-all cursor-pointer shadow-xs"
+                className="bg-white/15 dark:bg-slate-800 hover:bg-white/25 dark:hover:bg-slate-700 active:scale-95 text-white border border-white/20 dark:border-slate-700 text-[10px] px-2.5 py-1 rounded-full font-black flex items-center gap-1.5 transition-all cursor-pointer shadow-xs"
                 title="Tarik data terbaru dari Google Sheets & Server sekarang"
               >
                 <RefreshCw className={`w-3 h-3 ${syncStatus === 'pending' ? 'animate-spin' : ''}`} />
@@ -420,17 +424,17 @@ export default function App() {
               </button>
 
               {syncStatus === 'synced' && (
-                <span className="bg-sky-500/20 text-sky-300 border border-sky-500/30 text-[10px] px-2 py-0.5 rounded-full font-extrabold flex items-center gap-1">
+                <span className="bg-sky-500/20 text-sky-300 dark:bg-sky-500/15 dark:text-sky-300 border border-sky-500/30 text-[10px] px-2 py-0.5 rounded-full font-extrabold flex items-center gap-1">
                   <Wifi className="w-3 h-3" /> Online
                 </span>
               )}
               {syncStatus === 'pending' && (
-                <span className="bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[10px] px-2 py-0.5 rounded-full font-extrabold flex items-center gap-1 animate-pulse">
+                <span className="bg-amber-500/20 text-amber-300 dark:bg-amber-500/15 dark:text-amber-300 border border-amber-500/30 text-[10px] px-2 py-0.5 rounded-full font-extrabold flex items-center gap-1 animate-pulse">
                   <RefreshCw className="w-3 h-3 animate-spin" /> Sinkron
                 </span>
               )}
               {syncStatus === 'offline' && (
-                <span className="bg-rose-500/20 text-rose-300 border border-rose-500/30 text-[10px] px-2 py-0.5 rounded-full font-extrabold flex items-center gap-1">
+                <span className="bg-rose-500/20 text-rose-300 dark:bg-rose-500/15 dark:text-rose-300 border border-rose-500/30 text-[10px] px-2 py-0.5 rounded-full font-extrabold flex items-center gap-1">
                   <WifiOff className="w-3 h-3" /> Offline
                 </span>
               )}
@@ -457,7 +461,7 @@ export default function App() {
               ) : (
                 <button
                   onClick={() => setCurrentTab('settings')}
-                  className="bg-white/10 hover:bg-white/20 text-sky-100 hover:text-white border border-white/20 text-[10px] px-2 py-0.5 rounded-full font-bold flex items-center gap-1 transition-all cursor-pointer"
+                  className="bg-white/10 dark:bg-slate-800 hover:bg-white/20 dark:hover:bg-slate-700 text-sky-100 hover:text-white border border-white/20 dark:border-slate-700 text-[10px] px-2 py-0.5 rounded-full font-bold flex items-center gap-1 transition-all cursor-pointer"
                   title="Hubungkan database dengan Google Sheets / Apps Script"
                 >
                   <Database className="w-3 h-3 text-sky-300" />

@@ -20,10 +20,15 @@ import {
   Code2,
   ChevronDown,
   ChevronUp,
-  Layers
+  Layers,
+  Sun,
+  Moon,
+  Palette
 } from 'lucide-react';
 import { motion } from 'motion/react';
 import MenuHeroBanner from './MenuHeroBanner';
+import ThemeToggle from './ThemeToggle';
+import { useTheme } from '../utils/themeContext';
 
 const FULL_APPS_SCRIPT_CODE = `// ============================================================================
 // GOOGLE APPS SCRIPT: SINKRONISASI 2 ARAH LENGKAP KE GOOGLE SPREADSHEET
@@ -622,11 +627,64 @@ export default function SettingsPanel({
         }
       />
 
+      {/* SECTION: TEMA TAMPILAN (MODE GELAP & MODE TERANG) */}
+      <motion.div 
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="bg-white dark:bg-slate-900 border-2 border-sky-200/90 dark:border-slate-800 rounded-3xl p-6 shadow-sm space-y-5 transition-colors duration-200"
+      >
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800 gap-3">
+          <div className="flex items-center gap-2.5">
+            <div className="p-2 bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 rounded-xl">
+              <Palette className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="text-sm font-black text-slate-800 dark:text-white uppercase tracking-wide">
+                Tema Pilihan Tampilan
+              </h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400">
+                Pilih kenyamanan visual antara Mode Terang (Light), Mode Gelap (Dark), atau Otomatis mengikuti sistem perangkat.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center">
+            <ThemeToggle variant="segmented" />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+          <div className="p-3.5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 flex items-start gap-3">
+            <div className="p-2 bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 rounded-xl shrink-0 mt-0.5">
+              <Sun className="w-4 h-4" />
+            </div>
+            <div>
+              <p className="text-xs font-black text-slate-800 dark:text-white uppercase tracking-wide">Mode Terang (Light Mode)</p>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 leading-relaxed font-medium">
+                Tampilan bernuansa biru institusional dan putih bersih, optimal untuk pencahayaan ruangan kantor terang di siang hari.
+              </p>
+            </div>
+          </div>
+
+          <div className="p-3.5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 flex items-start gap-3">
+            <div className="p-2 bg-sky-100 dark:bg-sky-950 text-sky-700 dark:text-sky-300 rounded-xl shrink-0 mt-0.5">
+              <Moon className="w-4 h-4" />
+            </div>
+            <div>
+              <p className="text-xs font-black text-slate-800 dark:text-white uppercase tracking-wide">Mode Gelap (Dark Mode)</p>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 leading-relaxed font-medium">
+                Kontras gelap lembut yang nyaman di mata pada malam hari dan menghemat konsumsi baterai perangkat smartphone &amp; laptop.
+              </p>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+
       {/* SECTION 1: Google Spreadsheet Linking (MAIN USER FEATURE) */}
       <motion.div 
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white border-2 border-sky-200/90 rounded-3xl p-6 shadow-sm space-y-6"
+        className="bg-white dark:bg-slate-900 border-2 border-sky-200/90 dark:border-slate-800 rounded-3xl p-6 shadow-sm space-y-6 transition-colors duration-200"
       >
         {/* Section Title & Status Indicator */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-100 gap-3">

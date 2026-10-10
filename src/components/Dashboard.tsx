@@ -312,14 +312,14 @@ export default function Dashboard({
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.08 }}
           onClick={() => onNavigateToTab('database')}
-          className="bg-white p-3.5 rounded-2xl shadow-sm border-2 border-slate-200 flex flex-col justify-between cursor-pointer hover:border-sky-300 hover:shadow-md transition-all duration-200 active:scale-95"
+          className="bg-white dark:bg-slate-900 p-3.5 rounded-2xl shadow-sm border-2 border-slate-200 dark:border-slate-800 flex flex-col justify-between cursor-pointer hover:border-sky-300 dark:hover:border-sky-500 hover:shadow-md transition-all duration-200 active:scale-95"
         >
-          <div className="p-2 bg-sky-100 text-sky-700 rounded-xl w-9 h-9 flex items-center justify-center">
+          <div className="p-2 bg-sky-100 dark:bg-sky-950 text-sky-700 dark:text-sky-300 rounded-xl w-9 h-9 flex items-center justify-center">
             <span className="text-lg">🏘️</span>
           </div>
           <div className="mt-3">
-            <p className="text-[10px] font-bold text-slate-500 uppercase leading-tight">Tanah</p>
-            <p className="text-lg font-black text-slate-900 mt-1">{tanahCount} <span className="text-[10px] font-normal text-slate-400">Unit</span></p>
+            <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase leading-tight">Tanah</p>
+            <p className="text-lg font-black text-slate-900 dark:text-white mt-1">{tanahCount} <span className="text-[10px] font-normal text-slate-400">Unit</span></p>
           </div>
         </motion.div>
 
@@ -329,14 +329,14 @@ export default function Dashboard({
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.12 }}
           onClick={() => onNavigateToTab('database')}
-          className="bg-white p-3.5 rounded-2xl shadow-sm border-2 border-slate-200 flex flex-col justify-between cursor-pointer hover:border-amber-300 hover:shadow-md transition-all duration-200 active:scale-95"
+          className="bg-white dark:bg-slate-900 p-3.5 rounded-2xl shadow-sm border-2 border-slate-200 dark:border-slate-800 flex flex-col justify-between cursor-pointer hover:border-amber-300 dark:hover:border-amber-500 hover:shadow-md transition-all duration-200 active:scale-95"
         >
-          <div className="p-2 bg-amber-100 text-amber-600 rounded-xl w-9 h-9 flex items-center justify-center">
+          <div className="p-2 bg-amber-100 dark:bg-amber-950 text-amber-600 dark:text-amber-400 rounded-xl w-9 h-9 flex items-center justify-center">
             <span className="text-lg">🚐</span>
           </div>
           <div className="mt-3">
-            <p className="text-[10px] font-bold text-slate-500 uppercase leading-tight">Kendaraan</p>
-            <p className="text-lg font-black text-slate-900 mt-1">{kendaraanCount} <span className="text-[10px] font-normal text-slate-400">Unit</span></p>
+            <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase leading-tight">Kendaraan</p>
+            <p className="text-lg font-black text-slate-900 dark:text-white mt-1">{kendaraanCount} <span className="text-[10px] font-normal text-slate-400">Unit</span></p>
           </div>
         </motion.div>
 
@@ -346,14 +346,14 @@ export default function Dashboard({
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.16 }}
           onClick={() => onNavigateToTab('database')}
-          className="bg-white p-3.5 rounded-2xl shadow-sm border-2 border-slate-200 flex flex-col justify-between cursor-pointer hover:border-purple-300 hover:shadow-md transition-all duration-200 active:scale-95"
+          className="bg-white dark:bg-slate-900 p-3.5 rounded-2xl shadow-sm border-2 border-slate-200 dark:border-slate-800 flex flex-col justify-between cursor-pointer hover:border-purple-300 dark:hover:border-purple-500 hover:shadow-md transition-all duration-200 active:scale-95"
         >
-          <div className="p-2 bg-purple-100 text-purple-600 rounded-xl w-9 h-9 flex items-center justify-center">
+          <div className="p-2 bg-purple-100 dark:bg-purple-950 text-purple-600 dark:text-purple-400 rounded-xl w-9 h-9 flex items-center justify-center">
             <span className="text-lg">🏢</span>
           </div>
           <div className="mt-3">
-            <p className="text-[10px] font-bold text-slate-500 uppercase leading-tight">Bangunan</p>
-            <p className="text-lg font-black text-slate-900 mt-1">{bangunanCount} <span className="text-[10px] font-normal text-slate-400">Unit</span></p>
+            <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase leading-tight">Bangunan</p>
+            <p className="text-lg font-black text-slate-900 dark:text-white mt-1">{bangunanCount} <span className="text-[10px] font-normal text-slate-400">Unit</span></p>
           </div>
         </motion.div>
       </div>
@@ -364,30 +364,30 @@ export default function Dashboard({
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
         onClick={() => onNavigateToTab('database')}
-        className="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-6 shadow-sm border-2 border-slate-200 hover:border-sky-300 hover:shadow-md transition-all duration-200 cursor-pointer space-y-4"
+        className="bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl p-5 sm:p-6 shadow-sm border-2 border-slate-200 dark:border-slate-800 hover:border-sky-300 dark:hover:border-sky-500 hover:shadow-md transition-all duration-200 cursor-pointer space-y-4"
       >
         {/* Header Row */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100 dark:border-slate-800">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-sky-50 text-sky-800 border border-sky-100 flex items-center justify-center shadow-2xs shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-sky-50 dark:bg-sky-950 text-sky-800 dark:text-sky-300 border border-sky-100 dark:border-sky-800 flex items-center justify-center shadow-2xs shrink-0">
               <LandPlot className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="text-sm sm:text-base font-black text-slate-800 uppercase tracking-wide">
+                <h3 className="text-sm sm:text-base font-black text-slate-800 dark:text-white uppercase tracking-wide">
                   Total Luas Tanah Terinput
                 </h3>
-                <span className="bg-sky-100 text-sky-800 text-[10px] font-black px-2.5 py-0.5 rounded-full">
+                <span className="bg-sky-100 dark:bg-sky-900/60 text-sky-800 dark:text-sky-300 text-[10px] font-black px-2.5 py-0.5 rounded-full">
                   {tanahCount} Bidang
                 </span>
               </div>
-              <p className="text-xs text-slate-500 mt-0.5 font-medium">
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 font-medium">
                 Akumulasi seluruh bidang tanah yang tercatat di database Madiun
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-1.5 self-start sm:self-auto text-xs font-bold text-sky-800 bg-sky-50 hover:bg-sky-100 px-3 py-1.5 rounded-xl border border-sky-100 transition-colors">
+          <div className="flex items-center gap-1.5 self-start sm:self-auto text-xs font-bold text-sky-800 dark:text-sky-300 bg-sky-50 dark:bg-sky-950/80 hover:bg-sky-100 dark:hover:bg-sky-900 px-3 py-1.5 rounded-xl border border-sky-100 dark:border-sky-800 transition-colors">
             <span>Buka Database</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </div>
@@ -396,72 +396,72 @@ export default function Dashboard({
         {/* Main Number & Quick Stats */}
         <div className="flex flex-col md:flex-row md:items-baseline justify-between gap-2 pt-1">
           <div className="flex flex-wrap items-baseline gap-2.5">
-            <span className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+            <span className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
               {formatLuas(totalLuasTanah)}
             </span>
             {formatHektar(totalLuasTanah) && (
-              <span className="text-xs sm:text-sm font-bold text-slate-700 bg-slate-100 px-2.5 py-1 rounded-xl border border-slate-200">
+              <span className="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-xl border border-slate-200 dark:border-slate-700">
                 ≈ {formatHektar(totalLuasTanah)}
               </span>
             )}
           </div>
           {tanahWithLuasCount < tanahCount && (
-            <div className="text-xs text-slate-500 font-medium">
-              <strong className="text-slate-700">{tanahWithLuasCount}</strong> dari {tanahCount} bidang terisi luas
+            <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+              <strong className="text-slate-700 dark:text-slate-300">{tanahWithLuasCount}</strong> dari {tanahCount} bidang terisi luas
             </div>
           )}
         </div>
 
         {/* 4 Clean Metric Blocks Matching App Theme */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-1">
-          <div className="p-3 bg-slate-50 rounded-xl border border-slate-200/80 hover:bg-slate-100/60 transition-colors">
-            <div className="flex items-center justify-between text-[11px] font-bold text-slate-600">
+          <div className="p-3 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-200/80 dark:border-slate-700/80 hover:bg-slate-100/60 dark:hover:bg-slate-800 transition-colors">
+            <div className="flex items-center justify-between text-[11px] font-bold text-slate-600 dark:text-slate-300">
               <span className="flex items-center gap-1">
                 <span>📗</span>
                 <span>SHM Yayasan</span>
               </span>
-              <span className="text-[10px] text-slate-400 font-semibold">{countSHMYayasan} unit</span>
+              <span className="text-[10px] text-slate-400 dark:text-slate-400 font-semibold">{countSHMYayasan} unit</span>
             </div>
-            <p className="text-sm sm:text-base font-black text-slate-900 mt-1.5">
+            <p className="text-sm sm:text-base font-black text-slate-900 dark:text-white mt-1.5">
               {formatLuas(luasSHMYayasan)}
             </p>
           </div>
 
-          <div className="p-3 bg-slate-50 rounded-xl border border-slate-200/80 hover:bg-slate-100/60 transition-colors">
-            <div className="flex items-center justify-between text-[11px] font-bold text-slate-600">
+          <div className="p-3 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-200/80 dark:border-slate-700/80 hover:bg-slate-100/60 dark:hover:bg-slate-800 transition-colors">
+            <div className="flex items-center justify-between text-[11px] font-bold text-slate-600 dark:text-slate-300">
               <span className="flex items-center gap-1">
                 <span>🕌</span>
                 <span>Wakaf Yayasan</span>
               </span>
-              <span className="text-[10px] text-slate-400 font-semibold">{countWakafYayasan} unit</span>
+              <span className="text-[10px] text-slate-400 dark:text-slate-400 font-semibold">{countWakafYayasan} unit</span>
             </div>
-            <p className="text-sm sm:text-base font-black text-slate-900 mt-1.5">
+            <p className="text-sm sm:text-base font-black text-slate-900 dark:text-white mt-1.5">
               {formatLuas(luasWakafYayasan)}
             </p>
           </div>
 
-          <div className="p-3 bg-slate-50 rounded-xl border border-slate-200/80 hover:bg-slate-100/60 transition-colors">
-            <div className="flex items-center justify-between text-[11px] font-bold text-slate-600">
+          <div className="p-3 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-200/80 dark:border-slate-700/80 hover:bg-slate-100/60 dark:hover:bg-slate-800 transition-colors">
+            <div className="flex items-center justify-between text-[11px] font-bold text-slate-600 dark:text-slate-300">
               <span className="flex items-center gap-1">
                 <span>📘</span>
                 <span>SHGB Yayasan</span>
               </span>
-              <span className="text-[10px] text-slate-400 font-semibold">{countSHGBYayasan} unit</span>
+              <span className="text-[10px] text-slate-400 dark:text-slate-400 font-semibold">{countSHGBYayasan} unit</span>
             </div>
-            <p className="text-sm sm:text-base font-black text-slate-900 mt-1.5">
+            <p className="text-sm sm:text-base font-black text-slate-900 dark:text-white mt-1.5">
               {formatLuas(luasSHGBYayasan)}
             </p>
           </div>
 
-          <div className="p-3 bg-slate-50 rounded-xl border border-slate-200/80 hover:bg-slate-100/60 transition-colors">
-            <div className="flex items-center justify-between text-[11px] font-bold text-slate-600">
+          <div className="p-3 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-200/80 dark:border-slate-700/80 hover:bg-slate-100/60 dark:hover:bg-slate-800 transition-colors">
+            <div className="flex items-center justify-between text-[11px] font-bold text-slate-600 dark:text-slate-300">
               <span className="flex items-center gap-1">
                 <span>⏳</span>
                 <span>Belum Yayasan</span>
               </span>
-              <span className="text-[10px] text-slate-400 font-semibold">{countBelumYayasan} unit</span>
+              <span className="text-[10px] text-slate-400 dark:text-slate-400 font-semibold">{countBelumYayasan} unit</span>
             </div>
-            <p className="text-sm sm:text-base font-black text-slate-900 mt-1.5">
+            <p className="text-sm sm:text-base font-black text-slate-900 dark:text-white mt-1.5">
               {formatLuas(luasBelumYayasan)}
             </p>
           </div>
@@ -473,20 +473,20 @@ export default function Dashboard({
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.22 }}
-        className="bg-white p-5 sm:p-6 rounded-3xl shadow-sm border-2 border-slate-200/90 space-y-6"
+        className="bg-white dark:bg-slate-900 p-5 sm:p-6 rounded-3xl shadow-sm border-2 border-slate-200/90 dark:border-slate-800 space-y-6"
       >
         {/* Card Header with View Switcher */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100 dark:border-slate-800">
           <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-2xl bg-sky-50 text-sky-800 border border-sky-100 flex items-center justify-center shadow-2xs shrink-0">
+            <div className="w-11 h-11 rounded-2xl bg-sky-50 dark:bg-sky-950 text-sky-800 dark:text-sky-300 border border-sky-100 dark:border-sky-800 flex items-center justify-center shadow-2xs shrink-0">
               <BarChart3 className="w-6 h-6" />
             </div>
             <div>
               <div className="flex flex-wrap items-center gap-2">
-                <h3 className="text-sm sm:text-base font-black text-slate-800 uppercase tracking-wide">
+                <h3 className="text-sm sm:text-base font-black text-slate-800 dark:text-white uppercase tracking-wide">
                   Status Sertifikat Tanah
                 </h3>
-                <span className="bg-sky-100 text-sky-800 text-[10px] font-black px-2.5 py-0.5 rounded-full">
+                <span className="bg-sky-100 dark:bg-sky-900/60 text-sky-800 dark:text-sky-300 text-[10px] font-black px-2.5 py-0.5 rounded-full">
                   Total {countSemua} Bidang
                 </span>
               </div>
@@ -494,14 +494,14 @@ export default function Dashboard({
           </div>
 
           {/* Toggle View Mode */}
-          <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl shrink-0 self-start sm:self-auto">
+          <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl shrink-0 self-start sm:self-auto">
             <button
               type="button"
               onClick={() => setChartView('bar')}
               className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                 chartView === 'bar'
-                  ? 'bg-white text-sky-900 shadow-2xs'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-white dark:bg-slate-700 text-sky-900 dark:text-white shadow-2xs'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               📊 Batang Tegak
@@ -511,8 +511,8 @@ export default function Dashboard({
               onClick={() => setChartView('horizontal')}
               className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                 chartView === 'horizontal'
-                  ? 'bg-white text-sky-900 shadow-2xs'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-white dark:bg-slate-700 text-sky-900 dark:text-white shadow-2xs'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               📑 Rincian Mendatar
@@ -696,10 +696,10 @@ export default function Dashboard({
       {/* Conditions Monitor */}
       <div className="grid grid-cols-1 gap-4">
         {/* Jenis Kendaraan */}
-        <div className="bg-white p-5 rounded-2xl shadow-sm border-2 border-slate-200 space-y-3.5 hover:border-slate-300 transition-all duration-200">
-          <h3 className="text-xs font-black text-slate-800 uppercase tracking-wider flex items-center justify-between">
+        <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl shadow-sm border-2 border-slate-200 dark:border-slate-800 space-y-3.5 hover:border-slate-300 dark:hover:border-slate-700 transition-all duration-200">
+          <h3 className="text-xs font-black text-slate-800 dark:text-white uppercase tracking-wider flex items-center justify-between">
             <span className="flex items-center gap-1.5">📊 Jenis Kendaraan di Database</span>
-            <span className="text-[10px] font-bold text-slate-400 bg-slate-100 px-2.5 py-0.5 rounded-full">({kendaraanCount} Unit)</span>
+            <span className="text-[10px] font-bold text-slate-400 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2.5 py-0.5 rounded-full">({kendaraanCount} Unit)</span>
           </h3>
           <div className="space-y-3">
             {kendaraanCount === 0 ? (
@@ -710,11 +710,11 @@ export default function Dashboard({
                 const percent = (count / kendaraanCount) * 100;
                 return (
                   <div key={jenis}>
-                    <div className="flex justify-between text-[11px] font-bold text-slate-600 mb-1.5">
+                    <div className="flex justify-between text-[11px] font-bold text-slate-600 dark:text-slate-300 mb-1.5">
                       <span>{jenis}</span>
                       <span className={colors.text}>{count} unit ({Math.round(percent)}%)</span>
                     </div>
-                    <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                    <div className="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-2 overflow-hidden">
                       <div 
                         className={`${colors.bg} h-full rounded-full transition-all duration-500`} 
                         style={{ width: `${percent}%` }}
@@ -728,18 +728,18 @@ export default function Dashboard({
         </div>
 
         {/* Kondisi Bangunan */}
-        <div className="bg-white p-5 rounded-2xl shadow-sm border-2 border-slate-200 space-y-3.5 hover:border-slate-300 transition-all duration-200">
-          <h3 className="text-xs font-black text-slate-800 uppercase tracking-wider flex items-center justify-between">
+        <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl shadow-sm border-2 border-slate-200 dark:border-slate-800 space-y-3.5 hover:border-slate-300 dark:hover:border-slate-700 transition-all duration-200">
+          <h3 className="text-xs font-black text-slate-800 dark:text-white uppercase tracking-wider flex items-center justify-between">
             <span className="flex items-center gap-1.5">🏢 Kondisi Bangunan Gedung</span>
-            <span className="text-[10px] font-bold text-slate-400 bg-slate-100 px-2.5 py-0.5 rounded-full">({bangunanCount} Gedung)</span>
+            <span className="text-[10px] font-bold text-slate-400 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2.5 py-0.5 rounded-full">({bangunanCount} Gedung)</span>
           </h3>
           <div className="space-y-3">
             <div>
-              <div className="flex justify-between text-[11px] font-bold text-slate-600 mb-1.5">
+              <div className="flex justify-between text-[11px] font-bold text-slate-600 dark:text-slate-300 mb-1.5">
                 <span>Baik</span>
-                <span className="text-sky-700">{bangunanKondisi.baik} unit</span>
+                <span className="text-sky-700 dark:text-sky-400">{bangunanKondisi.baik} unit</span>
               </div>
-              <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+              <div className="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-2 overflow-hidden">
                 <div 
                   className="bg-sky-500 h-full rounded-full transition-all duration-500" 
                   style={{ width: `${bangunanCount ? (bangunanKondisi.baik / bangunanCount) * 100 : 0}%` }}
@@ -747,11 +747,11 @@ export default function Dashboard({
               </div>
             </div>
             <div>
-              <div className="flex justify-between text-[11px] font-bold text-slate-600 mb-1.5">
+              <div className="flex justify-between text-[11px] font-bold text-slate-600 dark:text-slate-300 mb-1.5">
                 <span>Rusak Ringan</span>
-                <span className="text-amber-700">{bangunanKondisi.ringan} unit</span>
+                <span className="text-amber-700 dark:text-amber-400">{bangunanKondisi.ringan} unit</span>
               </div>
-              <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+              <div className="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-2 overflow-hidden">
                 <div 
                   className="bg-amber-500 h-full rounded-full transition-all duration-500" 
                   style={{ width: `${bangunanCount ? (bangunanKondisi.ringan / bangunanCount) * 100 : 0}%` }}
@@ -759,11 +759,11 @@ export default function Dashboard({
               </div>
             </div>
             <div>
-              <div className="flex justify-between text-[11px] font-bold text-slate-600 mb-1.5">
+              <div className="flex justify-between text-[11px] font-bold text-slate-600 dark:text-slate-300 mb-1.5">
                 <span>Rusak Berat</span>
-                <span className="text-rose-700">{bangunanKondisi.berat} unit</span>
+                <span className="text-rose-700 dark:text-rose-400">{bangunanKondisi.berat} unit</span>
               </div>
-              <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+              <div className="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-2 overflow-hidden">
                 <div 
                   className="bg-rose-500 h-full rounded-full transition-all duration-500" 
                   style={{ width: `${bangunanCount ? (bangunanKondisi.berat / bangunanCount) * 100 : 0}%` }}
@@ -775,16 +775,16 @@ export default function Dashboard({
       </div>
 
       {/* Recent Activity List */}
-      <div className="bg-white p-5 rounded-2xl shadow-sm border-2 border-slate-200 hover:border-slate-300 transition-all duration-200 space-y-4">
+      <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl shadow-sm border-2 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition-all duration-200 space-y-4">
         <div className="flex justify-between items-center">
-          <h3 className="text-xs font-black text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+          <h3 className="text-xs font-black text-slate-800 dark:text-white uppercase tracking-wider flex items-center gap-1.5">
             <span>📝 Aktivitas Input Terakhir</span>
-            <span className="bg-slate-100 text-slate-500 text-[10px] px-2 py-0.5 rounded-full uppercase font-bold">Terbaru</span>
+            <span className="bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 text-[10px] px-2 py-0.5 rounded-full uppercase font-bold">Terbaru</span>
           </h3>
           <button 
             type="button"
             onClick={() => onNavigateToTab('database')}
-            className="text-xs text-sky-800 font-bold hover:underline bg-sky-50 px-2.5 py-1 rounded-lg hover:bg-sky-100 transition-colors"
+            className="text-xs text-sky-800 dark:text-sky-300 font-bold hover:underline bg-sky-50 dark:bg-sky-950/70 px-2.5 py-1 rounded-lg hover:bg-sky-100 dark:hover:bg-sky-900 transition-colors"
           >
             Lihat Semua
           </button>
@@ -795,20 +795,20 @@ export default function Dashboard({
             Belum ada aset terdaftar. Silakan masukkan data di Tab "Input Aset".
           </div>
         ) : (
-          <div className="divide-y divide-slate-100">
+          <div className="divide-y divide-slate-100 dark:divide-slate-800">
             {recentAssets.map((asset) => (
               <div key={asset.id} className="py-3 flex items-center justify-between first:pt-0 last:pb-0">
                 <div className="flex items-center gap-3">
                   <div className={`p-2 rounded-xl text-lg ${
-                    asset.type === 'tanah' ? 'bg-sky-50 text-sky-700' :
-                    asset.type === 'kendaraan' ? 'bg-amber-50 text-amber-700' : 'bg-purple-50 text-purple-700'
+                    asset.type === 'tanah' ? 'bg-sky-50 dark:bg-sky-950 text-sky-700 dark:text-sky-300' :
+                    asset.type === 'kendaraan' ? 'bg-amber-50 dark:bg-amber-950 text-amber-700 dark:text-amber-300' : 'bg-purple-50 dark:bg-purple-950 text-purple-700 dark:text-purple-300'
                   }`}>
                     {asset.type === 'tanah' && '🏘️'}
                     {asset.type === 'kendaraan' && '🚐'}
                     {asset.type === 'bangunan' && '🏢'}
                   </div>
                   <div>
-                    <h4 className="text-xs font-bold text-slate-800 leading-snug">
+                    <h4 className="text-xs font-bold text-slate-800 dark:text-white leading-snug">
                       {asset.type === 'tanah' && `${asset.jenisSertifikat} - No. ${asset.nomerSertifikat}`}
                       {asset.type === 'kendaraan' && `${asset.merk} (${asset.nomorPolisi})`}
                       {asset.type === 'bangunan' && asset.namaBangunan}
@@ -822,8 +822,8 @@ export default function Dashboard({
                 </div>
                 <div className="text-right flex flex-col items-end">
                   <span className={`px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-wider ${
-                    asset.type === 'tanah' ? 'bg-sky-100 text-sky-700' :
-                    asset.type === 'kendaraan' ? 'bg-amber-100 text-amber-700' : 'bg-purple-100 text-purple-700'
+                    asset.type === 'tanah' ? 'bg-sky-100 dark:bg-sky-950 text-sky-700 dark:text-sky-300' :
+                    asset.type === 'kendaraan' ? 'bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300' : 'bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300'
                   }`}>
                     {asset.type}
                   </span>
@@ -838,13 +838,13 @@ export default function Dashboard({
       </div>
 
       {/* Mobile Input Guide */}
-      <div className="bg-amber-50/70 border-2 border-amber-200/50 p-5 rounded-2xl text-slate-800 text-xs leading-relaxed space-y-1.5 shadow-sm">
-        <h4 className="font-extrabold text-amber-800 flex items-center gap-1 text-sm">💡 Petunjuk Input Ponsel:</h4>
-        <p className="text-slate-600 font-medium">Aplikasi didesain khusus agar ringan & mudah diisi langsung dari lokasi lapangan (menggunakan Handphone). Anda bisa langsung mencatat ketika survei:</p>
-        <ol className="list-decimal pl-4 mt-2 space-y-1 font-semibold text-slate-700">
-          <li>Pilih tab <span className="text-amber-850 font-bold">"Input Aset"</span> untuk mencatat.</li>
-          <li>Data tersimpan aman di <span className="text-amber-850 font-bold">Cloud Server</span> &amp; <span className="text-amber-850 font-bold">Local Storage</span> browser Anda.</li>
-          <li>Ekspor data ke <span className="text-amber-850 font-bold">Google Sheets / Excel (CSV)</span> di tab <span className="text-amber-850 font-bold">"Ekspor"</span>.</li>
+      <div className="bg-amber-50/70 dark:bg-amber-950/20 border-2 border-amber-200/50 dark:border-amber-900/40 p-5 rounded-2xl text-slate-800 dark:text-slate-200 text-xs leading-relaxed space-y-1.5 shadow-sm">
+        <h4 className="font-extrabold text-amber-800 dark:text-amber-300 flex items-center gap-1 text-sm">💡 Petunjuk Input Ponsel:</h4>
+        <p className="text-slate-600 dark:text-slate-400 font-medium">Aplikasi didesain khusus agar ringan & mudah diisi langsung dari lokasi lapangan (menggunakan Handphone). Anda bisa langsung mencatat ketika survei:</p>
+        <ol className="list-decimal pl-4 mt-2 space-y-1 font-semibold text-slate-700 dark:text-slate-300">
+          <li>Pilih tab <span className="text-amber-850 dark:text-amber-300 font-bold">"Input Aset"</span> untuk mencatat.</li>
+          <li>Data tersimpan aman di <span className="text-amber-850 dark:text-amber-300 font-bold">Cloud Server</span> &amp; <span className="text-amber-850 dark:text-amber-300 font-bold">Local Storage</span> browser Anda.</li>
+          <li>Ekspor data ke <span className="text-amber-850 dark:text-amber-300 font-bold">Google Sheets / Excel (CSV)</span> di tab <span className="text-amber-850 dark:text-amber-300 font-bold">"Ekspor"</span>.</li>
         </ol>
       </div>
     </div>

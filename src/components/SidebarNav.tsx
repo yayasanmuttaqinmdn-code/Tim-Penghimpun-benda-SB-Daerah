@@ -60,25 +60,25 @@ export default function SidebarNav({
   };
 
   const navContent = (
-    <div className="flex flex-col h-full justify-between bg-sky-800 text-white select-none">
+    <div className="flex flex-col h-full justify-between bg-sky-800 dark:bg-slate-900 text-white select-none transition-colors duration-200">
       {/* UPPER PART */}
       <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden pt-4 px-3 space-y-4">
         {/* Header & Logo */}
-        <div className="flex items-center justify-between pb-3 border-b border-sky-700/60 min-h-[48px]">
+        <div className="flex items-center justify-between pb-3 border-b border-sky-700/60 dark:border-slate-800 min-h-[48px]">
           <div className="flex items-center gap-2.5 px-1">
-            <div className="w-8 h-8 flex-shrink-0 bg-white text-sky-850 rounded-lg flex items-center justify-center font-black text-md shadow-md text-sky-800">
+            <div className="w-8 h-8 flex-shrink-0 bg-white dark:bg-slate-100 rounded-lg flex items-center justify-center font-black text-md shadow-md text-sky-800 dark:text-sky-900">
               T
             </div>
             <div className="leading-tight">
               <h2 className="text-[11px] font-black tracking-wide text-white uppercase">TIM BENDA SB</h2>
-              <p className="text-[8px] text-sky-300 font-black tracking-wider leading-none mt-0.5 uppercase">DAERAH MADIUN</p>
+              <p className="text-[8px] text-sky-300 dark:text-sky-400 font-black tracking-wider leading-none mt-0.5 uppercase">DAERAH MADIUN</p>
             </div>
           </div>
 
           {/* Mobile close button (X) */}
           <button
             onClick={() => setIsOpen(false)}
-            className="p-1.5 hover:bg-sky-700 rounded-lg text-sky-200 hover:text-white transition-all cursor-pointer lg:hidden"
+            className="p-1.5 hover:bg-sky-700 dark:hover:bg-slate-800 rounded-lg text-sky-200 hover:text-white transition-all cursor-pointer lg:hidden"
             title="Tutup Menu"
           >
             <X className="w-4.5 h-4.5" />
@@ -97,8 +97,8 @@ export default function SidebarNav({
                 onClick={() => handleTabClick(tab.id)}
                 className={`relative w-full flex items-center py-2.5 px-3 rounded-xl transition-all duration-150 cursor-pointer text-left focus:outline-none ${
                   isActive 
-                    ? 'bg-amber-400 text-sky-950 font-black shadow-md border-r-4 border-amber-600' 
-                    : 'text-sky-100 hover:bg-sky-700 hover:text-white'
+                    ? 'bg-amber-400 dark:bg-sky-600 text-sky-950 dark:text-white font-black shadow-md border-r-4 border-amber-600 dark:border-sky-400' 
+                    : 'text-sky-100 dark:text-slate-300 hover:bg-sky-700 dark:hover:bg-slate-800 hover:text-white'
                 }`}
               >
                 <Icon className={`w-4.5 h-4.5 flex-shrink-0 ${isActive ? 'stroke-[2.5]' : 'stroke-[1.5]'}`} />
@@ -109,7 +109,7 @@ export default function SidebarNav({
                 
                 {/* Badge count for database records */}
                 {tab.id === 'database' && totalCount > 0 && (
-                  <span className="absolute right-3 bg-rose-600 text-white font-extrabold text-[9px] rounded-full h-4 min-w-[18px] px-1 flex items-center justify-center border border-sky-800">
+                  <span className="absolute right-3 bg-rose-600 text-white font-extrabold text-[9px] rounded-full h-4 min-w-[18px] px-1 flex items-center justify-center border border-sky-800 dark:border-slate-800">
                     {totalCount}
                   </span>
                 )}
@@ -120,13 +120,13 @@ export default function SidebarNav({
       </div>
 
       {/* LOWER PART / FOOTER SECTION */}
-      <div className="p-3 border-t border-sky-700/40 bg-sky-900/40">
+      <div className="p-3 border-t border-sky-700/40 dark:border-slate-800 bg-sky-900/40 dark:bg-slate-950/60">
         <div className="space-y-1 w-full">
-          <div className="flex items-center justify-between text-[10px] text-sky-300 leading-tight">
+          <div className="flex items-center justify-between text-[10px] text-sky-300 dark:text-sky-400 leading-tight">
             <span className="font-semibold">Sistem Status</span>
-            <span className="font-mono text-[9px] bg-sky-900/80 px-1.5 py-0.5 rounded border border-sky-800/50 text-white font-bold">v2.0</span>
+            <span className="font-mono text-[9px] bg-sky-900/80 dark:bg-slate-800 px-1.5 py-0.5 rounded border border-sky-800/50 dark:border-slate-700 text-white font-bold">v2.0</span>
           </div>
-          <p className="text-[9px] text-sky-200/80 leading-normal font-medium">
+          <p className="text-[9px] text-sky-200/80 dark:text-slate-400 leading-normal font-medium">
             Sistem Informasi Manajemen data aset Daerah Madiun
           </p>
         </div>
@@ -162,7 +162,7 @@ export default function SidebarNav({
 
       {/* 2. DESKTOP PERMANENT / TOGGLEABLE IN-FLOW SIDEBAR (NEVER OVERLAPS CONTENT) */}
       <aside
-        className={`hidden lg:flex flex-col flex-shrink-0 h-screen transition-all duration-250 ease-in-out border-r-4 border-sky-950 z-20 ${
+        className={`hidden lg:flex flex-col flex-shrink-0 h-screen transition-all duration-250 ease-in-out border-r-4 border-sky-950 dark:border-slate-800 z-20 ${
           isOpen ? 'w-64' : 'w-0 overflow-hidden border-r-0'
         }`}
       >

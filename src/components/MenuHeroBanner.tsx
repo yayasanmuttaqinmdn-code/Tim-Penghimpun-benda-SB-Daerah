@@ -21,7 +21,7 @@ export default function MenuHeroBanner({
     <motion.div
       initial={{ opacity: 0, y: -8 }}
       animate={{ opacity: 1, y: 0 }}
-      className="relative overflow-hidden bg-gradient-to-r from-sky-800 to-sky-950 p-5 sm:p-6 rounded-3xl text-white shadow-md border border-sky-700/30"
+      className="relative overflow-hidden bg-gradient-to-r from-sky-800 to-sky-950 dark:from-slate-900 dark:via-sky-950 dark:to-slate-900 p-5 sm:p-6 rounded-3xl text-white shadow-md border border-sky-700/30 dark:border-slate-800 transition-colors duration-200"
     >
       {/* Geometric chevron watermark */}
       <div className="absolute right-0 top-0 translate-x-1/4 -translate-y-1/4 opacity-10 pointer-events-none">
