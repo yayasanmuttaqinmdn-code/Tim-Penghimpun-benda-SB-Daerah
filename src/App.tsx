@@ -505,12 +505,10 @@ export default function App() {
                 <button
                   type="button"
                   onClick={handleSwitchToAdmin}
-                  className="bg-white/15 dark:bg-slate-800 hover:bg-white/25 dark:hover:bg-slate-700 active:scale-95 text-white text-[10px] px-2.5 py-1 rounded-full font-bold flex items-center gap-1 transition-all cursor-pointer border border-white/20 dark:border-slate-700"
-                  title="Klik untuk masuk sebagai Administrator dengan PIN"
+                  className="bg-white/15 dark:bg-slate-800 hover:bg-white/25 dark:hover:bg-slate-700 active:scale-95 text-amber-300 w-7 h-7 rounded-full flex items-center justify-center transition-all cursor-pointer border border-white/20 dark:border-slate-700 shadow-xs"
+                  title="Mode Terkunci (Mode Tamu) — Klik untuk Masuk PIN Admin"
                 >
-                  <Lock className="w-3 h-3 text-amber-300" />
-                  <span className="hidden sm:inline">Mode Tamu</span>
-                  <span className="text-[9px] text-amber-300 font-black">PIN</span>
+                  <Lock className="w-3.5 h-3.5" />
                 </button>
               )}
 

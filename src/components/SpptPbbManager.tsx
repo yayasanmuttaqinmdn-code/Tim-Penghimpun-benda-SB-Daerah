@@ -834,8 +834,8 @@ export default function SpptPbbManager({ userRole = 'viewer', googleToken, googl
             <PlusCircle className="w-3.5 h-3.5 stroke-[2.5]" />
             <span>Form Input</span>
             {userRole === 'viewer' && (
-              <span className="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-[9px] px-1.5 py-0.2 rounded font-bold">
-                🔒 Admin
+              <span className="text-xs" title="Terkunci (Khusus Admin)">
+                🔒
               </span>
             )}
             {editingRecord && (
@@ -1609,8 +1609,8 @@ export default function SpptPbbManager({ userRole = 'viewer', googleToken, googl
                                   </button>
                                 </>
                               ) : (
-                                <span className="text-[10px] text-slate-400 font-bold px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800" title="Mode Tamu (Hanya Melihat)">
-                                  🔒 Lihat
+                                <span className="text-xs text-slate-400 dark:text-slate-500" title="Mode Tamu: Terkunci (Hanya Melihat)">
+                                  🔒
                                 </span>
                               )}
                             </div>

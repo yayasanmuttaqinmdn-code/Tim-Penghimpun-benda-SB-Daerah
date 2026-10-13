@@ -422,7 +422,7 @@ export default function FormInput({
           >
             <span>🏘️ Tanah</span>
             {userRole === 'viewer' && (
-              <span className="text-[9px] bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 px-1.5 py-0.5 rounded font-bold">🔒 Admin</span>
+              <span className="text-xs" title="Terkunci (Khusus Admin)">🔒</span>
             )}
           </button>
           <button
@@ -435,9 +435,6 @@ export default function FormInput({
             }`}
           >
             <span>🚐 Kendaraan</span>
-            {userRole === 'viewer' && (
-              <span className="text-[9px] bg-emerald-600 text-white px-1.5 py-0.5 rounded font-bold">✓ Buka</span>
-            )}
           </button>
           <button
             type="button"
@@ -460,7 +457,7 @@ export default function FormInput({
           >
             <span>🏢 Bangunan</span>
             {userRole === 'viewer' && (
-              <span className="text-[9px] bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 px-1.5 py-0.5 rounded font-bold">🔒 Admin</span>
+              <span className="text-xs" title="Terkunci (Khusus Admin)">🔒</span>
             )}
           </button>
         </div>

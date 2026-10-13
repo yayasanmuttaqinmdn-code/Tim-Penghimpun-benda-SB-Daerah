@@ -325,8 +325,8 @@ export default function PinjamBerkasPanel({ assets, userRole = 'viewer', onSaveA
           >
             <PlusCircle className="w-4 h-4" /> Pinjam Berkas Baru
             {userRole === 'viewer' && (
-              <span className="text-[9px] bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 px-1.5 py-0.2 rounded font-bold">
-                🔒 Admin
+              <span className="text-xs" title="Terkunci (Khusus Admin)">
+                🔒
               </span>
             )}
           </button>

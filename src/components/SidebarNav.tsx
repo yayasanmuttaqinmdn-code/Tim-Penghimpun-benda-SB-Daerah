@@ -12,7 +12,8 @@ import {
   ShieldAlert,
   Users,
   Settings,
-  Receipt
+  Receipt,
+  Lock
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import PondokLogo from './PondokLogo';
@@ -151,10 +152,10 @@ export default function SidebarNav({
             <button
               type="button"
               onClick={onSwitchToAdmin}
-              className="px-2 py-1 bg-amber-400 hover:bg-amber-500 text-sky-950 rounded-lg text-[9px] font-black uppercase tracking-wider transition-colors cursor-pointer shadow-xs shrink-0"
-              title="Masuk sebagai Administrator"
+              className="p-1.5 bg-amber-400 hover:bg-amber-500 text-sky-950 rounded-lg transition-colors cursor-pointer shadow-xs shrink-0 flex items-center justify-center"
+              title="Mode Terkunci (Mode Tamu) — Klik untuk Masuk PIN Admin"
             >
-              Masuk PIN
+              <Lock className="w-3.5 h-3.5 stroke-[2.5]" />
             </button>
           )}
         </div>
