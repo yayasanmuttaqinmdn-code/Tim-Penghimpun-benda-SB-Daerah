@@ -880,16 +880,16 @@ export default function SettingsPanel({
         className="bg-white dark:bg-slate-900 border-2 border-sky-200/90 dark:border-slate-800 rounded-3xl p-6 shadow-sm space-y-6 transition-colors duration-200"
       >
         {/* Section Title & Status Indicator */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-100 gap-3">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800 gap-3">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 bg-emerald-50 text-emerald-700 rounded-xl">
+            <div className="p-2 bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 rounded-xl">
               <FileSpreadsheet className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-sm font-black text-slate-800 uppercase tracking-wide">
+              <h3 className="text-sm font-black text-slate-800 dark:text-slate-100 uppercase tracking-wide">
                 Tautkan Link Google Spreadsheet
               </h3>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-slate-500 dark:text-slate-400">
                 Data aset Anda akan tersimpan langsung ke lembar kerja ini secara otomatis.
               </p>
             </div>
@@ -897,19 +897,19 @@ export default function SettingsPanel({
 
           <div>
             {sheetsConnected && (
-              <span className="bg-emerald-100 text-emerald-800 text-xs font-black px-3 py-1 rounded-full flex items-center gap-1.5 shadow-2xs">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+              <span className="bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 text-xs font-black px-3 py-1 rounded-full flex items-center gap-1.5 shadow-2xs">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                 <span>Terhubung &amp; Aktif</span>
               </span>
             )}
             {!sheetsConnected && googleUser && (
-              <span className="bg-amber-100 text-amber-800 text-xs font-black px-3 py-1 rounded-full flex items-center gap-1.5 shadow-2xs">
-                <AlertTriangle className="w-3.5 h-3.5 text-amber-600" />
+              <span className="bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800 text-xs font-black px-3 py-1 rounded-full flex items-center gap-1.5 shadow-2xs">
+                <AlertTriangle className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
                 <span>Perlu Izin Akses Editor</span>
               </span>
             )}
             {!sheetsConnected && !googleUser && (
-              <span className="bg-slate-100 text-slate-600 text-xs font-bold px-3 py-1 rounded-full">
+              <span className="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-bold px-3 py-1 rounded-full">
                 ⚪ Belum Terhubung
               </span>
             )}
@@ -917,32 +917,32 @@ export default function SettingsPanel({
         </div>
 
         {/* One-Time Central Setup Info Banner */}
-        <div className="bg-linear-to-r from-emerald-50 via-teal-50 to-sky-50 border border-emerald-200/80 rounded-2xl p-4 flex items-start gap-3 shadow-2xs">
+        <div className="bg-linear-to-r from-emerald-50 via-teal-50 to-sky-50 dark:from-emerald-950/40 dark:via-teal-950/40 dark:to-sky-950/40 border border-emerald-200/80 dark:border-emerald-800/60 rounded-2xl p-4 flex items-start gap-3 shadow-2xs">
           <div className="p-2 bg-emerald-600 text-white rounded-xl shrink-0 mt-0.5 shadow-xs">
             <Layers className="w-4 h-4" />
           </div>
           <div className="space-y-1">
-            <h4 className="text-xs font-black text-emerald-950 uppercase tracking-wide flex items-center gap-1.5">
+            <h4 className="text-xs font-black text-emerald-950 dark:text-emerald-200 uppercase tracking-wide flex items-center gap-1.5">
               <span>Cukup Masukkan URL / ID 1 Kali Saja</span>
-              <span className="bg-emerald-200 text-emerald-900 text-[10px] font-black px-2 py-0.5 rounded-md">Otomatis Semua Perangkat</span>
+              <span className="bg-emerald-200 dark:bg-emerald-900 text-emerald-900 dark:text-emerald-200 text-[10px] font-black px-2 py-0.5 rounded-md">Otomatis Semua Perangkat</span>
             </h4>
-            <p className="text-[11px] text-emerald-800 leading-relaxed font-medium">
+            <p className="text-[11px] text-emerald-800 dark:text-emerald-300 leading-relaxed font-medium">
               URL Spreadsheet yang Anda masukkan di sini disimpan langsung di server pusat. <strong>Seluruh perangkat lain (HP, Smartphone, Tablet, Laptop)</strong> yang membuka aplikasi ini akan <strong>otomatis langsung terhubung ke database spreadsheet yang sama</strong> tanpa perlu mengetik ulang link!
             </p>
           </div>
         </div>
 
         {/* Google Account Connection Status Bar */}
-        <div className="bg-sky-50/60 border border-sky-100 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="bg-sky-50/60 dark:bg-slate-800/60 border border-sky-100 dark:border-slate-700 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-white border border-sky-200 text-sky-800 flex items-center justify-center font-black shadow-2xs">
+            <div className="w-10 h-10 rounded-xl bg-white dark:bg-slate-700 border border-sky-200 dark:border-slate-600 text-sky-800 dark:text-sky-300 flex items-center justify-center font-black shadow-2xs">
               {googleUser ? (googleUser.email?.[0]?.toUpperCase() || 'G') : 'G'}
             </div>
             <div>
-              <p className="text-xs font-black text-slate-800">
+              <p className="text-xs font-black text-slate-800 dark:text-slate-100">
                 {googleUser ? (googleUser.displayName || googleUser.email) : 'Akun Google Belum Masuk'}
               </p>
-              <p className="text-[11px] text-slate-500">
+              <p className="text-[11px] text-slate-500 dark:text-slate-400">
                 {googleUser 
                   ? `Sesi aktif: ${googleUser.email} (Izin baca & tulis Spreadsheet)`
                   : 'Masuk dengan Google agar aplikasi memiliki izin mengedit spreadsheet Anda.'}
@@ -955,7 +955,7 @@ export default function SettingsPanel({
               <button
                 type="button"
                 onClick={onLogoutGoogle}
-                className="px-3.5 py-2 bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-700 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer"
+                className="px-3.5 py-2 bg-rose-50 dark:bg-rose-950/60 hover:bg-rose-100 dark:hover:bg-rose-900/60 border border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-300 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer"
               >
                 <LogOut className="w-3.5 h-3.5" />
                 <span>Putuskan Akun</span>
@@ -976,8 +976,8 @@ export default function SettingsPanel({
         {/* Input Form for Link / ID */}
         <form onSubmit={handleSaveSpreadsheetLink} className="space-y-4">
           <div>
-            <label className="block text-xs font-black text-slate-800 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-              <LinkIcon className="w-3.5 h-3.5 text-sky-700" />
+            <label className="block text-xs font-black text-slate-800 dark:text-slate-100 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+              <LinkIcon className="w-3.5 h-3.5 text-sky-700 dark:text-sky-400" />
               <span>Link Tautan Google Spreadsheet / Spreadsheet ID</span>
             </label>
             <div className="relative">
@@ -986,7 +986,7 @@ export default function SettingsPanel({
                 value={inputUrlOrId}
                 onChange={(e) => handleInputChange(e.target.value)}
                 placeholder="Tempel (paste) link Google Spreadsheet di sini..."
-                className="w-full pl-3.5 pr-24 py-3 bg-slate-50 border-2 border-slate-200 rounded-2xl text-xs font-mono text-slate-800 focus:outline-none focus:border-sky-600 focus:bg-white transition-all shadow-inner"
+                className="w-full pl-3.5 pr-24 py-3 bg-slate-50 dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-2xl text-xs font-mono text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-sky-600 focus:bg-white dark:focus:bg-slate-800 transition-all shadow-inner"
               />
               <button
                 type="button"
@@ -997,43 +997,43 @@ export default function SettingsPanel({
                     alert('Gunakan Ctrl+V atau klik kanan untuk menempel tautan.');
                   });
                 }}
-                className="absolute right-2 top-2 px-3 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 text-[10px] font-bold rounded-xl transition-colors cursor-pointer"
+                className="absolute right-2 top-2 px-3 py-1.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 text-[10px] font-bold rounded-xl transition-colors cursor-pointer"
                 title="Tempel dari Clipboard"
               >
                 Paste
               </button>
             </div>
-            <p className="text-[11px] text-slate-500 mt-2 leading-relaxed">
-              💡 <strong>Tips:</strong> Anda cukup menyalin seluruh URL dari browser saat membuka file Google Sheets Anda (misalnya: <code className="bg-slate-100 px-1 py-0.5 rounded text-sky-800 font-mono">https://docs.google.com/spreadsheets/d/1TABYBj6rdO.../edit</code>), sistem akan otomatis mendeteksi ID uniknya.
+            <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
+              💡 <strong>Tips:</strong> Anda cukup menyalin seluruh URL dari browser saat membuka file Google Sheets Anda (misalnya: <code className="bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded text-sky-800 dark:text-sky-300 font-mono">https://docs.google.com/spreadsheets/d/1TABYBj6rdO.../edit</code>), sistem akan otomatis mendeteksi ID uniknya.
             </p>
           </div>
 
           {/* Real-time Extracted ID Preview Box */}
           {extractedId && (
-            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 space-y-2 text-xs">
+            <div className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-3.5 space-y-2 text-xs">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">ID Terdeteksi:</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">ID Terdeteksi:</span>
                 <button
                   type="button"
                   onClick={handleCopyId}
-                  className="text-[10px] font-bold text-sky-700 hover:text-sky-900 flex items-center gap-1 cursor-pointer"
+                  className="text-[10px] font-bold text-sky-700 dark:text-sky-400 hover:text-sky-900 dark:hover:text-sky-300 flex items-center gap-1 cursor-pointer"
                 >
-                  {copiedId ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
+                  {copiedId ? <Check className="w-3 h-3 text-emerald-600 dark:text-emerald-400" /> : <Copy className="w-3 h-3" />}
                   {copiedId ? 'Tersalin' : 'Salin ID'}
                 </button>
               </div>
-              <div className="font-mono text-xs text-sky-900 bg-white p-2 rounded-xl border border-slate-200 break-all select-all font-semibold">
+              <div className="font-mono text-xs text-sky-900 dark:text-sky-200 bg-white dark:bg-slate-900 p-2 rounded-xl border border-slate-200 dark:border-slate-700 break-all select-all font-semibold">
                 {extractedId}
               </div>
 
               {fullSheetUrl && (
                 <div className="pt-1 flex items-center justify-between">
-                  <span className="text-[10px] text-slate-400">Tautan Langsung:</span>
+                  <span className="text-[10px] text-slate-400 dark:text-slate-500">Tautan Langsung:</span>
                   <a
                     href={fullSheetUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-[11px] font-bold text-sky-700 hover:text-sky-900 hover:underline"
+                    className="inline-flex items-center gap-1 text-[11px] font-bold text-sky-700 dark:text-sky-400 hover:text-sky-900 dark:hover:text-sky-300 hover:underline"
                   >
                     <span>Buka File Spreadsheet di Google</span>
                     <ExternalLink className="w-3 h-3" />
@@ -1072,7 +1072,7 @@ export default function SettingsPanel({
               type="button"
               onClick={onSyncManual}
               disabled={syncStatus === 'pending'}
-              className="w-full sm:w-auto px-4 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 active:scale-98 disabled:opacity-50 rounded-2xl text-xs font-bold flex items-center justify-center gap-2 transition-all cursor-pointer"
+              className="w-full sm:w-auto px-4 py-3 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 active:scale-98 disabled:opacity-50 rounded-2xl text-xs font-bold flex items-center justify-center gap-2 transition-all cursor-pointer border border-transparent dark:border-slate-700"
             >
               <RefreshCw className={`w-3.5 h-3.5 ${syncStatus === 'pending' ? 'animate-spin' : ''}`} />
               <span>Uji &amp; Sinkronkan Sekarang</span>
@@ -1080,23 +1080,23 @@ export default function SettingsPanel({
           </div>
 
           {sheetSaveSuccess && (
-            <div className="p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-2xl text-xs font-bold flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+            <div className="p-3 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 rounded-2xl text-xs font-bold flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
               <span>Tautan Spreadsheet berhasil diperbarui dan diselaraskan!</span>
             </div>
           )}
 
           {/* Error Notice if any */}
           {sheetsError && (
-            <div className="p-4 bg-amber-50 border-2 border-amber-200 text-amber-900 rounded-2xl text-xs space-y-1.5">
-              <div className="flex items-center gap-2 font-black uppercase tracking-wider text-amber-950">
-                <AlertTriangle className="w-4 h-4 text-amber-600" />
+            <div className="p-4 bg-amber-50 dark:bg-amber-950/60 border-2 border-amber-200 dark:border-amber-800 text-amber-900 dark:text-amber-200 rounded-2xl text-xs space-y-1.5">
+              <div className="flex items-center gap-2 font-black uppercase tracking-wider text-amber-950 dark:text-amber-200">
+                <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                 <span>Pemberitahuan Izin Akses Spreadsheet:</span>
               </div>
               <p className="leading-relaxed font-medium">
                 {sheetsError}
               </p>
-              <p className="text-[11px] text-amber-800 leading-normal pt-1">
+              <p className="text-[11px] text-amber-800 dark:text-amber-300 leading-normal pt-1">
                 <strong>Cara Mengatasi:</strong> Buka file Google Spreadsheet Anda, klik tombol <strong>"Bagikan" (Share)</strong> di pojok kanan atas, lalu tambahkan akun Google yang Anda hubungkan dengan hak akses <strong>"Editor"</strong>.
               </p>
             </div>
@@ -1104,64 +1104,64 @@ export default function SettingsPanel({
         </form>
 
         {/* Five Connected Menus Overview */}
-        <div className="bg-slate-50 border-2 border-slate-200/90 rounded-2xl p-4.5 space-y-3">
-          <div className="flex items-center gap-2 text-slate-800">
-            <Layers className="w-4 h-4 text-sky-700" />
+        <div className="bg-slate-50 dark:bg-slate-800/80 border-2 border-slate-200/90 dark:border-slate-700 rounded-2xl p-4.5 space-y-3">
+          <div className="flex items-center gap-2 text-slate-800 dark:text-slate-100">
+            <Layers className="w-4 h-4 text-sky-700 dark:text-sky-400" />
             <h4 className="text-xs font-black uppercase tracking-wider">
               5 Lembar Kerja (Sheet Tabs) yang Otomatis Terhubung:
             </h4>
           </div>
-          <p className="text-[11px] text-slate-500 leading-relaxed">
+          <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
             Semua menu di aplikasi ini secara otomatis mengirimkan dan memperbarui datanya ke lembar kerja terpisah di Google Spreadsheet Anda:
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 pt-1">
-            <div className="p-3 bg-white border border-slate-200 rounded-xl space-y-1">
-              <div className="flex items-center gap-1.5 font-bold text-xs text-sky-900">
+            <div className="p-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl space-y-1">
+              <div className="flex items-center gap-1.5 font-bold text-xs text-sky-900 dark:text-sky-300">
                 <span className="w-2 h-2 rounded-full bg-sky-600"></span>
                 <span>1. Database_Aset_Wakaf</span>
               </div>
-              <p className="text-[11px] text-slate-500">
+              <p className="text-[11px] text-slate-500 dark:text-slate-400">
                 Terhubung ke menu <strong>Input Aset</strong> dan <strong>Lihat &amp; Cari Database</strong> (Tanah, Kendaraan, Bangunan).
               </p>
             </div>
 
-            <div className="p-3 bg-white border border-slate-200 rounded-xl space-y-1">
-              <div className="flex items-center gap-1.5 font-bold text-xs text-amber-900">
+            <div className="p-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl space-y-1">
+              <div className="flex items-center gap-1.5 font-bold text-xs text-amber-900 dark:text-amber-300">
                 <span className="w-2 h-2 rounded-full bg-amber-600"></span>
                 <span>2. Peminjaman_Berkas</span>
               </div>
-              <p className="text-[11px] text-slate-500">
+              <p className="text-[11px] text-slate-500 dark:text-slate-400">
                 Terhubung ke menu <strong>Pinjam Berkas</strong> (Peminjaman berkas aktif, kontak peminjam, &amp; riwayat pengembalian).
               </p>
             </div>
 
-            <div className="p-3 bg-white border border-slate-200 rounded-xl space-y-1">
-              <div className="flex items-center gap-1.5 font-bold text-xs text-indigo-900">
+            <div className="p-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl space-y-1">
+              <div className="flex items-center gap-1.5 font-bold text-xs text-indigo-900 dark:text-indigo-300">
                 <span className="w-2 h-2 rounded-full bg-indigo-600"></span>
                 <span>3. Progres_Balik_Nama</span>
               </div>
-              <p className="text-[11px] text-slate-500">
+              <p className="text-[11px] text-slate-500 dark:text-slate-400">
                 Terhubung ke menu <strong>Balik Nama</strong> (Tahapan proses, rincian biaya notaris/BPN, &amp; riwayat balik nama).
               </p>
             </div>
 
-            <div className="p-3 bg-white border border-slate-200 rounded-xl space-y-1">
-              <div className="flex items-center gap-1.5 font-bold text-xs text-emerald-900">
+            <div className="p-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl space-y-1">
+              <div className="flex items-center gap-1.5 font-bold text-xs text-emerald-900 dark:text-emerald-300">
                 <span className="w-2 h-2 rounded-full bg-emerald-600"></span>
                 <span>4. Ringkasan_Dashboard</span>
               </div>
-              <p className="text-[11px] text-slate-500">
+              <p className="text-[11px] text-slate-500 dark:text-slate-400">
                 Terhubung ke menu <strong>Dashboard</strong> (Total nilai, rekapitulasi jumlah aset, &amp; status peminjaman).
               </p>
             </div>
 
-            <div className="p-3 bg-white border border-teal-200 rounded-xl space-y-1 sm:col-span-2 lg:col-span-1 bg-teal-50/40">
-              <div className="flex items-center gap-1.5 font-bold text-xs text-teal-900">
+            <div className="p-3 bg-teal-50/40 dark:bg-teal-950/40 border border-teal-200 dark:border-teal-800 rounded-xl space-y-1 sm:col-span-2 lg:col-span-1">
+              <div className="flex items-center gap-1.5 font-bold text-xs text-teal-900 dark:text-teal-300">
                 <span className="w-2 h-2 rounded-full bg-teal-600"></span>
                 <span>5. SPPT_PBB</span>
               </div>
-              <p className="text-[11px] text-slate-600">
+              <p className="text-[11px] text-slate-600 dark:text-slate-400">
                 Terhubung ke menu <strong>SPPT PBB</strong> (NOP, Nilai Pajak Terutang, Beban Yayasan, &amp; Ceklis Pembayaran 2025–2035).
               </p>
             </div>
@@ -1169,41 +1169,41 @@ export default function SettingsPanel({
         </div>
 
         {/* Expandable Apps Script Code Section */}
-        <div className="bg-sky-50/50 border border-sky-200 rounded-2xl overflow-hidden">
+        <div className="bg-sky-50/50 dark:bg-slate-800/80 border border-sky-200 dark:border-slate-700 rounded-2xl overflow-hidden">
           <button
             type="button"
             onClick={() => setShowScriptCode(!showScriptCode)}
-            className="w-full p-4 flex items-center justify-between text-left hover:bg-sky-50 transition-colors cursor-pointer"
+            className="w-full p-4 flex items-center justify-between text-left hover:bg-sky-50 dark:hover:bg-slate-800 transition-colors cursor-pointer"
           >
             <div className="flex items-center gap-2.5">
-              <div className="p-2 bg-sky-100 text-sky-800 rounded-xl">
+              <div className="p-2 bg-sky-100 dark:bg-sky-950/60 text-sky-800 dark:text-sky-300 rounded-xl">
                 <Code2 className="w-4 h-4" />
               </div>
               <div>
-                <h4 className="text-xs font-black text-slate-800 uppercase tracking-wide">
+                <h4 className="text-xs font-black text-slate-800 dark:text-slate-100 uppercase tracking-wide">
                   Kode Google Apps Script untuk Menghubungkan 5 Menu Lengkap
                 </h4>
-                <p className="text-[11px] text-slate-500">
+                <p className="text-[11px] text-slate-500 dark:text-slate-400">
                   Perbarui skrip di Google Sheets Anda agar otomatis membuat dan menyinkronkan 5 tab lembar kerja di atas.
                 </p>
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-[11px] font-bold text-sky-700">
+              <span className="text-[11px] font-bold text-sky-700 dark:text-sky-400">
                 {showScriptCode ? 'Tutup Kode' : 'Lihat & Salin Kode'}
               </span>
               {showScriptCode ? (
-                <ChevronUp className="w-4 h-4 text-sky-700" />
+                <ChevronUp className="w-4 h-4 text-sky-700 dark:text-sky-400" />
               ) : (
-                <ChevronDown className="w-4 h-4 text-sky-700" />
+                <ChevronDown className="w-4 h-4 text-sky-700 dark:text-sky-400" />
               )}
             </div>
           </button>
 
           {showScriptCode && (
-            <div className="p-4 border-t border-sky-100 space-y-3 bg-white">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 bg-slate-50 p-3 rounded-xl border border-slate-200">
-                <div className="text-xs text-slate-600 font-medium">
+            <div className="p-4 border-t border-sky-100 dark:border-slate-700 space-y-3 bg-white dark:bg-slate-900">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 bg-slate-50 dark:bg-slate-800 p-3 rounded-xl border border-slate-200 dark:border-slate-700">
+                <div className="text-xs text-slate-600 dark:text-slate-300 font-medium">
                   Klik tombol di samping untuk menyalin seluruh kode skrip:
                 </div>
                 <button
@@ -1216,11 +1216,11 @@ export default function SettingsPanel({
                 </button>
               </div>
 
-              <div className="text-[11px] text-slate-600 space-y-1">
-                <p className="font-bold text-slate-700">Cara memperbarui di Google Spreadsheet Anda:</p>
+              <div className="text-[11px] text-slate-600 dark:text-slate-300 space-y-1">
+                <p className="font-bold text-slate-700 dark:text-slate-200">Cara memperbarui di Google Spreadsheet Anda:</p>
                 <ol className="list-decimal pl-4 space-y-1 leading-relaxed">
                   <li>Buka Google Spreadsheet Anda, lalu klik menu <strong>Ekstensi (Extensions) &gt; Apps Script</strong>.</li>
-                  <li>Hapus kode lama di file <code className="bg-slate-100 px-1 py-0.5 rounded font-mono">Code.gs</code>, lalu tempelkan (paste) kode baru ini.</li>
+                  <li>Hapus kode lama di file <code className="bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded font-mono">Code.gs</code>, lalu tempelkan (paste) kode baru ini.</li>
                   <li>Klik tombol <strong>Simpan (ikon disket)</strong>.</li>
                   <li>Klik tombol biru <strong>Terapkan (Deploy) &gt; Kelola Penerapan (Manage deployments)</strong>.</li>
                   <li>Klik <strong>ikon pensil (Edit)</strong>, lalu pada bagian Versi pilih <strong>"Versi baru" (New version)</strong>, lalu klik <strong>Terapkan (Deploy)</strong>.</li>

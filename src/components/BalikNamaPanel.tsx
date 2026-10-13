@@ -292,13 +292,13 @@ export default function BalikNamaPanel({ assets, onSaveAsset, userRole = 'viewer
       </div>
 
       {/* Sub-Tabs Selector */}
-      <div className="flex bg-slate-100 p-1 rounded-xl">
+      <div className="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-xl">
         <button
           onClick={() => setActiveSubTab('progress')}
           className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 focus:outline-none cursor-pointer ${
             activeSubTab === 'progress'
-              ? 'bg-white text-slate-800 shadow-xs border border-transparent font-black'
-              : 'text-slate-500 hover:text-slate-800'
+              ? 'bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-xs border border-transparent font-black'
+              : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
           }`}
         >
           <RefreshCw className="w-3.5 h-3.5" />
@@ -309,7 +309,7 @@ export default function BalikNamaPanel({ assets, onSaveAsset, userRole = 'viewer
           className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 focus:outline-none cursor-pointer ${
             activeSubTab === 'completed'
               ? 'bg-sky-600 text-white shadow-xs font-black'
-              : 'text-slate-500 hover:text-sky-700'
+              : 'text-slate-500 dark:text-slate-400 hover:text-sky-700 dark:hover:text-sky-300'
           }`}
         >
           <UserCheck className="w-3.5 h-3.5" />
@@ -326,7 +326,7 @@ export default function BalikNamaPanel({ assets, onSaveAsset, userRole = 'viewer
               className="w-full p-3.5 bg-sky-50/60 dark:bg-slate-800 hover:bg-sky-50 dark:hover:bg-slate-700/80 text-sky-800 dark:text-sky-300 font-black text-xs flex items-center justify-between focus:outline-none transition-colors cursor-pointer"
             >
               <span className="flex items-center gap-2">
-                <PlusCircle className="w-4 h-4 text-sky-600" />
+                <PlusCircle className="w-4 h-4 text-sky-600 dark:text-sky-400" />
                 Masukkan Aset ke Antrean Balik Nama
               </span>
               <span className="text-[10px] bg-sky-100 dark:bg-slate-700 px-2 py-0.5 rounded font-bold">
@@ -338,7 +338,7 @@ export default function BalikNamaPanel({ assets, onSaveAsset, userRole = 'viewer
               <span className="flex items-center gap-2 font-bold">
                 <span>🔒</span> Mode Tamu: Memantau Progres Mutasi Balik Nama Sertifikat
               </span>
-              <span className="text-[10px] text-slate-500 font-bold bg-white dark:bg-slate-700 px-2.5 py-1 rounded-full border border-slate-200 dark:border-slate-600">
+              <span className="text-[10px] text-slate-500 dark:text-slate-400 font-bold bg-white dark:bg-slate-700 px-2.5 py-1 rounded-full border border-slate-200 dark:border-slate-600">
                 Pendaftaran Khusus Admin
               </span>
             </div>
@@ -350,22 +350,22 @@ export default function BalikNamaPanel({ assets, onSaveAsset, userRole = 'viewer
                 initial={{ height: 0 }}
                 animate={{ height: 'auto' }}
                 exit={{ height: 0 }}
-                className="overflow-hidden border-t border-slate-100"
+                className="overflow-hidden border-t border-slate-100 dark:border-slate-800"
               >
-                <div className="p-3.5 space-y-3 bg-slate-50/50">
+                <div className="p-3.5 space-y-3 bg-slate-50/50 dark:bg-slate-800/50">
                   <div className="relative">
                     <input 
                       type="text" 
                       placeholder="Cari aset dari database daerah..."
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
-                      className="w-full bg-white border-2 border-slate-200 rounded-lg p-2 pl-3 text-xs focus:outline-none focus:border-sky-400 h-9 font-medium"
+                      className="w-full bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-lg p-2 pl-3 text-xs text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-sky-400 h-9 font-medium"
                     />
                   </div>
 
-                  <div className="max-h-48 overflow-y-auto space-y-2 pr-1 divide-y divide-slate-100">
+                  <div className="max-h-48 overflow-y-auto space-y-2 pr-1 divide-y divide-slate-100 dark:divide-slate-800">
                     {readyForQueueAssets.length === 0 ? (
-                      <div className="text-center py-4 text-slate-400 text-xs font-semibold">
+                      <div className="text-center py-4 text-slate-400 dark:text-slate-500 text-xs font-semibold">
                         Aset tidak ditemukan atau seluruh aset telah masuk antrean.
                       </div>
                     ) : (
@@ -375,15 +375,15 @@ export default function BalikNamaPanel({ assets, onSaveAsset, userRole = 'viewer
                         return (
                           <div key={asset.id} className="pt-2 flex items-center justify-between gap-2">
                             <div className="min-w-0 flex-1">
-                              <span className="text-[9px] font-black uppercase px-2 py-0.5 rounded mr-1.5 bg-slate-200 text-slate-700">
+                              <span className="text-[9px] font-black uppercase px-2 py-0.5 rounded mr-1.5 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200">
                                 {asset.type}
                               </span>
-                              <span className="text-xs font-black text-slate-800">
+                              <span className="text-xs font-black text-slate-800 dark:text-slate-100">
                                 {isTanah && `${asset.jenisSertifikat} - No. ${asset.nomerSertifikat}`}
                                 {isKendaraan && `${asset.merk} (${asset.nomorPolisi})`}
                                 {!isTanah && !isKendaraan && asset.namaBangunan}
                               </span>
-                              <p className="text-[10px] text-slate-400 truncate">
+                              <p className="text-[10px] text-slate-400 dark:text-slate-400 truncate">
                                 Pemilik saat ini: {isTanah ? asset.atasNamaSertifikat : isKendaraan ? asset.atasNama : 'Gedung'}
                               </p>
                             </div>
@@ -409,10 +409,10 @@ export default function BalikNamaPanel({ assets, onSaveAsset, userRole = 'viewer
       {activeSubTab === 'completed' ? (
         <div className="space-y-3">
           {completedAssets.length === 0 ? (
-            <div className="bg-white text-center py-12 rounded-2xl border-2 border-slate-200 p-6 space-y-2">
-              <UserCheck className="w-8 h-8 text-slate-300 mx-auto" />
-              <span className="block text-sm font-black text-slate-800">Belum Ada Berkas Selesai</span>
-              <p className="text-slate-400 text-[11px] max-w-xs mx-auto">
+            <div className="bg-white dark:bg-slate-800 text-center py-12 rounded-2xl border-2 border-slate-200 dark:border-slate-700 p-6 space-y-2">
+              <UserCheck className="w-8 h-8 text-slate-300 dark:text-slate-600 mx-auto" />
+              <span className="block text-sm font-black text-slate-800 dark:text-slate-100">Belum Ada Berkas Selesai</span>
+              <p className="text-slate-400 dark:text-slate-400 text-[11px] max-w-xs mx-auto">
                 Belum ada laporan atau aset daerah yang telah selesai dibalik nama ke atas nama Yayasan Pondok Pesantren Muttaqin Josenan.
               </p>
             </div>
@@ -424,7 +424,7 @@ export default function BalikNamaPanel({ assets, onSaveAsset, userRole = 'viewer
               let mainLabel = '';
               let searchTarget = '';
               let visualEmoji = '🏘️';
-              let cardBg = 'hover:border-sky-400 border-slate-200';
+              let cardBg = 'hover:border-sky-400 dark:hover:border-sky-500 border-slate-200 dark:border-slate-700';
 
               if (isTanah) {
                 mainLabel = `${asset.jenisSertifikat} - No. ${asset.nomerSertifikat}`;
@@ -443,41 +443,41 @@ export default function BalikNamaPanel({ assets, onSaveAsset, userRole = 'viewer
               return (
                 <div 
                   key={asset.id}
-                  className={`bg-white border-2 rounded-2xl p-4.5 shadow-sm space-y-3.5 relative overflow-hidden transition-all duration-150 ${cardBg}`}
+                  className={`bg-white dark:bg-slate-800 border-2 rounded-2xl p-4.5 shadow-sm space-y-3.5 relative overflow-hidden transition-all duration-150 ${cardBg}`}
                 >
                   {/* Subtle completed background stamp */}
-                  <div className="absolute right-2 bottom-2 text-sky-100/35 pointer-events-none select-none text-9xl font-black">
+                  <div className="absolute right-2 bottom-2 text-sky-100/35 dark:text-sky-900/20 pointer-events-none select-none text-9xl font-black">
                     ✓
                   </div>
 
                   {/* Header */}
                   <div className="flex justify-between items-start gap-2 relative z-10">
                     <div className="flex items-center gap-2.5 min-w-0">
-                      <div className="w-10 h-10 bg-sky-50 text-xl flex items-center justify-center rounded-xl shrink-0 border border-sky-100">
+                      <div className="w-10 h-10 bg-sky-50 dark:bg-sky-950/60 text-xl flex items-center justify-center rounded-xl shrink-0 border border-sky-100 dark:border-sky-800">
                         {visualEmoji}
                       </div>
                       <div className="min-w-0">
-                        <span className="text-[9px] font-black uppercase text-sky-800 bg-sky-100 rounded px-1.5 py-0.5 border border-sky-200/50">
+                        <span className="text-[9px] font-black uppercase text-sky-800 dark:text-sky-300 bg-sky-100 dark:bg-sky-950 rounded px-1.5 py-0.5 border border-sky-200/50 dark:border-sky-800">
                           ✓ Berhasil Balik Nama
                         </span>
-                        <h3 className="text-xs font-black text-slate-900 truncate mt-1">
+                        <h3 className="text-xs font-black text-slate-900 dark:text-white truncate mt-1">
                           {mainLabel}
                         </h3>
                       </div>
                     </div>
-                    <span className="text-[9px] font-mono bg-sky-50 text-sky-700 px-2 py-0.5 rounded uppercase border border-sky-100">
+                    <span className="text-[9px] font-mono bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 px-2 py-0.5 rounded uppercase border border-sky-100 dark:border-sky-800">
                       {asset.type}
                     </span>
                   </div>
 
                   {/* Visual indication card - showing target reached! */}
-                  <div className="bg-sky-50/50 p-3.5 rounded-xl border border-sky-100 text-left relative z-10 flex items-center gap-3">
-                    <div className="bg-sky-600/10 p-2 rounded-lg text-sky-700 shrink-0">
+                  <div className="bg-sky-50/50 dark:bg-sky-950/40 p-3.5 rounded-xl border border-sky-100 dark:border-sky-800 text-left relative z-10 flex items-center gap-3">
+                    <div className="bg-sky-600/10 dark:bg-sky-600/20 p-2 rounded-lg text-sky-700 dark:text-sky-300 shrink-0">
                       <UserCheck className="w-4 h-4" />
                     </div>
                     <div className="min-w-0">
-                      <span className="block text-[8px] text-sky-600 font-extrabold uppercase tracking-wider">Pemilik Resmi Terdaftar</span>
-                      <span className="text-[11px] font-black text-sky-950 block truncate">
+                      <span className="block text-[8px] text-sky-600 dark:text-sky-400 font-extrabold uppercase tracking-wider">Pemilik Resmi Terdaftar</span>
+                      <span className="text-[11px] font-black text-sky-950 dark:text-sky-200 block truncate">
                         YAYASAN PONDOK PESANTREN MUTTAQIN JOSENAN MADIUN
                       </span>
                     </div>
@@ -486,75 +486,75 @@ export default function BalikNamaPanel({ assets, onSaveAsset, userRole = 'viewer
                   {/* Detail Information */}
                   <div className="space-y-2 text-xs relative z-10">
                     {searchTarget && (
-                      <div className="flex items-center gap-2 text-slate-600">
+                      <div className="flex items-center gap-2 text-slate-600 dark:text-slate-300">
                         <span className="text-sm">📍</span>
-                        <span className="font-semibold text-[11px] text-slate-500">Keterangan / Wilayah:</span>
-                        <span className="font-bold text-[11px] text-slate-800">
+                        <span className="font-semibold text-[11px] text-slate-500 dark:text-slate-400">Keterangan / Wilayah:</span>
+                        <span className="font-bold text-[11px] text-slate-800 dark:text-slate-100">
                           {searchTarget}
                         </span>
                       </div>
                     )}
                     {asset.catatanBalikNama ? (
-                      <div className="flex items-start gap-2 text-slate-600">
+                      <div className="flex items-start gap-2 text-slate-600 dark:text-slate-300">
                         <span className="text-sm mt-0.5">📝</span>
                         <div className="space-y-0.5">
-                          <span className="font-semibold text-[11px] block text-slate-500">Catatan Riwayat Transfer:</span>
-                          <p className="text-[11px] text-sky-900 font-medium leading-relaxed bg-sky-50/15 p-2 rounded-lg border border-sky-100/40">
+                          <span className="font-semibold text-[11px] block text-slate-500 dark:text-slate-400">Catatan Riwayat Transfer:</span>
+                          <p className="text-[11px] text-sky-900 dark:text-sky-200 font-medium leading-relaxed bg-sky-50/15 dark:bg-sky-950/30 p-2 rounded-lg border border-sky-100/40 dark:border-sky-800/40">
                             {asset.catatanBalikNama}
                           </p>
                         </div>
                       </div>
                     ) : (
-                      <div className="flex items-center gap-2 text-slate-500 italic">
+                      <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400 italic">
                         <span className="text-sm">📝</span>
                         <span className="text-[11px]">Sertifikat kepemilikan resmi atas nama Yayasan Pondok Pesantren Muttaqin Josenan seutuhnya.</span>
                       </div>
                     )}
 
                     {asset.riwayatBalikNama && asset.riwayatBalikNama.length > 0 && (
-                      <div className="pt-2.5 border-t border-slate-150 mt-2 space-y-2">
-                        <span className="text-[10px] text-slate-500 font-extrabold uppercase tracking-wider flex items-center gap-1">
+                      <div className="pt-2.5 border-t border-slate-150 dark:border-slate-700 mt-2 space-y-2">
+                        <span className="text-[10px] text-slate-500 dark:text-slate-400 font-extrabold uppercase tracking-wider flex items-center gap-1">
                           <span>📜</span> Riwayat Kepemilikan & Sertifikat Lama:
                         </span>
                         <div className="space-y-2">
                           {asset.riwayatBalikNama.map((r, i) => (
-                            <div key={i} className="bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-left text-[11px] space-y-1 font-sans">
-                              <div className="flex justify-between items-center text-slate-700 font-bold">
-                                <span>Pemilik Lama: <span className="font-extrabold text-slate-900">{r.atasNamaLama}</span></span>
-                                <span className="text-[9px] text-slate-400 font-mono font-bold bg-slate-200/50 px-1.5 py-0.5 rounded">{r.tanggalSelesai}</span>
+                            <div key={i} className="bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl p-2.5 text-left text-[11px] space-y-1 font-sans">
+                              <div className="flex justify-between items-center text-slate-700 dark:text-slate-300 font-bold">
+                                <span>Pemilik Lama: <span className="font-extrabold text-slate-900 dark:text-white">{r.atasNamaLama}</span></span>
+                                <span className="text-[9px] text-slate-400 dark:text-slate-400 font-mono font-bold bg-slate-200/50 dark:bg-slate-700 px-1.5 py-0.5 rounded">{r.tanggalSelesai}</span>
                               </div>
-                              <div className="grid grid-cols-2 gap-2 text-[10px] text-slate-500 pt-1">
+                              <div className="grid grid-cols-2 gap-2 text-[10px] text-slate-500 dark:text-slate-400 pt-1">
                                 <div>
-                                  <span className="block text-[8px] text-slate-400 font-bold uppercase tracking-wider">No. Dokumen Lama</span>
-                                  <span className="font-mono text-slate-700 font-semibold">{r.nomerSertifikatLama}</span>
+                                  <span className="block text-[8px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider">No. Dokumen Lama</span>
+                                  <span className="font-mono text-slate-700 dark:text-slate-200 font-semibold">{r.nomerSertifikatLama}</span>
                                 </div>
                                 <div>
-                                  <span className="block text-[8px] text-slate-400 font-bold uppercase tracking-wider">No. Dokumen Baru (Yayasan)</span>
-                                  <span className="font-mono text-sky-800 font-bold">{r.nomorSertifikatBaru}</span>
+                                  <span className="block text-[8px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider">No. Dokumen Baru (Yayasan)</span>
+                                  <span className="font-mono text-sky-800 dark:text-sky-300 font-bold">{r.nomorSertifikatBaru}</span>
                                 </div>
                               </div>
                               {r.catatanLama && (
-                                <p className="text-[9px] text-slate-400 leading-normal italic mt-1 border-l border-slate-300 pl-1.5">{r.catatanLama}</p>
+                                <p className="text-[9px] text-slate-400 dark:text-slate-400 leading-normal italic mt-1 border-l border-slate-300 dark:border-slate-600 pl-1.5">{r.catatanLama}</p>
                               )}
                               
                               {r.progresDetail && r.progresDetail.length > 0 && (
                                 <div className="mt-2 space-y-1">
-                                  <span className="font-semibold text-[9px] uppercase text-slate-400 block mb-1 tracking-wider border-t border-dashed border-slate-200 pt-1">Log Histori Progres & Biaya:</span>
+                                  <span className="font-semibold text-[9px] uppercase text-slate-400 dark:text-slate-500 block mb-1 tracking-wider border-t border-dashed border-slate-200 dark:border-slate-700 pt-1">Log Histori Progres & Biaya:</span>
                                   {r.progresDetail.map((prog, k) => (
-                                    <div key={k} className="bg-white border text-[9px] text-slate-600 flex justify-between gap-1 items-start p-1.5 rounded">
+                                    <div key={k} className="bg-white dark:bg-slate-800 border dark:border-slate-700 text-[9px] text-slate-600 dark:text-slate-300 flex justify-between gap-1 items-start p-1.5 rounded">
                                       <div className="space-y-0.5 min-w-0 flex-1">
-                                        <span className="font-mono font-bold text-slate-400">{new Date(prog.tanggal).toLocaleDateString('id-ID')}</span>
+                                        <span className="font-mono font-bold text-slate-400 dark:text-slate-500">{new Date(prog.tanggal).toLocaleDateString('id-ID')}</span>
                                         <p className="leading-relaxed truncate pr-2">{prog.keterangan}</p>
                                       </div>
                                       {prog.biaya > 0 && (
-                                        <div className="shrink-0 text-right font-mono font-bold text-slate-400">
+                                        <div className="shrink-0 text-right font-mono font-bold text-slate-400 dark:text-slate-400">
                                           Rp {prog.biaya.toLocaleString('id-ID')}
                                         </div>
                                       )}
                                     </div>
                                   ))}
-                                  <div className="text-right text-[9px] font-bold text-slate-500 pt-1 pr-1">
-                                    Total Biaya: <span className="text-slate-700">Rp {r.progresDetail.reduce((sum, p) => sum + (p.biaya || 0), 0).toLocaleString('id-ID')}</span>
+                                  <div className="text-right text-[9px] font-bold text-slate-500 dark:text-slate-400 pt-1 pr-1">
+                                    Total Biaya: <span className="text-slate-700 dark:text-slate-200 font-bold">Rp {r.progresDetail.reduce((sum, p) => sum + (p.biaya || 0), 0).toLocaleString('id-ID')}</span>
                                   </div>
                                 </div>
                               )}
@@ -572,10 +572,10 @@ export default function BalikNamaPanel({ assets, onSaveAsset, userRole = 'viewer
       ) : (
         <div className="space-y-3">
           {inProgressAssets.length === 0 ? (
-            <div className="bg-white text-center py-12 rounded-2xl border-2 border-slate-200 p-6 space-y-2">
-              <RefreshCw className="w-8 h-8 text-slate-300 mx-auto animate-pulse" />
-              <span className="block text-sm font-black text-slate-800">Tidak Ada Proses Balik Nama Aktif</span>
-              <p className="text-slate-400 text-[11px] max-w-xs mx-auto">
+            <div className="bg-white dark:bg-slate-800 text-center py-12 rounded-2xl border-2 border-slate-200 dark:border-slate-700 p-6 space-y-2">
+              <RefreshCw className="w-8 h-8 text-slate-300 dark:text-slate-600 mx-auto animate-pulse" />
+              <span className="block text-sm font-black text-slate-800 dark:text-slate-100">Tidak Ada Proses Balik Nama Aktif</span>
+              <p className="text-slate-400 dark:text-slate-400 text-[11px] max-w-xs mx-auto">
                 Saat ini tidak ada laporan atau aset daerah yang didaftarkan dalam proses balik nama sertifikasi pemilik.
               </p>
             </div>
@@ -588,7 +588,7 @@ export default function BalikNamaPanel({ assets, onSaveAsset, userRole = 'viewer
               let mainLabel = '';
               let currentOwner = '';
               let visualEmoji = '🏘️';
-              let cardBg = 'hover:border-sky-400 border-slate-200';
+              let cardBg = 'hover:border-sky-400 dark:hover:border-sky-500 border-slate-200 dark:border-slate-700';
 
               if (isTanah) {
                 mainLabel = `${asset.jenisSertifikat} - No. ${asset.nomerSertifikat}`;
@@ -609,33 +609,33 @@ export default function BalikNamaPanel({ assets, onSaveAsset, userRole = 'viewer
               return (
                 <div 
                   key={asset.id}
-                  className={`bg-white border-2 rounded-2xl p-4.5 shadow-sm space-y-3.5 relative overflow-hidden transition-all duration-150 ${cardBg}`}
+                  className={`bg-white dark:bg-slate-800 border-2 rounded-2xl p-4.5 shadow-sm space-y-3.5 relative overflow-hidden transition-all duration-150 ${cardBg}`}
                 >
                   {/* Header */}
                   <div className="flex justify-between items-start gap-2">
                     <div className="flex items-center gap-2.5 min-w-0">
-                      <div className="w-10 h-10 bg-slate-50 text-xl flex items-center justify-center rounded-xl shrink-0">
+                      <div className="w-10 h-10 bg-slate-50 dark:bg-slate-700 text-xl flex items-center justify-center rounded-xl shrink-0">
                         {visualEmoji}
                       </div>
                       <div className="min-w-0">
-                        <span className="text-[9px] font-black uppercase text-amber-800 bg-amber-100 rounded px-1.5 py-0.5">
+                        <span className="text-[9px] font-black uppercase text-amber-800 dark:text-amber-300 bg-amber-100 dark:bg-amber-950 rounded px-1.5 py-0.5 border border-amber-200 dark:border-amber-850">
                           Proses Balik Nama
                         </span>
-                        <h3 className="text-xs font-black text-slate-900 truncate mt-1">
+                        <h3 className="text-xs font-black text-slate-900 dark:text-white truncate mt-1">
                           {mainLabel}
                         </h3>
                       </div>
                     </div>
-                    <span className="text-[9px] font-mono bg-slate-100 text-slate-600 px-2 py-0.5 rounded uppercase">
+                    <span className="text-[9px] font-mono bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 px-2 py-0.5 rounded uppercase border border-slate-200 dark:border-slate-600">
                       {asset.type}
                     </span>
                   </div>
 
                   {/* Transfer Map */}
-                  <div className="bg-slate-50 p-3 rounded-xl border border-slate-200/60 grid grid-cols-7 items-center gap-1.5 text-center">
+                  <div className="bg-slate-50 dark:bg-slate-900/60 p-3 rounded-xl border border-slate-200/60 dark:border-slate-700 grid grid-cols-7 items-center gap-1.5 text-center">
                     <div className="col-span-3 min-w-0">
-                      <span className="block text-[8px] text-slate-400 font-bold uppercase tracking-wider">Pemilik Lama</span>
-                      <span className="text-[10px] font-bold text-slate-700 block truncate" title={currentOwner}>
+                      <span className="block text-[8px] text-slate-400 dark:text-slate-400 font-bold uppercase tracking-wider">Pemilik Lama</span>
+                      <span className="text-[10px] font-bold text-slate-700 dark:text-slate-200 block truncate" title={currentOwner}>
                         {currentOwner || '-'}
                       </span>
                     </div>
@@ -644,7 +644,7 @@ export default function BalikNamaPanel({ assets, onSaveAsset, userRole = 'viewer
                     </div>
                     <div className="col-span-3 min-w-0">
                       <span className="block text-[8px] text-sky-500 font-bold uppercase tracking-wider">Target Baru</span>
-                      <span className="text-[10px] font-extrabold text-sky-700 block truncate" title={asset.namaPemilikBaru}>
+                      <span className="text-[10px] font-extrabold text-sky-700 dark:text-sky-300 block truncate" title={asset.namaPemilikBaru}>
                         {asset.namaPemilikBaru || 'Belum Diisi'}
                       </span>
                     </div>
@@ -652,35 +652,35 @@ export default function BalikNamaPanel({ assets, onSaveAsset, userRole = 'viewer
 
                   {/* Detail Information */}
                   <div className="space-y-2 text-xs">
-                    <div className="flex items-center gap-2 text-slate-600">
+                    <div className="flex items-center gap-2 text-slate-600 dark:text-slate-300">
                       <Calendar className="w-3.5 h-3.5 shrink-0 text-slate-400" />
-                      <span className="font-semibold text-[11px]">Tanggal Mulai:</span>
-                      <span className="font-mono text-[11px] text-slate-700">
+                      <span className="font-semibold text-[11px] text-slate-500 dark:text-slate-400">Tanggal Mulai:</span>
+                      <span className="font-mono text-[11px] text-slate-700 dark:text-slate-200">
                         {asset.tanggalMulaiBalikNama ? new Date(asset.tanggalMulaiBalikNama).toLocaleDateString('id-ID', {day: 'numeric', month: 'long', year: 'numeric'}) : '-'}
                       </span>
                     </div>
                     
-                    <div className="flex items-start gap-2 text-slate-600">
+                    <div className="flex items-start gap-2 text-slate-600 dark:text-slate-300">
                       <Clock className="w-3.5 h-3.5 shrink-0 text-slate-400 mt-0.5" />
                       <div className="space-y-2 flex-1">
-                        <span className="font-semibold text-[11px] block text-slate-600">Catatan Info Utama:</span>
-                        <p className="text-[11px] text-slate-600 leading-relaxed font-sans bg-amber-50/40 p-2.5 rounded-lg border border-amber-100/70">
+                        <span className="font-semibold text-[11px] block text-slate-600 dark:text-slate-300">Catatan Info Utama:</span>
+                        <p className="text-[11px] text-slate-700 dark:text-slate-200 leading-relaxed font-sans bg-amber-50/40 dark:bg-amber-950/40 p-2.5 rounded-lg border border-amber-100/70 dark:border-amber-900/60">
                           {asset.catatanBalikNama || 'Menunggu pembaruan catatan administrasi...'}
                         </p>
 
                         {/* List of Progres Balik Nama Detailed logs */}
                         {asset.progresBalikNama && asset.progresBalikNama.length > 0 && (
                           <div className="mt-3 space-y-1.5">
-                            <span className="font-semibold text-[10px] uppercase text-slate-500 block mb-1 tracking-wider">Log Progres & Biaya:</span>
+                            <span className="font-semibold text-[10px] uppercase text-slate-500 dark:text-slate-400 block mb-1 tracking-wider">Log Progres & Biaya:</span>
                             {asset.progresBalikNama.map((prog, i) => (
-                              <div key={prog.id} className="bg-slate-50 border border-slate-200 rounded-lg p-2 text-[10px] text-slate-700 flex justify-between gap-1 items-start">
+                              <div key={prog.id} className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-[10px] text-slate-700 dark:text-slate-300 flex justify-between gap-1 items-start">
                                 <div className="space-y-0.5 min-w-0 flex-1">
-                                  <span className="font-mono font-bold text-[9px] text-slate-500">{new Date(prog.tanggal).toLocaleDateString('id-ID')}</span>
-                                  <p className="font-medium text-slate-800 leading-relaxed break-words pr-2">{prog.keterangan}</p>
+                                  <span className="font-mono font-bold text-[9px] text-slate-500 dark:text-slate-400">{new Date(prog.tanggal).toLocaleDateString('id-ID')}</span>
+                                  <p className="font-medium text-slate-800 dark:text-slate-100 leading-relaxed break-words pr-2">{prog.keterangan}</p>
                                 </div>
                                 {prog.biaya > 0 && (
                                   <div className="shrink-0 text-right">
-                                    <span className="inline-block bg-rose-50 text-rose-700 border border-rose-100 rounded px-1.5 py-0.5 font-bold font-mono whitespace-nowrap">
+                                    <span className="inline-block bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 border border-rose-100 dark:border-rose-900/60 rounded px-1.5 py-0.5 font-bold font-mono whitespace-nowrap">
                                       Rp {prog.biaya.toLocaleString('id-ID')}
                                     </span>
                                   </div>
@@ -688,9 +688,9 @@ export default function BalikNamaPanel({ assets, onSaveAsset, userRole = 'viewer
                               </div>
                             ))}
                             {asset.progresBalikNama.length > 0 && (
-                              <div className="flex justify-between items-center text-[10px] font-bold text-slate-600 px-1 pt-1">
+                              <div className="flex justify-between items-center text-[10px] font-bold text-slate-600 dark:text-slate-300 px-1 pt-1">
                                 <span>Total Biaya:</span>
-                                <span className="text-rose-700 font-black">
+                                <span className="text-rose-700 dark:text-rose-400 font-black">
                                   Rp {asset.progresBalikNama.reduce((sum, p) => sum + (p.biaya || 0), 0).toLocaleString('id-ID')}
                                 </span>
                               </div>
@@ -703,38 +703,38 @@ export default function BalikNamaPanel({ assets, onSaveAsset, userRole = 'viewer
 
                   {/* Edit Form Sub-section */}
                   {isEditing && (
-                    <div className="border-t-2 border-dotted border-slate-200 pt-4.5 space-y-3.5">
-                      <h4 className="text-[10px] font-black text-slate-800 uppercase tracking-widest flex items-center gap-1">
+                    <div className="border-t-2 border-dotted border-slate-200 dark:border-slate-700 pt-4.5 space-y-3.5">
+                      <h4 className="text-[10px] font-black text-slate-800 dark:text-slate-100 uppercase tracking-widest flex items-center gap-1">
                         <span>✏️ Sunting Progres Administrasi</span>
                       </h4>
 
                       <div className="space-y-3">
                         <div className="space-y-1">
-                          <label className="text-[10px] font-black text-slate-600">Nama Pemilik Baru / Target Balik Nama</label>
+                          <label className="text-[10px] font-black text-slate-600 dark:text-slate-300">Nama Pemilik Baru / Target Balik Nama</label>
                           <input 
                             type="text" 
                             value={draftNamaBaru}
                             onChange={(e) => setDraftNamaBaru(e.target.value)}
                             placeholder="Masukkan nama pemilik baru"
-                            className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-xs focus:outline-none focus:bg-white h-10 font-bold text-slate-800"
+                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2.5 text-xs text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:bg-white dark:focus:bg-slate-800 h-10 font-bold"
                           />
                         </div>
 
                         <div className="grid grid-cols-2 gap-2">
                           <div className="space-y-1">
-                            <label className="text-[10px] font-black text-slate-600">Tanggal Mulai Proses</label>
+                            <label className="text-[10px] font-black text-slate-600 dark:text-slate-300">Tanggal Mulai Proses</label>
                             <input 
                               type="date" 
                               value={draftTanggal}
                               onChange={(e) => setDraftTanggal(e.target.value)}
-                              className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-xs focus:outline-none focus:bg-white h-10 font-mono"
+                              className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2.5 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:bg-white dark:focus:bg-slate-800 h-10 font-mono"
                             />
                           </div>
                           <div className="space-y-1 flex flex-col justify-end">
                             <button
                               type="button"
                               onClick={() => setDraftNamaBaru('YAYASAN PONDOK PESANTREN MUTTAQIN JOSENAN MADIUN')}
-                              className="bg-slate-100 hover:bg-slate-200 text-slate-700 text-[9px] font-black py-2.5 rounded-lg border border-slate-200 h-10 transition-colors cursor-pointer"
+                              className="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-[9px] font-black py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 h-10 transition-colors cursor-pointer"
                             >
                               Set PP Muttaqin
                             </button>
@@ -742,39 +742,39 @@ export default function BalikNamaPanel({ assets, onSaveAsset, userRole = 'viewer
                         </div>
 
                         <div className="space-y-1">
-                          <label className="text-[10px] font-black text-slate-600">Catatan Info Utama</label>
+                          <label className="text-[10px] font-black text-slate-600 dark:text-slate-300">Catatan Info Utama</label>
                           <textarea 
                             rows={2}
                             value={draftCatatan}
                             onChange={(e) => setDraftCatatan(e.target.value)}
                             placeholder="Contoh: Proses pengajuan ke BPN Kabupaten."
-                            className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-xs focus:outline-none focus:bg-white leading-relaxed font-sans"
+                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2.5 text-xs text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:bg-white dark:focus:bg-slate-800 leading-relaxed font-sans"
                           />
                         </div>
 
                         {/* Add Progress and Cost Detail */}
-                        <div className="space-y-2 border-t border-slate-100 pt-3">
-                          <label className="text-[10px] font-black text-slate-600 flex justify-between">
+                        <div className="space-y-2 border-t border-slate-100 dark:border-slate-700 pt-3">
+                          <label className="text-[10px] font-black text-slate-600 dark:text-slate-300 flex justify-between">
                             <span>Detail Log Progres & Biaya Tambahan</span>
                           </label>
                           
                           {draftProgressList.length > 0 && (
-                            <div className="space-y-1 mb-2 bg-slate-50 p-2 rounded-lg border border-slate-200">
+                            <div className="space-y-1 mb-2 bg-slate-50 dark:bg-slate-800/80 p-2 rounded-lg border border-slate-200 dark:border-slate-700">
                               {draftProgressList.map((prog) => (
-                                <div key={prog.id} className="flex items-center justify-between gap-2 bg-white px-2 py-1.5 rounded border border-slate-100 text-[10px]">
+                                <div key={prog.id} className="flex items-center justify-between gap-2 bg-white dark:bg-slate-800 px-2 py-1.5 rounded border border-slate-100 dark:border-slate-700 text-[10px]">
                                   <div className="flex-1 min-w-0 flex flex-col">
-                                    <span className="font-mono text-slate-500 font-bold text-[9px]">{new Date(prog.tanggal).toLocaleDateString('id-ID')}</span>
-                                    <span className="truncate text-slate-800 font-medium">{prog.keterangan}</span>
+                                    <span className="font-mono text-slate-500 dark:text-slate-400 font-bold text-[9px]">{new Date(prog.tanggal).toLocaleDateString('id-ID')}</span>
+                                    <span className="truncate text-slate-800 dark:text-slate-100 font-medium">{prog.keterangan}</span>
                                   </div>
                                   {prog.biaya > 0 && (
-                                    <span className="shrink-0 text-slate-600 font-mono font-bold">
+                                    <span className="shrink-0 text-slate-600 dark:text-slate-300 font-mono font-bold">
                                       Rp {prog.biaya.toLocaleString('id-ID')}
                                     </span>
                                   )}
                                   <button
                                     type="button"
                                     onClick={() => handleDeleteProgress(prog.id)}
-                                    className="p-1 hover:bg-rose-50 text-rose-500 rounded text-xs cursor-pointer"
+                                    className="p-1 hover:bg-rose-50 dark:hover:bg-rose-950/60 text-rose-500 rounded text-xs cursor-pointer"
                                   >
                                     <Trash2 className="w-3 h-3" />
                                   </button>
@@ -783,13 +783,13 @@ export default function BalikNamaPanel({ assets, onSaveAsset, userRole = 'viewer
                             </div>
                           )}
 
-                          <div className="bg-slate-50 p-2 rounded-lg border border-slate-200 space-y-2">
+                          <div className="bg-slate-50 dark:bg-slate-800/80 p-2 rounded-lg border border-slate-200 dark:border-slate-700 space-y-2">
                             <div className="grid grid-cols-2 gap-2">
                               <input 
                                 type="date" 
                                 value={draftProgressTanggal}
                                 onChange={(e) => setDraftProgressTanggal(e.target.value)}
-                                className="w-full bg-white border border-slate-200 rounded p-2 text-xs focus:outline-none h-8 font-mono"
+                                className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded p-2 text-xs text-slate-800 dark:text-slate-100 focus:outline-none h-8 font-mono"
                               />
                               <div className="relative">
                                 <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[10px] font-black text-slate-400">Rp</span>
@@ -800,23 +800,23 @@ export default function BalikNamaPanel({ assets, onSaveAsset, userRole = 'viewer
                                   placeholder="Biaya (Opsional)"
                                   value={draftProgressBiaya}
                                   onChange={(e) => setDraftProgressBiaya(e.target.value)}
-                                  className="w-full bg-white border border-slate-200 rounded p-2 pl-7 text-xs focus:outline-none h-8 font-mono"
+                                  className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded p-2 pl-7 text-xs text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none h-8 font-mono"
                                 />
                               </div>
                             </div>
                             <div className="flex gap-2">
                               <input 
-                                type="text"
+                                type="text" 
                                 placeholder="Keterangan progres (Cth: Bayar Notaris)"
                                 value={draftProgressKeterangan}
                                 onChange={(e) => setDraftProgressKeterangan(e.target.value)}
-                                className="flex-1 bg-white border border-slate-200 rounded p-2 text-xs focus:outline-none h-8 font-sans"
+                                className="flex-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded p-2 text-xs text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none h-8 font-sans"
                               />
                               <button 
                                 type="button" 
                                 onClick={handleAddProgress}
                                 disabled={!draftProgressKeterangan || !draftProgressTanggal}
-                                className="px-3 shrink-0 bg-sky-100 hover:bg-sky-200 text-sky-700 disabled:opacity-50 disabled:cursor-not-allowed rounded text-[10px] font-black flex items-center gap-1 cursor-pointer"
+                                className="px-3 shrink-0 bg-sky-100 dark:bg-sky-950 hover:bg-sky-200 dark:hover:bg-sky-900 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800 disabled:opacity-50 disabled:cursor-not-allowed rounded text-[10px] font-black flex items-center gap-1 cursor-pointer"
                               >
                                 <PlusCircle className="w-3.5 h-3.5" /> Tambah
                               </button>
@@ -836,7 +836,7 @@ export default function BalikNamaPanel({ assets, onSaveAsset, userRole = 'viewer
                         </button>
                         <button
                           onClick={() => setEditingCardId(null)}
-                          className="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg text-xs font-bold transition-colors cursor-pointer"
+                          className="px-3 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 rounded-lg text-xs font-bold transition-colors cursor-pointer"
                         >
                           Batal
                         </button>
@@ -846,16 +846,16 @@ export default function BalikNamaPanel({ assets, onSaveAsset, userRole = 'viewer
 
                   {/* Bottom Row Actions & Confirmation states */}
                   {!isEditing && (
-                    <div className="border-t border-slate-100 pt-3">
+                    <div className="border-t border-slate-100 dark:border-slate-700 pt-3">
                       {confirmingCompleteId === asset.id ? (
-                        <div className="bg-sky-50 border border-sky-100 rounded-xl p-3.5 space-y-3">
-                          <p className="text-[10px] font-black text-sky-900 leading-relaxed uppercase tracking-wider">
-                            ⚠️ Selesaikan Balik Nama? Nama pemilik aset secara resmi akan diubah menjadi <strong className="underline text-sky-950 font-black">"YAYASAN PONDOK PESANTREN MUTTAQIN JOSENAN MADIUN"</strong>.
+                        <div className="bg-sky-50 dark:bg-sky-950/60 border border-sky-100 dark:border-sky-800 rounded-xl p-3.5 space-y-3">
+                          <p className="text-[10px] font-black text-sky-900 dark:text-sky-200 leading-relaxed uppercase tracking-wider">
+                            ⚠️ Selesaikan Balik Nama? Nama pemilik aset secara resmi akan diubah menjadi <strong className="underline text-sky-950 dark:text-sky-100 font-black">"YAYASAN PONDOK PESANTREN MUTTAQIN JOSENAN MADIUN"</strong>.
                           </p>
 
                           {/* Dynamic Certificate No input field */}
-                          <div className="space-y-1 bg-white p-2.5 rounded-lg border border-sky-100">
-                            <label className="block text-[9px] font-black text-slate-700 uppercase tracking-wider">
+                          <div className="space-y-1 bg-white dark:bg-slate-800 p-2.5 rounded-lg border border-sky-100 dark:border-sky-800">
+                            <label className="block text-[9px] font-black text-slate-700 dark:text-slate-200 uppercase tracking-wider">
                               {asset.type === 'tanah' && 'Nomor Sertifikat Baru (Wajib Diisi)'}
                               {asset.type === 'kendaraan' && 'Nomor Polisi / Dokumen Baru (Wajib Diisi)'}
                               {asset.type === 'bangunan' && 'Nomor PBG / SLF Baru (Wajib Diisi)'}
@@ -869,10 +869,10 @@ export default function BalikNamaPanel({ assets, onSaveAsset, userRole = 'viewer
                                 asset.type === 'kendaraan' ? "Contoh: AE 1234 AP" :
                                 "Contoh: PBG-357701-..."
                               }
-                              className="w-full bg-slate-50 border border-slate-200 rounded px-2.5 py-1.5 text-xs focus:outline-none focus:border-sky-600 font-bold font-mono text-slate-800"
+                              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded px-2.5 py-1.5 text-xs focus:outline-none focus:border-sky-600 font-bold font-mono text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
                             />
                             {!newSertifikatNo.trim() && (
-                              <p className="text-[9px] text-rose-500 font-extrabold uppercase tracking-wide mt-1">
+                              <p className="text-[9px] text-rose-500 dark:text-rose-400 font-extrabold uppercase tracking-wide mt-1">
                                 ● Harap masukkan nomor sertifikat / dokumen baru untuk disimpan otomatis!
                               </p>
                             )}
@@ -882,7 +882,7 @@ export default function BalikNamaPanel({ assets, onSaveAsset, userRole = 'viewer
                             <button
                               disabled={!newSertifikatNo.trim()}
                               onClick={() => handleCompleteProcess(asset, newSertifikatNo)}
-                              className="flex-1 py-1.5 bg-sky-700 hover:bg-sky-800 disabled:bg-slate-300 disabled:text-slate-500 disabled:cursor-not-allowed text-white rounded-lg text-[10px] font-black transition-colors cursor-pointer text-center uppercase tracking-wide"
+                              className="flex-1 py-1.5 bg-sky-700 hover:bg-sky-800 disabled:bg-slate-300 dark:disabled:bg-slate-700 disabled:text-slate-500 disabled:cursor-not-allowed text-white rounded-lg text-[10px] font-black transition-colors cursor-pointer text-center uppercase tracking-wide"
                             >
                               Ya, Ubah & Selesaikan
                             </button>
@@ -891,15 +891,15 @@ export default function BalikNamaPanel({ assets, onSaveAsset, userRole = 'viewer
                                 setConfirmingCompleteId(null);
                                 setNewSertifikatNo('');
                               }}
-                              className="px-3 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-lg text-[10px] font-bold transition-colors cursor-pointer text-center uppercase tracking-wide"
+                              className="px-3 py-1.5 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 rounded-lg text-[10px] font-bold transition-colors cursor-pointer text-center uppercase tracking-wide"
                             >
                               Batal
                             </button>
                           </div>
                         </div>
                       ) : confirmingCancelId === asset.id ? (
-                        <div className="bg-rose-50 border border-rose-100 rounded-xl p-3 space-y-2.5">
-                          <p className="text-[10px] font-black text-rose-900 leading-relaxed">
+                        <div className="bg-rose-50 dark:bg-rose-950/60 border border-rose-100 dark:border-rose-900/60 rounded-xl p-3 space-y-2.5">
+                          <p className="text-[10px] font-black text-rose-900 dark:text-rose-200 leading-relaxed">
                             ⚠️ Apakah Anda yakin ingin membatalkan proses balik nama untuk aset ini? Data akan ditarik dari antrean balik nama.
                           </p>
                           <div className="flex gap-2">
@@ -911,7 +911,7 @@ export default function BalikNamaPanel({ assets, onSaveAsset, userRole = 'viewer
                             </button>
                             <button
                               onClick={() => setConfirmingCancelId(null)}
-                              className="px-3 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-lg text-[10px] font-bold transition-colors cursor-pointer"
+                              className="px-3 py-1.5 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 rounded-lg text-[10px] font-bold transition-colors cursor-pointer"
                             >
                               Kembali
                             </button>
@@ -922,16 +922,16 @@ export default function BalikNamaPanel({ assets, onSaveAsset, userRole = 'viewer
                           <div className="flex gap-1.5">
                             <button
                               onClick={() => startEditCard(asset)}
-                              className="px-3 py-1.5 text-[10px] font-black hover:bg-slate-100 border border-slate-200 rounded-lg text-slate-700 flex items-center gap-1 cursor-pointer transition-colors"
+                              className="px-3 py-1.5 text-[10px] font-black hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 flex items-center gap-1 cursor-pointer transition-colors"
                             >
-                              <FileEdit className="w-3 h-3 text-slate-500" /> Progres
+                              <FileEdit className="w-3 h-3 text-slate-500 dark:text-slate-400" /> Progres
                             </button>
                             <button
                               onClick={() => {
                                 setConfirmingCancelId(asset.id);
                                 setConfirmingCompleteId(null);
                               }}
-                              className="px-3 py-1.5 text-[10px] font-black hover:bg-rose-50 border border-slate-200 hover:border-rose-100 rounded-lg text-rose-600 flex items-center gap-1 cursor-pointer transition-colors"
+                              className="px-3 py-1.5 text-[10px] font-black hover:bg-rose-50 dark:hover:bg-rose-950/60 border border-slate-200 dark:border-slate-700 hover:border-rose-100 rounded-lg text-rose-600 dark:text-rose-400 flex items-center gap-1 cursor-pointer transition-colors"
                               title="Hapus dari antrean balik nama"
                             >
                               <Trash2 className="w-3 h-3 text-rose-500" /> Batalkan
@@ -966,15 +966,15 @@ export default function BalikNamaPanel({ assets, onSaveAsset, userRole = 'viewer
       )}
 
       {/* Helpful Guide / Info */}
-      <div className="bg-slate-100 p-4.5 rounded-2xl border border-slate-200 space-y-2.5 text-slate-600 font-medium">
-        <h4 className="text-[10px] font-black text-slate-800 uppercase tracking-wider flex items-center gap-1">
+      <div className="bg-slate-100 dark:bg-slate-800/80 p-4.5 rounded-2xl border border-slate-200 dark:border-slate-700 space-y-2.5 text-slate-600 dark:text-slate-300 font-medium">
+        <h4 className="text-[10px] font-black text-slate-800 dark:text-slate-100 uppercase tracking-wider flex items-center gap-1">
           <HelpCircle className="w-3.5 h-3.5 text-slate-400" /> Alur Balik Nama Sabilillah
         </h4>
-        <ol className="list-decimal pl-4 text-[10px] text-slate-500 space-y-1.5 leading-relaxed">
+        <ol className="list-decimal pl-4 text-[10px] text-slate-500 dark:text-slate-400 space-y-1.5 leading-relaxed">
           <li>Admin memilih aset yang akan dibalik nama pada menu pencarian di atas.</li>
           <li>Aset dimasukkan ke antrean proses sertifikasi dan dicatat tanggal mulainya.</li>
           <li>Tim administrasi memperbarui progres rekam catatan secara manual.</li>
-          <li>Setelah BPN / Dinas mengeluarkan akta kepemilikan baru, admin menekan tombol <strong className="text-slate-700">"Selesai BN"</strong> untuk melakukan pembaruan status final kepemilikan aset secara otomatis di sistem.</li>
+          <li>Setelah BPN / Dinas mengeluarkan akta kepemilikan baru, admin menekan tombol <strong className="text-slate-700 dark:text-slate-200">"Selesai BN"</strong> untuk melakukan pembaruan status final kepemilikan aset secara otomatis di sistem.</li>
         </ol>
       </div>
     </div>

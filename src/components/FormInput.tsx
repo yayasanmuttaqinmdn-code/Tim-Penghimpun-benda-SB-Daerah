@@ -493,9 +493,9 @@ export default function FormInput({
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
-                className="bg-sky-50 text-sky-800 p-3 rounded-xl border border-sky-200 text-xs flex items-center gap-2"
+                className="bg-sky-50 dark:bg-sky-950/60 text-sky-800 dark:text-sky-200 p-3 rounded-xl border border-sky-200 dark:border-sky-800 text-xs flex items-center gap-2"
               >
-                <CheckCircle2 className="w-4.5 h-4.5 text-sky-600 flex-shrink-0" />
+                <CheckCircle2 className="w-4.5 h-4.5 text-sky-600 dark:text-sky-400 flex-shrink-0" />
                 <span>{successMsg}</span>
               </motion.div>
             )}
@@ -506,27 +506,27 @@ export default function FormInput({
             <div className="space-y-4">
               {/* Jenis Sertifikat */}
               <div className="flex flex-col space-y-1">
-                <label className="text-xs font-extrabold text-gray-700">Jenis Sertifikat <strong className="text-rose-500">*</strong></label>
+                <label className="text-xs font-extrabold text-gray-700 dark:text-slate-200">Jenis Sertifikat <strong className="text-rose-500">*</strong></label>
                 <select
-                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-xs text-medium focus:ring-2 focus:ring-sky-500 focus:bg-white transition-all focus:outline-none h-11"
+                  className="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 font-medium focus:ring-2 focus:ring-sky-500 focus:bg-white dark:focus:bg-slate-800 transition-all focus:outline-none h-11"
                   value={jenisSertifikat}
                   onChange={(e) => setJenisSertifikat(e.target.value as SertifikatTanahType)}
                 >
-                  <option value="SHM">SHM (Sertifikat Hak Milik)</option>
-                  <option value="WAQAF">WAQAF</option>
-                  <option value="SHGB">SHGB (Sertifikat Hak Guna Bangunan)</option>
-                  <option value="LETER C">LETER C</option>
+                  <option value="SHM" className="dark:bg-slate-800 dark:text-slate-100">SHM (Sertifikat Hak Milik)</option>
+                  <option value="WAQAF" className="dark:bg-slate-800 dark:text-slate-100">WAQAF</option>
+                  <option value="SHGB" className="dark:bg-slate-800 dark:text-slate-100">SHGB (Sertifikat Hak Guna Bangunan)</option>
+                  <option value="LETER C" className="dark:bg-slate-800 dark:text-slate-100">LETER C</option>
                 </select>
               </div>
 
               {/* Nomer Sertifikat */}
               <div className="flex flex-col space-y-1">
-                <label className="text-xs font-extrabold text-gray-700">Nomor Sertifikat <strong className="text-rose-500">*</strong></label>
+                <label className="text-xs font-extrabold text-gray-700 dark:text-slate-200">Nomor Sertifikat <strong className="text-rose-500">*</strong></label>
                 <input
                   type="text"
                   required
                   placeholder="Contoh: No. 10.05.01.03.1.00234"
-                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-xs focus:ring-2 focus:ring-sky-500 focus:bg-white transition-all focus:outline-none h-11"
+                  className="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:ring-2 focus:ring-sky-500 focus:bg-white dark:focus:bg-slate-800 transition-all focus:outline-none h-11"
                   value={nomerSertifikat}
                   onChange={(e) => setNomerSertifikat(e.target.value)}
                 />
@@ -534,12 +534,12 @@ export default function FormInput({
 
               {/* Atas Nama Sertifikat */}
               <div className="flex flex-col space-y-1">
-                <label className="text-xs font-extrabold text-gray-700">Atas Nama Sertifikat <strong className="text-rose-500">*</strong></label>
+                <label className="text-xs font-extrabold text-gray-700 dark:text-slate-200">Atas Nama Sertifikat <strong className="text-rose-500">*</strong></label>
                 <input
                   type="text"
                   required
                   placeholder="Nama pemilik sah yang tercantum"
-                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-xs focus:ring-2 focus:ring-sky-500 focus:bg-white transition-all focus:outline-none h-11"
+                  className="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:ring-2 focus:ring-sky-500 focus:bg-white dark:focus:bg-slate-800 transition-all focus:outline-none h-11"
                   value={atasNamaSertifikat}
                   onChange={(e) => setAtasNamaSertifikat(e.target.value)}
                 />
@@ -548,11 +548,11 @@ export default function FormInput({
               {/* Lokasi, Kecamatan, Desa */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="flex flex-col space-y-1">
-                  <label className="text-xs font-extrabold text-gray-700">Kecamatan</label>
+                  <label className="text-xs font-extrabold text-gray-700 dark:text-slate-200">Kecamatan</label>
                   <input
                     list="tanah-kecamatan-list"
                     placeholder="Pilih atau ketik kecamatan..."
-                    className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-xs focus:ring-2 focus:ring-sky-500 focus:bg-white transition-all focus:outline-none h-11"
+                    className="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:ring-2 focus:ring-sky-500 focus:bg-white dark:focus:bg-slate-800 transition-all focus:outline-none h-11"
                     value={tanahKecamatan}
                     onChange={(e) => {
                       setTanahKecamatan(e.target.value);
@@ -569,11 +569,11 @@ export default function FormInput({
                 </div>
 
                 <div className="flex flex-col space-y-1">
-                  <label className="text-xs font-extrabold text-gray-700">Desa / Kelurahan</label>
+                  <label className="text-xs font-extrabold text-gray-700 dark:text-slate-200">Desa / Kelurahan</label>
                   <input
                     list="tanah-desa-list"
                     placeholder="Pilih atau ketik desa..."
-                    className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-xs focus:ring-2 focus:ring-sky-500 focus:bg-white transition-all focus:outline-none h-11"
+                    className="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:ring-2 focus:ring-sky-500 focus:bg-white dark:focus:bg-slate-800 transition-all focus:outline-none h-11"
                     value={tanahDesa}
                     onChange={(e) => setTanahDesa(e.target.value)}
                   />
@@ -587,11 +587,11 @@ export default function FormInput({
 
               {/* Penggunaan */}
               <div className="flex flex-col space-y-1">
-                <label className="text-xs font-extrabold text-gray-700">Penggunaan</label>
+                <label className="text-xs font-extrabold text-gray-700 dark:text-slate-200">Penggunaan</label>
                 <input
                   type="text"
                   placeholder="Contoh: Kantor, Sawah, Fasilitas Kesehatan"
-                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-xs focus:ring-2 focus:ring-sky-500 focus:bg-white transition-all focus:outline-none h-11"
+                  className="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:ring-2 focus:ring-sky-500 focus:bg-white dark:focus:bg-slate-800 transition-all focus:outline-none h-11"
                   value={tanahPenggunaan}
                   onChange={(e) => setTanahPenggunaan(e.target.value)}
                 />
@@ -599,13 +599,13 @@ export default function FormInput({
 
               {/* Luas Tanah */}
               <div className="flex flex-col space-y-1">
-                <label className="text-xs font-extrabold text-gray-700">Luas Tanah (m²)</label>
+                <label className="text-xs font-extrabold text-gray-700 dark:text-slate-200">Luas Tanah (m²)</label>
                 <input
                   type="number"
                   min="0"
                   step="any"
                   placeholder="Contoh: 150 (kosongkan jika tidak tahu)"
-                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-xs focus:ring-2 focus:ring-sky-500 focus:bg-white transition-all focus:outline-none h-11"
+                  className="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:ring-2 focus:ring-sky-500 focus:bg-white dark:focus:bg-slate-800 transition-all focus:outline-none h-11"
                   value={luasTanah}
                   onChange={(e) => setLuasTanah(e.target.value === '' ? '' : Number(e.target.value))}
                 />
@@ -613,24 +613,24 @@ export default function FormInput({
 
               {/* Koordinat Google Maps */}
               <div className="flex flex-col space-y-1">
-                <label className="text-xs font-extrabold text-gray-700">Koordinat Google Maps (Opsional)</label>
+                <label className="text-xs font-extrabold text-gray-700 dark:text-slate-200">Koordinat Google Maps (Opsional)</label>
                 <input
                   type="text"
                   placeholder="Contoh: -7.6298, 111.5303 atau link Gmaps"
-                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-xs focus:ring-2 focus:ring-sky-500 focus:bg-white transition-all focus:outline-none h-11"
+                  className="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:ring-2 focus:ring-sky-500 focus:bg-white dark:focus:bg-slate-800 transition-all focus:outline-none h-11"
                   value={tanahKoordinat}
                   onChange={(e) => setTanahKoordinat(e.target.value)}
                 />
-                <p className="text-[10px] text-gray-500">Bisa diisi link Google Maps atau titik koordinat.</p>
+                <p className="text-[10px] text-gray-500 dark:text-slate-400">Bisa diisi link Google Maps atau titik koordinat.</p>
               </div>
 
               {/* Tempat Simpan Berkas */}
               <div className="flex flex-col space-y-1">
-                <label className="text-xs font-extrabold text-gray-700">Tempat Simpan Berkas Asli</label>
+                <label className="text-xs font-extrabold text-gray-700 dark:text-slate-200">Tempat Simpan Berkas Asli</label>
                 <input
                   type="text"
                   placeholder="Contoh: Brankas Kantor Pusat (Madiun)"
-                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-xs focus:ring-2 focus:ring-sky-500 focus:bg-white transition-all focus:outline-none h-11"
+                  className="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:ring-2 focus:ring-sky-500 focus:bg-white dark:focus:bg-slate-800 transition-all focus:outline-none h-11"
                   value={tempatSimpanBerkas}
                   onChange={(e) => setTempatSimpanBerkas(e.target.value)}
                 />
@@ -643,27 +643,27 @@ export default function FormInput({
             <div className="space-y-4">
               {/* Jenis Kendaraan */}
               <div className="flex flex-col space-y-1">
-                <label className="text-xs font-extrabold text-gray-700">Jenis Kendaraan <strong className="text-rose-500">*</strong></label>
+                <label className="text-xs font-extrabold text-gray-700 dark:text-slate-200">Jenis Kendaraan <strong className="text-rose-500">*</strong></label>
                 <select
-                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-xs text-medium focus:ring-2 focus:ring-sky-500 focus:bg-white transition-all focus:outline-none h-11"
+                  className="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 font-medium focus:ring-2 focus:ring-sky-500 focus:bg-white dark:focus:bg-slate-800 transition-all focus:outline-none h-11"
                   value={jenisKendaraan}
                   onChange={(e) => setJenisKendaraan(e.target.value as JenisKendaraanType)}
                 >
-                  <option value="MOTOR">MOTOR</option>
-                  <option value="MOBIL">MOBIL</option>
-                  <option value="ELF">ELF / MINI BUS</option>
-                  <option value="BUS">BUS BESAR</option>
+                  <option value="MOTOR" className="dark:bg-slate-800 dark:text-slate-100">MOTOR</option>
+                  <option value="MOBIL" className="dark:bg-slate-800 dark:text-slate-100">MOBIL</option>
+                  <option value="ELF" className="dark:bg-slate-800 dark:text-slate-100">ELF / MINI BUS</option>
+                  <option value="BUS" className="dark:bg-slate-800 dark:text-slate-100">BUS BESAR</option>
                 </select>
               </div>
 
               {/* Nomor Polisi */}
               <div className="flex flex-col space-y-1">
-                <label className="text-xs font-extrabold text-gray-700">Nomor Polisi (Nopol) <strong className="text-rose-500">*</strong></label>
+                <label className="text-xs font-extrabold text-gray-700 dark:text-slate-200">Nomor Polisi (Nopol) <strong className="text-rose-500">*</strong></label>
                 <input
                   type="text"
                   required
                   placeholder="Contoh: AE 1234 BZ"
-                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-xs uppercase focus:ring-2 focus:ring-sky-500 focus:bg-white transition-all focus:outline-none h-11"
+                  className="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 uppercase focus:ring-2 focus:ring-sky-500 focus:bg-white dark:focus:bg-slate-800 transition-all focus:outline-none h-11"
                   value={nomorPolisi}
                   onChange={(e) => setNomorPolisi(e.target.value)}
                 />
@@ -671,12 +671,12 @@ export default function FormInput({
 
               {/* Merk / Tipe */}
               <div className="flex flex-col space-y-1">
-                <label className="text-xs font-extrabold text-gray-700">Merk / Tipe <strong className="text-rose-500">*</strong></label>
+                <label className="text-xs font-extrabold text-gray-700 dark:text-slate-200">Merk / Tipe <strong className="text-rose-500">*</strong></label>
                 <input
                   type="text"
                   required
                   placeholder="Contoh: Honda Vario 150, Toyota Avanza"
-                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-xs focus:ring-2 focus:ring-sky-500 focus:bg-white transition-all focus:outline-none h-11"
+                  className="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:ring-2 focus:ring-sky-500 focus:bg-white dark:focus:bg-slate-800 transition-all focus:outline-none h-11"
                   value={merk}
                   onChange={(e) => setMerk(e.target.value)}
                 />
@@ -684,12 +684,12 @@ export default function FormInput({
 
               {/* Atas Nama Kendaraan */}
               <div className="flex flex-col space-y-1">
-                <label className="text-xs font-extrabold text-gray-700">Atas Nama STNK/BPKB <strong className="text-rose-500">*</strong></label>
+                <label className="text-xs font-extrabold text-gray-700 dark:text-slate-200">Atas Nama STNK/BPKB <strong className="text-rose-500">*</strong></label>
                 <input
                   type="text"
                   required
                   placeholder="Nama pemilik STNK asli"
-                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-xs focus:ring-2 focus:ring-sky-500 focus:bg-white transition-all focus:outline-none h-11"
+                  className="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:ring-2 focus:ring-sky-500 focus:bg-white dark:focus:bg-slate-800 transition-all focus:outline-none h-11"
                   value={atasNama}
                   onChange={(e) => setAtasNama(e.target.value)}
                 />
@@ -697,14 +697,14 @@ export default function FormInput({
 
               {/* Tahun Pembuatan */}
               <div className="flex flex-col space-y-1">
-                <label className="text-xs font-extrabold text-gray-700">Tahun Pembuatan <strong className="text-rose-500">*</strong></label>
+                <label className="text-xs font-extrabold text-gray-700 dark:text-slate-200">Tahun Pembuatan <strong className="text-rose-500">*</strong></label>
                 <input
                   type="number"
                   required
                   min={2000}
                   max={2027}
                   placeholder="Tahun pembuatan kendaraan"
-                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-xs focus:ring-2 focus:ring-sky-500 focus:bg-white transition-all focus:outline-none h-11"
+                  className="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:ring-2 focus:ring-sky-500 focus:bg-white dark:focus:bg-slate-800 transition-all focus:outline-none h-11"
                   value={tahunPembuatan}
                   onChange={(e) => setTahunPembuatan(Number(e.target.value))}
                 />
@@ -712,44 +712,44 @@ export default function FormInput({
 
               {/* Kondisi Kendaraan */}
               <div className="flex flex-col space-y-1">
-                <label className="text-xs font-extrabold text-gray-700">Kondisi Kendaraan <strong className="text-rose-500">*</strong></label>
+                <label className="text-xs font-extrabold text-gray-700 dark:text-slate-200">Kondisi Kendaraan <strong className="text-rose-500">*</strong></label>
                 <select
-                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-xs focus:ring-2 focus:ring-sky-500 focus:bg-white transition-all focus:outline-none h-11"
+                  className="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 focus:ring-2 focus:ring-sky-500 focus:bg-white dark:focus:bg-slate-800 transition-all focus:outline-none h-11"
                   value={kondisiKendaraan}
                   onChange={(e) => setKondisiKendaraan(e.target.value as KondisiType)}
                 >
-                  <option value="BAIK">✅ BAIK (Layak Jalan)</option>
-                  <option value="RUSAK RINGAN">⚠️ RUSAK RINGAN (Butuh Servis Minor)</option>
-                  <option value="RUSAK BERAT">❌ RUSAK BERAT (Sakit / Tidak Layak)</option>
+                  <option value="BAIK" className="dark:bg-slate-800 dark:text-slate-100">✅ BAIK (Layak Jalan)</option>
+                  <option value="RUSAK RINGAN" className="dark:bg-slate-800 dark:text-slate-100">⚠️ RUSAK RINGAN (Butuh Servis Minor)</option>
+                  <option value="RUSAK BERAT" className="dark:bg-slate-800 dark:text-slate-100">❌ RUSAK BERAT (Sakit / Tidak Layak)</option>
                 </select>
               </div>
 
               {/* Tanggal & Bulan Pajak */}
               <div className="flex flex-col space-y-2 pt-1">
-                <label className="text-xs font-extrabold text-gray-700">Tanggal &amp; Bulan Pajak <strong className="text-rose-500">*</strong></label>
+                <label className="text-xs font-extrabold text-gray-700 dark:text-slate-200">Tanggal &amp; Bulan Pajak <strong className="text-rose-500">*</strong></label>
                 <div className="grid grid-cols-2 gap-3">
                   <div className="flex flex-col space-y-1">
-                    <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Hari / Tanggal</span>
+                    <span className="text-[10px] text-slate-400 dark:text-slate-400 font-bold uppercase tracking-wider">Hari / Tanggal</span>
                     <select
-                      className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-xs focus:ring-2 focus:ring-sky-500 focus:bg-white transition-all focus:outline-none h-11 cursor-pointer"
+                      className="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 focus:ring-2 focus:ring-sky-500 focus:bg-white dark:focus:bg-slate-800 transition-all focus:outline-none h-11 cursor-pointer"
                       value={pajakHari}
                       onChange={(e) => setPajakHari(e.target.value)}
                     >
                       {HARI_LIST.map(day => (
-                        <option key={day} value={day}>{day}</option>
+                        <option key={day} value={day} className="dark:bg-slate-800 dark:text-slate-100">{day}</option>
                       ))}
                     </select>
                   </div>
                   
                   <div className="flex flex-col space-y-1">
-                    <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Nama Bulan</span>
+                    <span className="text-[10px] text-slate-400 dark:text-slate-400 font-bold uppercase tracking-wider">Nama Bulan</span>
                     <select
-                      className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-xs focus:ring-2 focus:ring-sky-500 focus:bg-white transition-all focus:outline-none h-11 cursor-pointer"
+                      className="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 focus:ring-2 focus:ring-sky-500 focus:bg-white dark:focus:bg-slate-800 transition-all focus:outline-none h-11 cursor-pointer"
                       value={pajakBulan}
                       onChange={(e) => setPajakBulan(e.target.value)}
                     >
                       {BULAN_LIST.map(mo => (
-                        <option key={mo} value={mo}>{mo}</option>
+                        <option key={mo} value={mo} className="dark:bg-slate-800 dark:text-slate-100">{mo}</option>
                       ))}
                     </select>
                   </div>
@@ -758,16 +758,16 @@ export default function FormInput({
 
               {/* Penanggung Jawab Daerah */}
               <div className="flex flex-col space-y-1 pt-1">
-                <label className="text-xs font-extrabold text-gray-700">Penanggung Jawab <strong className="text-rose-500">*</strong></label>
+                <label className="text-xs font-extrabold text-gray-700 dark:text-slate-200">Penanggung Jawab <strong className="text-rose-500">*</strong></label>
                 <select
                   required
-                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-xs focus:ring-2 focus:ring-sky-500 focus:bg-white transition-all focus:outline-none h-11 cursor-pointer"
+                  className="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 focus:ring-2 focus:ring-sky-500 focus:bg-white dark:focus:bg-slate-800 transition-all focus:outline-none h-11 cursor-pointer"
                   value={penanggungJawabDaerah}
                   onChange={(e) => setPenanggungJawabDaerah(e.target.value)}
                 >
-                  <option value="">-- Pilih Daerah / Kelompok --</option>
+                  <option value="" className="dark:bg-slate-800 dark:text-slate-100">-- Pilih Daerah / Kelompok --</option>
                   {DAERAH_LIST.map(daerah => (
-                    <option key={daerah} value={daerah}>{daerah}</option>
+                    <option key={daerah} value={daerah} className="dark:bg-slate-800 dark:text-slate-100">{daerah}</option>
                   ))}
                 </select>
               </div>
@@ -779,12 +779,12 @@ export default function FormInput({
             <div className="space-y-4">
               {/* Nama Bangunan */}
               <div className="flex flex-col space-y-1">
-                <label className="text-xs font-extrabold text-gray-700">Nama Gedung / Bangunan <strong className="text-rose-500">*</strong></label>
+                <label className="text-xs font-extrabold text-gray-700 dark:text-slate-200">Nama Gedung / Bangunan <strong className="text-rose-500">*</strong></label>
                 <input
                   type="text"
                   required
                   placeholder="Contoh: Gedung Serba Guna Madiun Baru"
-                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-xs focus:ring-2 focus:ring-amber-500 focus:bg-white transition-all focus:outline-none h-11"
+                  className="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:ring-2 focus:ring-amber-500 focus:bg-white dark:focus:bg-slate-800 transition-all focus:outline-none h-11"
                   value={namaBangunan}
                   onChange={(e) => setNamaBangunan(e.target.value)}
                 />
@@ -793,11 +793,11 @@ export default function FormInput({
               {/* Lokasi, Kecamatan, Desa */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="flex flex-col space-y-1">
-                  <label className="text-xs font-extrabold text-gray-700">Kecamatan</label>
+                  <label className="text-xs font-extrabold text-gray-700 dark:text-slate-200">Kecamatan</label>
                   <input
                     list="bangunan-kecamatan-list"
                     placeholder="Pilih atau ketik kecamatan..."
-                    className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-xs focus:ring-2 focus:ring-amber-500 focus:bg-white transition-all focus:outline-none h-11"
+                    className="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:ring-2 focus:ring-amber-500 focus:bg-white dark:focus:bg-slate-800 transition-all focus:outline-none h-11"
                     value={bangunanKecamatan}
                     onChange={(e) => {
                       setBangunanKecamatan(e.target.value);
@@ -814,11 +814,11 @@ export default function FormInput({
                 </div>
 
                 <div className="flex flex-col space-y-1">
-                  <label className="text-xs font-extrabold text-gray-700">Desa / Kelurahan</label>
+                  <label className="text-xs font-extrabold text-gray-700 dark:text-slate-200">Desa / Kelurahan</label>
                   <input
                     list="bangunan-desa-list"
                     placeholder="Pilih atau ketik desa..."
-                    className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-xs focus:ring-2 focus:ring-amber-500 focus:bg-white transition-all focus:outline-none h-11"
+                    className="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:ring-2 focus:ring-amber-500 focus:bg-white dark:focus:bg-slate-800 transition-all focus:outline-none h-11"
                     value={bangunanDesa}
                     onChange={(e) => setBangunanDesa(e.target.value)}
                   />
@@ -832,14 +832,14 @@ export default function FormInput({
 
               {/* Luas Bangunan */}
               <div className="flex flex-col space-y-1">
-                <label className="text-xs font-extrabold text-gray-700">Luas Bangunan (M²) <strong className="text-rose-500">*</strong></label>
+                <label className="text-xs font-extrabold text-gray-700 dark:text-slate-200">Luas Bangunan (M²) <strong className="text-rose-500">*</strong></label>
                 <input
                   type="number"
                   required
                   min={0}
                   step="any"
                   placeholder="Luas dalam Meter Persegi (angka)"
-                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-xs focus:ring-2 focus:ring-amber-500 focus:bg-white transition-all focus:outline-none h-11"
+                  className="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:ring-2 focus:ring-amber-500 focus:bg-white dark:focus:bg-slate-800 transition-all focus:outline-none h-11"
                   value={luasBangunan || ''}
                   onChange={(e) => setLuasBangunan(Number(e.target.value))}
                 />
@@ -847,12 +847,12 @@ export default function FormInput({
 
               {/* Penggunaan Bangunan */}
               <div className="flex flex-col space-y-1">
-                <label className="text-xs font-extrabold text-gray-700">Fungsi / Penggunaan Gedung <strong className="text-rose-500">*</strong></label>
+                <label className="text-xs font-extrabold text-gray-700 dark:text-slate-200">Fungsi / Penggunaan Gedung <strong className="text-rose-500">*</strong></label>
                 <input
                   type="text"
                   required
                   placeholder="Contoh: Gedung Pertemuan, Gudang Logistik"
-                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-xs focus:ring-2 focus:ring-amber-500 focus:bg-white transition-all focus:outline-none h-11"
+                  className="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:ring-2 focus:ring-amber-500 focus:bg-white dark:focus:bg-slate-800 transition-all focus:outline-none h-11"
                   value={penggunaanBangunan}
                   onChange={(e) => setPenggunaanBangunan(e.target.value)}
                 />
@@ -860,36 +860,36 @@ export default function FormInput({
 
               {/* Koordinat Google Maps */}
               <div className="flex flex-col space-y-1">
-                <label className="text-xs font-extrabold text-gray-700">Koordinat Google Maps (Opsional)</label>
+                <label className="text-xs font-extrabold text-gray-700 dark:text-slate-200">Koordinat Google Maps (Opsional)</label>
                 <input
                   type="text"
                   placeholder="Contoh: -7.6298, 111.5303 atau link Gmaps"
-                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-xs focus:ring-2 focus:ring-amber-500 focus:bg-white transition-all focus:outline-none h-11"
+                  className="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:ring-2 focus:ring-amber-500 focus:bg-white dark:focus:bg-slate-800 transition-all focus:outline-none h-11"
                   value={bangunanKoordinat}
                   onChange={(e) => setBangunanKoordinat(e.target.value)}
                 />
-                <p className="text-[10px] text-gray-500">Bisa diisi link Google Maps atau titik koordinat.</p>
+                <p className="text-[10px] text-gray-500 dark:text-slate-400">Bisa diisi link Google Maps atau titik koordinat.</p>
               </div>
 
               {/* PBG & SLF */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="flex flex-col space-y-1">
-                  <label className="text-xs font-extrabold text-gray-700">Nomor PBG (IMB Lama)</label>
+                  <label className="text-xs font-extrabold text-gray-700 dark:text-slate-200">Nomor PBG (IMB Lama)</label>
                   <input
                     type="text"
                     placeholder="Contoh: PBG-357701-..."
-                    className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-xs focus:ring-2 focus:ring-amber-500 focus:bg-white transition-all focus:outline-none h-11"
+                    className="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:ring-2 focus:ring-amber-500 focus:bg-white dark:focus:bg-slate-800 transition-all focus:outline-none h-11"
                     value={nomerPBG}
                     onChange={(e) => setNomerPBG(e.target.value)}
                   />
                 </div>
 
                 <div className="flex flex-col space-y-1">
-                  <label className="text-xs font-extrabold text-gray-700">Nomor SLF (Laik Fungsi)</label>
+                  <label className="text-xs font-extrabold text-gray-700 dark:text-slate-200">Nomor SLF (Laik Fungsi)</label>
                   <input
                     type="text"
                     placeholder="Contoh: SLF-357701-..."
-                    className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-xs focus:ring-2 focus:ring-amber-500 focus:bg-white transition-all focus:outline-none h-11"
+                    className="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:ring-2 focus:ring-amber-500 focus:bg-white dark:focus:bg-slate-800 transition-all focus:outline-none h-11"
                     value={nomerSLF}
                     onChange={(e) => setNomerSLF(e.target.value)}
                   />
@@ -898,15 +898,15 @@ export default function FormInput({
 
               {/* Kondisi Bangunan & Keterangan Kerusakan */}
               <div className="flex flex-col space-y-1">
-                <label className="text-xs font-extrabold text-gray-700">Kondisi Bangunan <strong className="text-rose-500">*</strong></label>
+                <label className="text-xs font-extrabold text-gray-700 dark:text-slate-200">Kondisi Bangunan <strong className="text-rose-500">*</strong></label>
                 <select
-                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-xs focus:ring-2 focus:ring-amber-500 focus:bg-white transition-all focus:outline-none h-11"
+                  className="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 focus:ring-2 focus:ring-amber-500 focus:bg-white dark:focus:bg-slate-800 transition-all focus:outline-none h-11"
                   value={kondisiBangunan}
                   onChange={(e) => setKondisiBangunan(e.target.value as KondisiType)}
                 >
-                  <option value="BAIK">✅ BAIK (Kondisi Kokoh)</option>
-                  <option value="RUSAK RINGAN">⚠️ RUSAK RINGAN (Retak Rambut, Cat Mengelupas)</option>
-                  <option value="RUSAK BERAT">❌ RUSAK BERAT (Struktur Rusak / Bahaya Plafon Ambruk)</option>
+                  <option value="BAIK" className="dark:bg-slate-800 dark:text-slate-100">✅ BAIK (Kondisi Kokoh)</option>
+                  <option value="RUSAK RINGAN" className="dark:bg-slate-800 dark:text-slate-100">⚠️ RUSAK RINGAN (Retak Rambut, Cat Mengelupas)</option>
+                  <option value="RUSAK BERAT" className="dark:bg-slate-800 dark:text-slate-100">❌ RUSAK BERAT (Struktur Rusak / Bahaya Plafon Ambruk)</option>
                 </select>
               </div>
 
@@ -916,12 +916,12 @@ export default function FormInput({
                   animate={{ opacity: 1, height: 'auto' }}
                   className="flex flex-col space-y-1"
                 >
-                  <label className="text-xs font-extrabold text-rose-800">Keterangan Detail Kerusakan <strong className="text-rose-500">*</strong></label>
+                  <label className="text-xs font-extrabold text-rose-800 dark:text-rose-300">Keterangan Detail Kerusakan <strong className="text-rose-500">*</strong></label>
                   <textarea
                     required
                     rows={2}
                     placeholder="Tulis bagian yang bocor, retak, atau butuh renovasi darurat..."
-                    className="w-full bg-rose-50/30 border border-rose-200 rounded-xl px-3 py-2 p-2.5 text-xs focus:ring-2 focus:ring-amber-500 focus:bg-white transition-all focus:outline-none"
+                    className="w-full bg-rose-50/30 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-900/60 rounded-xl px-3 py-2 p-2.5 text-xs text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:ring-2 focus:ring-amber-500 focus:bg-white dark:focus:bg-slate-800 transition-all focus:outline-none"
                     value={keteranganKerusakan}
                     onChange={(e) => setKeteranganKerusakan(e.target.value)}
                   />
@@ -936,7 +936,7 @@ export default function FormInput({
               type="submit"
               className={`flex-1 py-3 px-4 rounded-xl text-xs font-black transition-all shadow-md active:scale-98 flex items-center justify-center gap-2 cursor-pointer text-white focus:outline-none ${
                 activeType === 'tanah' ? 'bg-sky-600 hover:bg-sky-700 border border-sky-700' :
-                activeType === 'kendaraan' ? 'bg-amber-500 hover:bg-amber-600 text-slate-950 border border-amber-550' :
+                activeType === 'kendaraan' ? 'bg-amber-500 hover:bg-amber-600 text-slate-950 border border-amber-600' :
                 'bg-purple-600 hover:bg-purple-700 border border-purple-700'
               }`}
             >
@@ -947,7 +947,7 @@ export default function FormInput({
             <button
               type="button"
               onClick={editingAsset ? onCancelEdit : handleReset}
-              className="px-4 py-3 border border-gray-200 bg-gray-50 hover:bg-gray-100 text-gray-600 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1 focus:outline-none active:scale-98 cursor-pointer"
+              className="px-4 py-3 border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-slate-700 text-gray-600 dark:text-slate-300 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1 focus:outline-none active:scale-98 cursor-pointer"
             >
               <ListRestart className="w-4 h-4" />
               {editingAsset ? 'Batal' : 'Reset'}

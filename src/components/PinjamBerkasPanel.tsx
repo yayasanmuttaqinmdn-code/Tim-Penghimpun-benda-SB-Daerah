@@ -289,9 +289,9 @@ export default function PinjamBerkasPanel({ assets, userRole = 'viewer', onSaveA
       />
 
       {/* Sub-tabs Nav Bar */}
-      <div className="bg-white p-2 rounded-2xl border border-slate-200 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-white dark:bg-slate-900 p-2 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         {/* Tab Buttons */}
-        <div className="flex flex-wrap bg-slate-100 p-1.5 rounded-xl border border-slate-200/60 font-sans gap-1">
+        <div className="flex flex-wrap bg-slate-100 dark:bg-slate-800/80 p-1.5 rounded-xl border border-slate-200/60 dark:border-slate-700 font-sans gap-1">
           <button
             type="button"
             onClick={() => {
@@ -301,7 +301,7 @@ export default function PinjamBerkasPanel({ assets, userRole = 'viewer', onSaveA
             className={`px-4 py-2.5 rounded-lg text-xs font-black uppercase tracking-wider transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'active'
                 ? 'bg-slate-800 text-white shadow-xs'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/55'
+                : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/55 dark:hover:bg-slate-700'
             }`}
           >
             <Clock className="w-4 h-4" /> Berkas Aktif ({activeLoans.length})
@@ -320,7 +320,7 @@ export default function PinjamBerkasPanel({ assets, userRole = 'viewer', onSaveA
             className={`px-4 py-2.5 rounded-lg text-xs font-black uppercase tracking-wider transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'new-loan'
                 ? 'bg-sky-700 text-white shadow-xs'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/55'
+                : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/55 dark:hover:bg-slate-700'
             }`}
           >
             <PlusCircle className="w-4 h-4" /> Pinjam Berkas Baru
@@ -340,7 +340,7 @@ export default function PinjamBerkasPanel({ assets, userRole = 'viewer', onSaveA
             className={`px-4 py-2.5 rounded-lg text-xs font-black uppercase tracking-wider transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'history'
                 ? 'bg-slate-700 text-white shadow-xs'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/55'
+                : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/55 dark:hover:bg-slate-700'
             }`}
           >
             <History className="w-4 h-4" /> Riwayat Kembali ({loanHistory.length})
@@ -349,7 +349,7 @@ export default function PinjamBerkasPanel({ assets, userRole = 'viewer', onSaveA
 
         {/* Unified Search Input */}
         <div className="relative w-full sm:max-w-xs pr-1 font-sans">
-          <Search className="absolute left-3 top-3 w-4 h-4 text-slate-400" />
+          <Search className="absolute left-3 top-3 w-4 h-4 text-slate-400 dark:text-slate-500" />
           <input
             type="text"
             placeholder={
@@ -361,7 +361,7 @@ export default function PinjamBerkasPanel({ assets, userRole = 'viewer', onSaveA
             }
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold text-slate-800 placeholder-slate-400 focus:outline-none"
+            className="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-xs font-bold text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none"
           />
         </div>
       </div>
@@ -371,17 +371,17 @@ export default function PinjamBerkasPanel({ assets, userRole = 'viewer', onSaveA
         {activeTab === 'active' && (
           <div className="space-y-4 font-sans">
             <div className="flex items-center gap-2">
-              <span className="p-1 px-2.5 bg-amber-400 text-slate-900 rounded-lg text-xs font-black">ACTIVE</span>
-              <h2 className="text-xs font-black text-slate-900 uppercase tracking-widest">
+              <span className="p-1 px-2.5 bg-amber-400 dark:bg-amber-500 text-slate-900 rounded-lg text-xs font-black">ACTIVE</span>
+              <h2 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest">
                 Daftar Peminjaman Berkas yang masih Aktif ({filteredActiveLoans.length})
               </h2>
             </div>
 
             {filteredActiveLoans.length === 0 ? (
-              <div className="bg-white border text-center py-16 rounded-2xl border-slate-200">
+              <div className="bg-white dark:bg-slate-800 border text-center py-16 rounded-2xl border-slate-200 dark:border-slate-700">
                 <span className="text-4xl">📁</span>
-                <h3 className="text-xs font-black text-slate-750 mt-2">Tidak ada berkas yang sedang dipinjam</h3>
-                <p className="text-[10px] text-slate-400">Semua surat-surat berada lengkap di lemari simpan.</p>
+                <h3 className="text-xs font-black text-slate-750 dark:text-slate-100 mt-2">Tidak ada berkas yang sedang dipinjam</h3>
+                <p className="text-[10px] text-slate-400 dark:text-slate-400">Semua surat-surat berada lengkap di lemari simpan.</p>
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -392,66 +392,68 @@ export default function PinjamBerkasPanel({ assets, userRole = 'viewer', onSaveA
                   return (
                     <div 
                       key={asset.id} 
-                      className={`bg-white border-2 rounded-2xl shadow-xs overflow-hidden flex flex-col justify-between transition-all ${
-                        isOverdue ? 'border-rose-200 bg-rose-50/5' : 'border-slate-200 hover:border-slate-300'
+                      className={`bg-white dark:bg-slate-800 border-2 rounded-2xl shadow-xs overflow-hidden flex flex-col justify-between transition-all ${
+                        isOverdue 
+                          ? 'border-rose-200 dark:border-rose-900 bg-rose-50/5 dark:bg-rose-950/20' 
+                          : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600'
                       }`}
                     >
                       {/* Card Header */}
-                      <div className="p-4 border-b border-slate-100 flex items-start gap-4">
+                      <div className="p-4 border-b border-slate-100 dark:border-slate-700 flex items-start gap-4">
                         <div className={`p-2.5 rounded-xl ${
-                          asset.type === 'tanah' ? 'bg-sky-50 text-sky-800' :
-                          asset.type === 'kendaraan' ? 'bg-amber-50 text-amber-700' : 'bg-slate-50 text-slate-850'
+                          asset.type === 'tanah' ? 'bg-sky-50 dark:bg-sky-950/60 text-sky-800 dark:text-sky-300' :
+                          asset.type === 'kendaraan' ? 'bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300' : 'bg-slate-50 dark:bg-slate-700 text-slate-850 dark:text-slate-200'
                         }`}>
                           {asset.type === 'tanah' && <FileSpreadsheet className="w-5 h-5" />}
                           {asset.type === 'kendaraan' && <Car className="w-5 h-5" />}
                           {asset.type === 'bangunan' && <Building2 className="w-5 h-5" />}
                         </div>
                         <div className="leading-snug">
-                          <span className="text-[8px] font-black uppercase text-slate-400 tracking-wider">
+                          <span className="text-[8px] font-black uppercase text-slate-400 dark:text-slate-400 tracking-wider">
                             Berkas {asset.type === 'tanah' ? 'Tanah & Sertifikat' : asset.type === 'kendaraan' ? 'Kendaraan BPKB/STNK' : 'Dokumen PBG/SLF'}
                           </span>
-                          <h4 className="text-xs font-black text-slate-800 mt-0.5 leading-snug">
+                          <h4 className="text-xs font-black text-slate-800 dark:text-slate-100 mt-0.5 leading-snug">
                             {getAssetLabel(asset)}
                           </h4>
                         </div>
                       </div>
 
                       {/* Card Borrower Detail */}
-                      <div className="p-4 bg-slate-50/50 border-b border-slate-100 space-y-3">
+                      <div className="p-4 bg-slate-50/50 dark:bg-slate-900/50 border-b border-slate-100 dark:border-slate-700 space-y-3">
                         <div className="flex justify-between items-center">
                           <div className="flex items-center gap-1.5">
-                            <User className="w-4 h-4 text-slate-500" />
-                            <span className="text-xs font-extrabold text-slate-900">{loan.peminjamName}</span>
+                            <User className="w-4 h-4 text-slate-500 dark:text-slate-400" />
+                            <span className="text-xs font-extrabold text-slate-900 dark:text-white">{loan.peminjamName}</span>
                           </div>
-                          <span className="text-[10px] bg-slate-200/50 text-slate-700 px-2.5 py-0.5 rounded-full font-bold">
+                          <span className="text-[10px] bg-slate-200/50 dark:bg-slate-700 text-slate-700 dark:text-slate-200 px-2.5 py-0.5 rounded-full font-bold">
                             {loan.peminjamJabatan}
                           </span>
                         </div>
 
-                        <div className="grid grid-cols-2 gap-3 text-[11px] text-slate-600">
+                        <div className="grid grid-cols-2 gap-3 text-[11px] text-slate-600 dark:text-slate-300">
                           <div className="flex items-center gap-1.5">
                             <PhoneCall className="w-3.5 h-3.5 text-slate-400" />
                             <span>{loan.peminjamKontak}</span>
                           </div>
                           <div className="flex items-center gap-1.5 justify-end">
-                            <UserCheck className="w-3.5 h-3.5 text-slate-500" />
-                            <span>Petugas: <strong className="font-extrabold text-slate-850">{loan.namaPetugas}</strong></span>
+                            <UserCheck className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
+                            <span>Petugas: <strong className="font-extrabold text-slate-850 dark:text-slate-100">{loan.namaPetugas}</strong></span>
                           </div>
                         </div>
 
-                        <div className="pt-2 border-t border-slate-150 space-y-1 text-[11px] text-slate-600">
+                        <div className="pt-2 border-t border-slate-150 dark:border-slate-700 space-y-1 text-[11px] text-slate-600 dark:text-slate-300">
                           <div className="flex items-start gap-1.5">
-                            <Bookmark className="w-3.5 h-3.5 text-slate-405 mt-0.5" />
+                            <Bookmark className="w-3.5 h-3.5 text-slate-405 dark:text-slate-400 mt-0.5" />
                             <p className="leading-normal italic">"{loan.keperluan}"</p>
                           </div>
                         </div>
 
                         {loan.fotoPinjam && (
-                          <div className="pt-2 border-t border-slate-150 space-y-1">
-                            <span className="text-[8px] font-black uppercase text-slate-400 tracking-wider block">
+                          <div className="pt-2 border-t border-slate-150 dark:border-slate-700 space-y-1">
+                            <span className="text-[8px] font-black uppercase text-slate-400 dark:text-slate-400 tracking-wider block">
                               📸 Bukti Foto Peminjaman:
                             </span>
-                            <div className="w-24 h-16 bg-slate-900 rounded-lg overflow-hidden border border-slate-300 relative shadow-inner">
+                            <div className="w-24 h-16 bg-slate-900 rounded-lg overflow-hidden border border-slate-300 dark:border-slate-600 relative shadow-inner">
                               <img 
                                 src={loan.fotoPinjam} 
                                 alt="Foto Bukti Peminjaman" 
@@ -469,15 +471,15 @@ export default function PinjamBerkasPanel({ assets, userRole = 'viewer', onSaveA
                         )}
 
                         {/* Dates Row */}
-                        <div className="pt-2 border-t border-slate-150 grid grid-cols-2 gap-2 text-[10px] font-mono leading-none">
+                        <div className="pt-2 border-t border-slate-150 dark:border-slate-700 grid grid-cols-2 gap-2 text-[10px] font-mono leading-none">
                           <div>
-                            <span className="text-[8px] text-slate-400 block pb-1 font-bold uppercase tracking-wider">Tgl Ambil:</span>
-                            <strong className="text-slate-700 font-extrabold">📅 {loan.tanggalPinjam}</strong>
+                            <span className="text-[8px] text-slate-400 dark:text-slate-500 block pb-1 font-bold uppercase tracking-wider">Tgl Ambil:</span>
+                            <strong className="text-slate-700 dark:text-slate-200 font-extrabold">📅 {loan.tanggalPinjam}</strong>
                           </div>
                           {loan.tanggalKembaliRencana && (
                             <div className="text-right">
-                              <span className="text-[8px] text-slate-400 block pb-1 font-bold uppercase tracking-wider">Jatuh Tempo:</span>
-                              <strong className={isOverdue ? 'text-rose-600 font-black animate-pulse' : 'text-slate-700 font-extrabold'}>
+                              <span className="text-[8px] text-slate-400 dark:text-slate-500 block pb-1 font-bold uppercase tracking-wider">Jatuh Tempo:</span>
+                              <strong className={isOverdue ? 'text-rose-600 dark:text-rose-400 font-black animate-pulse' : 'text-slate-700 dark:text-slate-200 font-extrabold'}>
                                 ⌛ {loan.tanggalKembaliRencana} {isOverdue && '(Terlambat!)'}
                               </strong>
                             </div>
@@ -486,15 +488,15 @@ export default function PinjamBerkasPanel({ assets, userRole = 'viewer', onSaveA
                       </div>
 
                       {/* Return Actions inside active cards */}
-                      <div className="p-3 bg-white flex justify-end font-sans">
+                      <div className="p-3 bg-white dark:bg-slate-800 flex justify-end font-sans">
                         {returningAssetId === asset.id ? (
-                          <form onSubmit={handleReturnLoanSubmit} className="w-full bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-3">
-                            <span className="text-[10px] font-black text-slate-800 uppercase tracking-wider block">
+                          <form onSubmit={handleReturnLoanSubmit} className="w-full bg-slate-50 dark:bg-slate-900/80 p-3 rounded-xl border border-slate-200 dark:border-slate-700 space-y-3">
+                            <span className="text-[10px] font-black text-slate-800 dark:text-slate-100 uppercase tracking-wider block">
                               Konfirmasi Penerimaan Kembali:
                             </span>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                               <div className="space-y-1">
-                                <label className="block text-[8px] font-extrabold text-slate-600 uppercase tracking-widest">
+                                <label className="block text-[8px] font-extrabold text-slate-600 dark:text-slate-300 uppercase tracking-widest">
                                   Tgl Terima Fisik Berkas:
                                 </label>
                                 <input
@@ -502,11 +504,11 @@ export default function PinjamBerkasPanel({ assets, userRole = 'viewer', onSaveA
                                   required
                                   value={tanggalKembaliRiil}
                                   onChange={(e) => setTanggalKembaliRiil(e.target.value)}
-                                  className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs font-bold focus:outline-none focus:text-slate-800"
+                                  className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-bold text-slate-800 dark:text-slate-100 focus:outline-none"
                                 />
                               </div>
                               <div className="space-y-1">
-                                <label className="block text-[8px] font-extrabold text-slate-600 uppercase tracking-widest">
+                                <label className="block text-[8px] font-extrabold text-slate-600 dark:text-slate-300 uppercase tracking-widest">
                                   Petugas Penerima:
                                 </label>
                                 <input
@@ -515,19 +517,19 @@ export default function PinjamBerkasPanel({ assets, userRole = 'viewer', onSaveA
                                   placeholder="Nama Anda"
                                   value={namaPetugasPenerima}
                                   onChange={(e) => setNamaPetugasPenerima(e.target.value)}
-                                  className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs font-bold focus:outline-none focus:text-slate-800 placeholder:text-slate-400"
+                                  className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-bold text-slate-800 dark:text-slate-100 focus:outline-none placeholder:text-slate-400 dark:placeholder:text-slate-500"
                                 />
                               </div>
                             </div>
                             
-                            <div className="pt-2 border-t border-slate-200">
+                            <div className="pt-2 border-t border-slate-200 dark:border-slate-700">
                               <CameraCapture
                                 label="Ambil Foto Bukti Pengembalian Berkas"
                                 photoDataUrl={fotoKembali}
                                 onPhotoCaptured={setFotoKembali}
                               />
                               {!fotoKembali && (
-                                <p className="text-[9px] text-amber-600 bg-amber-50 rounded-lg p-1.5 font-bold text-center border border-amber-200/40 mt-1">
+                                <p className="text-[9px] text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/50 rounded-lg p-1.5 font-bold text-center border border-amber-200/40 dark:border-amber-800 mt-1">
                                   ⚠ Persyaratan: Harap ambil foto bukti pengembalian dari kamera untuk mengkonfirmasi penerimaan berkas.
                                 </p>
                               )}
@@ -537,14 +539,14 @@ export default function PinjamBerkasPanel({ assets, userRole = 'viewer', onSaveA
                               <button
                                 type="submit"
                                 disabled={isSubmitPending || !fotoKembali}
-                                className="flex-1 bg-sky-700 hover:bg-sky-800 disabled:bg-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed text-white font-extrabold uppercase text-[10px] py-1.5 rounded-lg cursor-pointer text-center"
+                                className="flex-1 bg-sky-700 hover:bg-sky-800 disabled:bg-slate-200 dark:disabled:bg-slate-700 disabled:text-slate-400 dark:disabled:text-slate-500 disabled:cursor-not-allowed text-white font-extrabold uppercase text-[10px] py-1.5 rounded-lg cursor-pointer text-center"
                               >
                                 {isSubmitPending ? 'Menyimpan...' : '✔ Berkas Sudah Kembali'}
                               </button>
                               <button
                                 type="button"
                                 onClick={() => setReturningAssetId(null)}
-                                className="px-3 bg-slate-200 hover:bg-slate-300 text-slate-700 font-extrabold uppercase text-[9px] rounded-lg cursor-pointer"
+                                className="px-3 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-extrabold uppercase text-[9px] rounded-lg cursor-pointer"
                               >
                                 Batal
                               </button>
@@ -581,7 +583,7 @@ export default function PinjamBerkasPanel({ assets, userRole = 'viewer', onSaveA
           <div className="space-y-4 font-sans">
             <div className="flex items-center gap-2">
               <span className="p-1 px-2.5 bg-sky-700 text-white rounded-lg text-xs font-black">FORMULIR</span>
-              <h2 className="text-xs font-black text-slate-900 uppercase tracking-widest">
+              <h2 className="text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-widest">
                 Pendaftaran & Pengeluaran Berkas Baru
               </h2>
             </div>
@@ -589,21 +591,21 @@ export default function PinjamBerkasPanel({ assets, userRole = 'viewer', onSaveA
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
               {/* Left Box: Asset Selector */}
               <div className="lg:col-span-5 space-y-4">
-                <div className="bg-white p-4 rounded-2xl border border-slate-200 space-y-3.5 shadow-sm">
-                  <h3 className="text-xs font-black text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
-                    <FolderOpen className="w-4 h-4 text-sky-700" />
+                <div className="bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-3.5 shadow-sm">
+                  <h3 className="text-xs font-black text-slate-800 dark:text-slate-100 uppercase tracking-wider flex items-center gap-1.5">
+                    <FolderOpen className="w-4 h-4 text-sky-700 dark:text-sky-400" />
                     Langkah A: Pilih Berkas yang Tersedia
                   </h3>
 
                   {/* Categories filtering bar */}
-                  <div className="flex bg-slate-100 p-1 rounded-xl border border-slate-200 gap-1 lg:max-w-none">
+                  <div className="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700 gap-1 lg:max-w-none">
                     <button
                       type="button"
                       onClick={() => setSelectedCategory('tanah')}
                       className={`flex-1 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-wide transition-all cursor-pointer text-center ${
                         selectedCategory === 'tanah'
                           ? 'bg-sky-700 text-white shadow-xs'
-                          : 'text-slate-600 hover:text-sky-850 hover:bg-slate-200/50'
+                          : 'text-slate-600 dark:text-slate-300 hover:text-sky-850 dark:hover:text-sky-300 hover:bg-slate-200/50 dark:hover:bg-slate-700'
                       }`}
                     >
                       Tanah ({availableTanah.length})
@@ -614,7 +616,7 @@ export default function PinjamBerkasPanel({ assets, userRole = 'viewer', onSaveA
                       className={`flex-1 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-wide transition-all cursor-pointer text-center ${
                         selectedCategory === 'kendaraan'
                           ? 'bg-amber-600 text-white shadow-xs'
-                          : 'text-slate-600 hover:text-amber-700 hover:bg-slate-200/50'
+                          : 'text-slate-600 dark:text-slate-300 hover:text-amber-700 dark:hover:text-amber-300 hover:bg-slate-200/50 dark:hover:bg-slate-700'
                       }`}
                     >
                       Kendaraan ({availableKendaraan.length})
@@ -625,7 +627,7 @@ export default function PinjamBerkasPanel({ assets, userRole = 'viewer', onSaveA
                       className={`flex-1 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-wide transition-all cursor-pointer text-center ${
                         selectedCategory === 'bangunan'
                           ? 'bg-slate-700 text-white shadow-xs'
-                          : 'text-slate-600 hover:text-slate-800 hover:bg-slate-200/50'
+                          : 'text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-white hover:bg-slate-200/50 dark:hover:bg-slate-700'
                       }`}
                     >
                       Bangunan ({availableBangunan.length})
@@ -635,7 +637,7 @@ export default function PinjamBerkasPanel({ assets, userRole = 'viewer', onSaveA
                   {/* List items scrollbox */}
                   <div className="space-y-4 max-h-[420px] overflow-y-auto pr-1">
                     {filteredAvailableAssets.length === 0 ? (
-                      <p className="text-[11px] text-slate-400 italic py-8 text-center bg-slate-50/50 rounded-xl">
+                      <p className="text-[11px] text-slate-400 dark:text-slate-500 italic py-8 text-center bg-slate-50/50 dark:bg-slate-800/50 rounded-xl">
                         Tidak ada berkas tersedia yang cocok dengan pencarian.
                       </p>
                     ) : (
@@ -643,13 +645,13 @@ export default function PinjamBerkasPanel({ assets, userRole = 'viewer', onSaveA
                         {/* Section 1: Tanah */}
                         {(selectedCategory === 'all' || selectedCategory === 'tanah') && (
                           <div className="space-y-2 font-sans">
-                            <div className="sticky top-0 bg-white/95 backdrop-blur-xs py-1 flex items-center justify-between border-b border-slate-100 z-10">
-                              <span className="text-[9px] font-black text-sky-850 uppercase tracking-wider flex items-center gap-1">
+                            <div className="sticky top-0 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xs py-1 flex items-center justify-between border-b border-slate-100 dark:border-slate-800 z-10">
+                              <span className="text-[9px] font-black text-sky-850 dark:text-sky-300 uppercase tracking-wider flex items-center gap-1">
                                 📜 Berkas Tanah ({availableTanah.length})
                               </span>
                             </div>
                             {availableTanah.length === 0 ? (
-                              <p className="text-[10px] text-slate-400 italic pl-2 py-1">Tidak ada berkas tanah yang tersedia</p>
+                              <p className="text-[10px] text-slate-400 dark:text-slate-500 italic pl-2 py-1">Tidak ada berkas tanah yang tersedia</p>
                             ) : (
                               availableTanah.map((asset) => {
                                 const isSelected = selectedAssetId === asset.id;
@@ -660,22 +662,22 @@ export default function PinjamBerkasPanel({ assets, userRole = 'viewer', onSaveA
                                     onClick={() => setSelectedAssetId(asset.id)}
                                     className={`w-full text-left p-3 rounded-xl border-2 transition-all flex items-start gap-2.5 cursor-pointer ${
                                       isSelected 
-                                        ? 'border-sky-700 bg-sky-50/40 text-slate-900 shadow-xs' 
-                                        : 'border-slate-100 bg-slate-50/30 hover:bg-slate-50'
+                                        ? 'border-sky-700 bg-sky-50/40 dark:bg-sky-950/40 text-slate-900 dark:text-white shadow-xs' 
+                                        : 'border-slate-100 dark:border-slate-800 bg-slate-50/30 dark:bg-slate-800/40 hover:bg-slate-50 dark:hover:bg-slate-800'
                                     }`}
                                   >
                                     <span className="mt-0.5">📜</span>
                                     <div className="leading-snug">
-                                      <span className="text-[8px] font-black uppercase text-slate-400 tracking-wider">ID: {asset.id}</span>
-                                      <h4 className="text-xs font-bold text-slate-800 line-clamp-2">
+                                      <span className="text-[8px] font-black uppercase text-slate-400 dark:text-slate-500 tracking-wider">ID: {asset.id}</span>
+                                      <h4 className="text-xs font-bold text-slate-800 dark:text-slate-100 line-clamp-2">
                                         {getAssetLabel(asset)}
                                       </h4>
                                       {asset.type === 'tanah' && (
-                                        <div className="mt-1 bg-sky-100/50 border border-sky-200/45 text-sky-900 font-extrabold text-[9px] px-2 py-0.5 rounded inline-block uppercase tracking-wider">
+                                        <div className="mt-1 bg-sky-100/50 dark:bg-sky-950/60 border border-sky-200/45 dark:border-sky-800 text-sky-900 dark:text-sky-300 font-extrabold text-[9px] px-2 py-0.5 rounded inline-block uppercase tracking-wider">
                                           👤 a.n: {asset.atasNamaSertifikat}
                                         </div>
                                       )}
-                                      <p className="text-[10px] text-slate-500 font-mono mt-1">Lokasi Simpan: {asset.tempatSimpanBerkas || '-'}</p>
+                                      <p className="text-[10px] text-slate-500 dark:text-slate-400 font-mono mt-1">Lokasi Simpan: {asset.tempatSimpanBerkas || '-'}</p>
                                     </div>
                                   </button>
                                 );
@@ -687,13 +689,13 @@ export default function PinjamBerkasPanel({ assets, userRole = 'viewer', onSaveA
                         {/* Section 2: Kendaraan */}
                         {(selectedCategory === 'all' || selectedCategory === 'kendaraan') && (
                           <div className="space-y-2 pt-2">
-                            <div className="sticky top-0 bg-white/95 backdrop-blur-xs py-1 flex items-center justify-between border-b border-slate-100 z-10">
-                              <span className="text-[9px] font-black text-amber-805 uppercase tracking-wider flex items-center gap-1">
+                            <div className="sticky top-0 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xs py-1 flex items-center justify-between border-b border-slate-100 dark:border-slate-800 z-10">
+                              <span className="text-[9px] font-black text-amber-805 dark:text-amber-300 uppercase tracking-wider flex items-center gap-1">
                                 🚗 Surat / BPKB Kendaraan ({availableKendaraan.length})
                               </span>
                             </div>
                             {availableKendaraan.length === 0 ? (
-                              <p className="text-[10px] text-slate-400 italic pl-2 py-1">Tidak ada berkas kendaraan yang tersedia</p>
+                              <p className="text-[10px] text-slate-400 dark:text-slate-500 italic pl-2 py-1">Tidak ada berkas kendaraan yang tersedia</p>
                             ) : (
                               availableKendaraan.map((asset) => {
                                 const isSelected = selectedAssetId === asset.id;
@@ -704,17 +706,17 @@ export default function PinjamBerkasPanel({ assets, userRole = 'viewer', onSaveA
                                     onClick={() => setSelectedAssetId(asset.id)}
                                     className={`w-full text-left p-3 rounded-xl border-2 transition-all flex items-start gap-2.5 cursor-pointer ${
                                       isSelected 
-                                        ? 'border-amber-500 bg-amber-50/40 text-slate-900 shadow-xs' 
-                                        : 'border-slate-100 bg-slate-50/30 hover:bg-slate-50'
+                                        ? 'border-amber-500 bg-amber-50/40 dark:bg-amber-950/40 text-slate-900 dark:text-white shadow-xs' 
+                                        : 'border-slate-100 dark:border-slate-800 bg-slate-50/30 dark:bg-slate-800/40 hover:bg-slate-50 dark:hover:bg-slate-800'
                                     }`}
                                   >
                                     <span className="mt-0.5">🚗</span>
                                     <div className="leading-snug">
-                                      <span className="text-[8px] font-black uppercase text-slate-400 tracking-wider">ID: {asset.id}</span>
-                                      <h4 className="text-xs font-bold text-slate-800 line-clamp-2">
+                                      <span className="text-[8px] font-black uppercase text-slate-400 dark:text-slate-500 tracking-wider">ID: {asset.id}</span>
+                                      <h4 className="text-xs font-bold text-slate-800 dark:text-slate-100 line-clamp-2">
                                         {getAssetLabel(asset)}
                                       </h4>
-                                      <p className="text-[10px] text-slate-500 font-mono mt-1">Pemegang STNK BPKB: {asset.atasNama || '-'}</p>
+                                      <p className="text-[10px] text-slate-500 dark:text-slate-400 font-mono mt-1">Pemegang STNK BPKB: {asset.atasNama || '-'}</p>
                                     </div>
                                   </button>
                                 );
@@ -726,13 +728,13 @@ export default function PinjamBerkasPanel({ assets, userRole = 'viewer', onSaveA
                         {/* Section 3: Bangunan */}
                         {(selectedCategory === 'all' || selectedCategory === 'bangunan') && (
                           <div className="space-y-2 pt-2">
-                            <div className="sticky top-0 bg-white/95 backdrop-blur-xs py-1 flex items-center justify-between border-b border-slate-100 z-10">
-                              <span className="text-[9px] font-black text-slate-700 uppercase tracking-wider flex items-center gap-1">
+                            <div className="sticky top-0 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xs py-1 flex items-center justify-between border-b border-slate-100 dark:border-slate-800 z-10">
+                              <span className="text-[9px] font-black text-slate-700 dark:text-slate-300 uppercase tracking-wider flex items-center gap-1">
                                 🏢 Dokumen Gedung / Bangunan ({availableBangunan.length})
                               </span>
                             </div>
                             {availableBangunan.length === 0 ? (
-                              <p className="text-[10px] text-slate-400 italic pl-2 py-1">Tidak ada berkas bangunan yang tersedia</p>
+                              <p className="text-[10px] text-slate-400 dark:text-slate-500 italic pl-2 py-1">Tidak ada berkas bangunan yang tersedia</p>
                             ) : (
                               availableBangunan.map((asset) => {
                                 const isSelected = selectedAssetId === asset.id;
@@ -743,17 +745,17 @@ export default function PinjamBerkasPanel({ assets, userRole = 'viewer', onSaveA
                                     onClick={() => setSelectedAssetId(asset.id)}
                                     className={`w-full text-left p-3 rounded-xl border-2 transition-all flex items-start gap-2.5 cursor-pointer ${
                                       isSelected 
-                                        ? 'border-slate-700 bg-slate-100 text-slate-900 shadow-xs' 
-                                        : 'border-slate-100 bg-slate-50/30 hover:bg-slate-50'
+                                        ? 'border-slate-700 dark:border-slate-500 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white shadow-xs' 
+                                        : 'border-slate-100 dark:border-slate-800 bg-slate-50/30 dark:bg-slate-800/40 hover:bg-slate-50 dark:hover:bg-slate-800'
                                     }`}
                                   >
                                     <span className="mt-0.5">🏢</span>
                                     <div className="leading-snug">
-                                      <span className="text-[8px] font-black uppercase text-slate-400 tracking-wider">ID: {asset.id}</span>
-                                      <h4 className="text-xs font-bold text-slate-800 line-clamp-2">
+                                      <span className="text-[8px] font-black uppercase text-slate-400 dark:text-slate-500 tracking-wider">ID: {asset.id}</span>
+                                      <h4 className="text-xs font-bold text-slate-800 dark:text-slate-100 line-clamp-2">
                                         {getAssetLabel(asset)}
                                       </h4>
-                                      <p className="text-[10px] text-slate-400 font-bold">Lokasi Gedung: {asset.lokasi}</p>
+                                      <p className="text-[10px] text-slate-400 dark:text-slate-400 font-bold">Lokasi Gedung: {asset.lokasi}</p>
                                     </div>
                                   </button>
                                 );
@@ -769,16 +771,16 @@ export default function PinjamBerkasPanel({ assets, userRole = 'viewer', onSaveA
 
               {/* Right Box: The Form - ALWAYS rendered and visible */}
               <div className="lg:col-span-7">
-                <form onSubmit={handleCreateLoan} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
-                  <div className="pb-3 border-b border-slate-100 flex justify-between items-center">
+                <form onSubmit={handleCreateLoan} className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                  <div className="pb-3 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center">
                     <div>
-                      <h3 className="text-xs font-black text-slate-850 uppercase tracking-widest flex items-center gap-1.5">
-                        <PlusCircle className="w-4 h-4 text-sky-700" />
+                      <h3 className="text-xs font-black text-slate-800 dark:text-slate-100 uppercase tracking-widest flex items-center gap-1.5">
+                        <PlusCircle className="w-4 h-4 text-sky-700 dark:text-sky-400" />
                         Langkah B: Formulir Peminjaman Resmi
                       </h3>
                       {selectedAssetId && (
-                        <p className="text-[10px] text-slate-400 font-bold uppercase mt-0.5">
-                          Aset terpilih: <span className="text-slate-800 font-black">{selectedAssetId}</span>
+                        <p className="text-[10px] text-slate-400 dark:text-slate-400 font-bold uppercase mt-0.5">
+                          Aset terpilih: <span className="text-slate-800 dark:text-slate-100 font-black">{selectedAssetId}</span>
                         </p>
                       )}
                     </div>
@@ -786,7 +788,7 @@ export default function PinjamBerkasPanel({ assets, userRole = 'viewer', onSaveA
                       <button
                         type="button"
                         onClick={() => setSelectedAssetId(null)}
-                        className="text-xs font-black tracking-wide text-rose-600 hover:underline cursor-pointer flex items-center gap-0.5 whitespace-nowrap"
+                        className="text-xs font-black tracking-wide text-rose-600 dark:text-rose-400 hover:underline cursor-pointer flex items-center gap-0.5 whitespace-nowrap"
                       >
                         <Undo2 className="w-3.5 h-3.5" /> Ganti Berkas
                       </button>
@@ -795,21 +797,21 @@ export default function PinjamBerkasPanel({ assets, userRole = 'viewer', onSaveA
 
                   {/* Status bar alert */}
                   {!selectedAssetId ? (
-                    <div className="bg-amber-100/50 border-2 border-amber-300/40 p-4 rounded-xl flex items-start gap-3 mt-1">
-                      <AlertCircle className="w-4.5 h-4.5 text-amber-600 flex-shrink-0 mt-0.5" />
+                    <div className="bg-amber-100/50 dark:bg-amber-950/40 border-2 border-amber-300/40 dark:border-amber-800/60 p-4 rounded-xl flex items-start gap-3 mt-1">
+                      <AlertCircle className="w-4.5 h-4.5 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
                       <div>
-                        <span className="text-[10px] uppercase font-extrabold block tracking-wider text-amber-850 font-sans">Lengkapi Pemilihan:</span>
-                        <p className="text-[10px] font-semibold text-slate-600 mt-0.5 font-sans">
+                        <span className="text-[10px] uppercase font-extrabold block tracking-wider text-amber-850 dark:text-amber-300 font-sans">Lengkapi Pemilihan:</span>
+                        <p className="text-[10px] font-semibold text-slate-600 dark:text-slate-300 mt-0.5 font-sans">
                           Silakan klik dan pilih salah satu berkas yang tersedia di panel sebelah kiri untuk mengaktifkan kolom input data peminjaman di formulir ini.
                         </p>
                       </div>
                     </div>
                   ) : (
-                    <div className="bg-sky-100/50 border-2 border-sky-300/40 p-4 rounded-xl flex items-start gap-3">
-                      <CheckCircle2 className="w-4.5 h-4.5 text-sky-700 flex-shrink-0 mt-0.5" />
+                    <div className="bg-sky-100/50 dark:bg-sky-950/40 border-2 border-sky-300/40 dark:border-sky-800/60 p-4 rounded-xl flex items-start gap-3">
+                      <CheckCircle2 className="w-4.5 h-4.5 text-sky-700 dark:text-sky-400 flex-shrink-0 mt-0.5" />
                       <div className="leading-snug">
-                        <span className="text-[10px] uppercase font-extrabold block text-sky-900 tracking-wider">Berkas Terbuka Siap Dialokasikan:</span>
-                        <p className="text-xs font-extrabold text-slate-800 mt-1">
+                        <span className="text-[10px] uppercase font-extrabold block text-sky-900 dark:text-sky-300 tracking-wider">Berkas Terbuka Siap Dialokasikan:</span>
+                        <p className="text-xs font-extrabold text-slate-800 dark:text-slate-100 mt-1">
                           {getAssetLabel(assets.find(a => a.id === selectedAssetId)!)}
                         </p>
                       </div>
@@ -819,7 +821,7 @@ export default function PinjamBerkasPanel({ assets, userRole = 'viewer', onSaveA
                   {/* Grid Inputs */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1">
-                      <label className="block text-[10px] font-black text-slate-700 uppercase tracking-wider">
+                      <label className="block text-[10px] font-black text-slate-700 dark:text-slate-200 uppercase tracking-wider">
                         Nama Lengkap Peminjam <span className="text-rose-500">*</span>
                       </label>
                       <input
@@ -829,12 +831,12 @@ export default function PinjamBerkasPanel({ assets, userRole = 'viewer', onSaveA
                         placeholder="Contoh: Budi Santoso"
                         value={peminjamName}
                         onChange={(e) => setPeminjamName(e.target.value)}
-                        className="w-full bg-slate-50 disabled:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed border border-slate-200 rounded-lg px-3 py-2 text-xs font-bold text-slate-800 focus:outline-none"
+                        className="w-full bg-slate-50 dark:bg-slate-800 disabled:bg-slate-100 dark:disabled:bg-slate-800/50 disabled:opacity-50 disabled:cursor-not-allowed border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 text-xs font-bold text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none"
                       />
                     </div>
 
                     <div className="space-y-1">
-                      <label className="block text-[10px] font-black text-slate-700 uppercase tracking-wider">
+                      <label className="block text-[10px] font-black text-slate-700 dark:text-slate-200 uppercase tracking-wider">
                         Jabatan / Lembaga / Bagian <span className="text-rose-500">*</span>
                       </label>
                       <input
@@ -844,12 +846,12 @@ export default function PinjamBerkasPanel({ assets, userRole = 'viewer', onSaveA
                         placeholder="Contoh: Pengurus Wakaf Madiun"
                         value={peminjamJabatan}
                         onChange={(e) => setPeminjamJabatan(e.target.value)}
-                        className="w-full bg-slate-50 disabled:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed border border-slate-200 rounded-lg px-3 py-2 text-xs font-bold text-slate-800 focus:outline-none"
+                        className="w-full bg-slate-50 dark:bg-slate-800 disabled:bg-slate-100 dark:disabled:bg-slate-800/50 disabled:opacity-50 disabled:cursor-not-allowed border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 text-xs font-bold text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none"
                       />
                     </div>
 
                     <div className="space-y-1">
-                      <label className="block text-[10px] font-black text-slate-700 uppercase tracking-wider">
+                      <label className="block text-[10px] font-black text-slate-700 dark:text-slate-200 uppercase tracking-wider">
                         No. Kontak / HP Aktif <span className="text-rose-500">*</span>
                       </label>
                       <input
@@ -859,12 +861,12 @@ export default function PinjamBerkasPanel({ assets, userRole = 'viewer', onSaveA
                         placeholder="Contoh: 0812-xxxx-xxxx"
                         value={peminjamKontak}
                         onChange={(e) => setPeminjamKontak(e.target.value)}
-                        className="w-full bg-slate-50 disabled:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed border border-slate-205 rounded-lg px-3 py-2 text-xs font-bold text-slate-800 focus:outline-none"
+                        className="w-full bg-slate-50 dark:bg-slate-800 disabled:bg-slate-100 dark:disabled:bg-slate-800/50 disabled:opacity-50 disabled:cursor-not-allowed border border-slate-205 dark:border-slate-700 rounded-lg px-3 py-2 text-xs font-bold text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none"
                       />
                     </div>
 
                     <div className="space-y-1">
-                      <label className="block text-[10px] font-black text-slate-700 uppercase tracking-wider">
+                      <label className="block text-[10px] font-black text-slate-700 dark:text-slate-200 uppercase tracking-wider">
                         Tanggal Pengeluaran / Pinjam <span className="text-rose-500">*</span>
                       </label>
                       <input
@@ -873,12 +875,12 @@ export default function PinjamBerkasPanel({ assets, userRole = 'viewer', onSaveA
                         disabled={!selectedAssetId}
                         value={tanggalPinjam}
                         onChange={(e) => setTanggalPinjam(e.target.value)}
-                        className="w-full bg-slate-50 disabled:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed border border-slate-200 rounded-lg px-3 py-2 text-xs font-bold text-slate-800 focus:outline-none"
+                        className="w-full bg-slate-50 dark:bg-slate-800 disabled:bg-slate-100 dark:disabled:bg-slate-800/50 disabled:opacity-50 disabled:cursor-not-allowed border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 text-xs font-bold text-slate-800 dark:text-slate-100 focus:outline-none"
                       />
                     </div>
 
                     <div className="space-y-1">
-                      <label className="block text-[10px] font-black text-slate-700 uppercase tracking-wider">
+                      <label className="block text-[10px] font-black text-slate-700 dark:text-slate-200 uppercase tracking-wider">
                         Batas Rencana Pengembalian
                       </label>
                       <input
@@ -886,12 +888,12 @@ export default function PinjamBerkasPanel({ assets, userRole = 'viewer', onSaveA
                         disabled={!selectedAssetId}
                         value={tanggalKembaliRencana}
                         onChange={(e) => setTanggalKembaliRencana(e.target.value)}
-                        className="w-full bg-slate-50 disabled:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed border border-slate-200 rounded-lg px-3 py-2 text-xs font-bold text-slate-800 focus:outline-none"
+                        className="w-full bg-slate-50 dark:bg-slate-800 disabled:bg-slate-100 dark:disabled:bg-slate-800/50 disabled:opacity-50 disabled:cursor-not-allowed border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 text-xs font-bold text-slate-800 dark:text-slate-100 focus:outline-none"
                       />
                     </div>
 
                     <div className="space-y-1">
-                      <label className="block text-[10px] font-black text-slate-700 uppercase tracking-wider">
+                      <label className="block text-[10px] font-black text-slate-700 dark:text-slate-200 uppercase tracking-wider">
                         Petugas Penyerah Fisik Berkas <span className="text-rose-500">*</span>
                       </label>
                       <input
@@ -901,13 +903,13 @@ export default function PinjamBerkasPanel({ assets, userRole = 'viewer', onSaveA
                         placeholder="Nama Anda / Pengurus"
                         value={namaPetugas}
                         onChange={(e) => setNamaPetugas(e.target.value)}
-                        className="w-full bg-slate-50 disabled:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed border border-slate-200 rounded-lg px-3 py-2 text-xs font-bold text-slate-800 focus:outline-none"
+                        className="w-full bg-slate-50 dark:bg-slate-800 disabled:bg-slate-100 dark:disabled:bg-slate-800/50 disabled:opacity-50 disabled:cursor-not-allowed border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 text-xs font-bold text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none"
                       />
                     </div>
                   </div>
 
                   <div className="space-y-1">
-                    <label className="block text-[10px] font-black text-slate-700 uppercase tracking-wider">
+                    <label className="block text-[10px] font-black text-slate-700 dark:text-slate-200 uppercase tracking-wider">
                       Alasan & Tujuan Utama Peminjaman <span className="text-rose-500">*</span>
                     </label>
                     <textarea
@@ -917,20 +919,20 @@ export default function PinjamBerkasPanel({ assets, userRole = 'viewer', onSaveA
                       placeholder="Tuliskan detail penggunaan berkas (misal: pengurusan pecah sertifikat, balik nama, atau verifikasi di notaris)..."
                       value={keperluan}
                       onChange={(e) => setKeperluan(e.target.value)}
-                      className="w-full bg-slate-50 disabled:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed border border-slate-202 rounded-lg px-3 py-2 text-xs font-bold text-slate-800 focus:outline-none"
+                      className="w-full bg-slate-50 dark:bg-slate-800 disabled:bg-slate-100 dark:disabled:bg-slate-800/50 disabled:opacity-50 disabled:cursor-not-allowed border border-slate-202 dark:border-slate-700 rounded-lg px-3 py-2 text-xs font-bold text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none"
                     />
                   </div>
 
                   {/* Live Camera Proof capture when asset is selected */}
                   {selectedAssetId && (
-                    <div className="pt-2 border-t border-slate-100 space-y-2">
+                    <div className="pt-2 border-t border-slate-100 dark:border-slate-800 space-y-2">
                       <CameraCapture
                         label="Ambil Foto Bukti Peminjaman (Serah Terima Dokumen)"
                         photoDataUrl={fotoPinjam}
                         onPhotoCaptured={setFotoPinjam}
                       />
                       {!fotoPinjam && (
-                        <p className="text-[10px] text-amber-600 bg-amber-50 rounded-lg p-2 font-bold text-center border border-amber-200/50">
+                        <p className="text-[10px] text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/40 rounded-lg p-2 font-bold text-center border border-amber-200/50 dark:border-amber-800">
                           ⚠ Persyaratan: Harap ambil foto bukti peminjaman langsung dari kamera untuk mengaktifkan tombol konfirmasi di bawah.
                         </p>
                       )}
@@ -955,23 +957,23 @@ export default function PinjamBerkasPanel({ assets, userRole = 'viewer', onSaveA
         {activeTab === 'history' && (
           <div className="space-y-4 pb-10 font-sans">
             <div className="flex items-center gap-2">
-              <span className="p-1 px-2.5 bg-slate-700 text-white rounded-lg text-xs font-black">HISTORY</span>
-              <h2 className="text-xs font-black text-slate-900 uppercase tracking-widest">
+              <span className="p-1 px-2.5 bg-slate-700 dark:bg-slate-600 text-white rounded-lg text-xs font-black">HISTORY</span>
+              <h2 className="text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-widest">
                 Riwayat Lengkap Peminjaman Berkas ({filteredHistory.length})
               </h2>
             </div>
 
             <div className="space-y-4">
               {filteredHistory.length === 0 ? (
-                <div className="bg-white border text-center py-16 rounded-2xl border-slate-200">
-                  <span className="text-4xl text-slate-300">📜</span>
-                  <p className="text-xs font-black text-slate-650 mt-2">Belum ada riwayat pengembalian dokumen tercatat</p>
+                <div className="bg-white dark:bg-slate-900 border text-center py-16 rounded-2xl border-slate-200 dark:border-slate-800">
+                  <span className="text-4xl text-slate-300 dark:text-slate-600">📜</span>
+                  <p className="text-xs font-black text-slate-600 dark:text-slate-350 mt-2">Belum ada riwayat pengembalian dokumen tercatat</p>
                 </div>
               ) : (
-                <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs">
+                <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-xs">
                   <div className="overflow-x-auto">
                     <table className="w-full text-left text-xs">
-                      <thead className="bg-slate-100 border-b border-slate-200 text-[10px] font-black uppercase text-slate-500 tracking-wider">
+                      <thead className="bg-slate-100 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 tracking-wider">
                         <tr>
                           <th className="p-4">Nama Aset / Berkas</th>
                           <th className="p-4">Identitas Peminjam</th>
@@ -980,47 +982,47 @@ export default function PinjamBerkasPanel({ assets, userRole = 'viewer', onSaveA
                           <th className="p-4">Status & Petugas</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-slate-100 font-medium">
+                      <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-medium">
                         {filteredHistory.map((item, index) => {
                           const p = item.loan;
                           return (
-                            <tr key={index} className="hover:bg-slate-50/50 transition-colors">
+                            <tr key={index} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors">
                               <td className="p-4 max-w-xs">
                                 <span className={`text-[8px] font-black uppercase px-2 py-0.5 rounded-full ${
-                                  item.asset.type === 'tanah' ? 'bg-sky-50 text-sky-800' :
-                                  item.asset.type === 'kendaraan' ? 'bg-amber-50 text-amber-800' :
-                                  'bg-slate-50 text-slate-700'
+                                  item.asset.type === 'tanah' ? 'bg-sky-50 dark:bg-sky-950/50 text-sky-800 dark:text-sky-300' :
+                                  item.asset.type === 'kendaraan' ? 'bg-amber-50 dark:bg-amber-950/50 text-amber-800 dark:text-amber-300' :
+                                  'bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300'
                                 }`}>
                                   {item.asset.type === 'tanah' ? 'Tanah' : item.asset.type === 'kendaraan' ? 'Kendaraan' : 'Bangunan'}
                                 </span>
-                                <p className="text-xs font-black text-slate-800 mt-1.5 leading-snug">
+                                <p className="text-xs font-black text-slate-800 dark:text-slate-100 mt-1.5 leading-snug">
                                   {getAssetLabel(item.asset)}
                                 </p>
                               </td>
 
                               <td className="p-4 leading-normal">
-                                <p className="font-extrabold text-slate-900">{p.peminjamName}</p>
-                                <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wide">{p.peminjamJabatan}</p>
-                                <p className="text-[10px] text-slate-500 font-bold font-mono mt-0.5">{p.peminjamKontak}</p>
+                                <p className="font-extrabold text-slate-900 dark:text-slate-100">{p.peminjamName}</p>
+                                <p className="text-[10px] text-slate-400 dark:text-slate-400 font-bold uppercase tracking-wide">{p.peminjamJabatan}</p>
+                                <p className="text-[10px] text-slate-500 dark:text-slate-400 font-bold font-mono mt-0.5">{p.peminjamKontak}</p>
                               </td>
 
-                              <td className="p-4 text-[11px] font-mono text-slate-600 leading-normal">
-                                <p>📤 Keluar: <strong className="font-bold text-slate-800">{p.tanggalPinjam}</strong></p>
-                                <p className="text-sky-700 mt-0.5">📥 Masuk: <strong className="font-black text-sky-850">{p.tanggalKembaliRiil}</strong></p>
+                              <td className="p-4 text-[11px] font-mono text-slate-600 dark:text-slate-300 leading-normal">
+                                <p>📤 Keluar: <strong className="font-bold text-slate-800 dark:text-slate-100">{p.tanggalPinjam}</strong></p>
+                                <p className="text-sky-700 dark:text-sky-400 mt-0.5">📥 Masuk: <strong className="font-black text-sky-850 dark:text-sky-300">{p.tanggalKembaliRiil}</strong></p>
                                 {p.tanggalKembaliRencana && (
-                                  <p className="text-[10px] text-slate-405 mt-1">Estimasi batas: {p.tanggalKembaliRencana}</p>
+                                  <p className="text-[10px] text-slate-405 dark:text-slate-400 mt-1">Estimasi batas: {p.tanggalKembaliRencana}</p>
                                 )}
                               </td>
 
                               <td className="p-4 max-w-xs">
-                                <p className="text-[11px] text-slate-650 italic leading-normal line-clamp-3">
+                                <p className="text-[11px] text-slate-650 dark:text-slate-300 italic leading-normal line-clamp-3">
                                   "{p.keperluan}"
                                 </p>
                                 <div className="flex gap-2.5 mt-2">
                                   {p.fotoPinjam && (
                                     <div className="flex flex-col items-start">
                                       <span className="text-[7px] font-black text-slate-400 uppercase tracking-wider mb-1">📸 Bukti Pinjam</span>
-                                      <div className="w-10 h-8 rounded-md overflow-hidden bg-slate-900 border border-slate-200 shadow-xs">
+                                      <div className="w-10 h-8 rounded-md overflow-hidden bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-xs">
                                         <img 
                                           src={p.fotoPinjam} 
                                           alt="Bukti Pinjam" 
@@ -1039,7 +1041,7 @@ export default function PinjamBerkasPanel({ assets, userRole = 'viewer', onSaveA
                                   {p.fotoKembali && (
                                     <div className="flex flex-col items-start">
                                       <span className="text-[7px] font-black text-slate-400 uppercase tracking-wider mb-1">📸 Bukti Kembali</span>
-                                      <div className="w-10 h-8 rounded-md overflow-hidden bg-slate-900 border border-slate-200 shadow-xs">
+                                      <div className="w-10 h-8 rounded-md overflow-hidden bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-xs">
                                         <img 
                                           src={p.fotoKembali} 
                                           alt="Bukti Kembali" 
@@ -1059,11 +1061,11 @@ export default function PinjamBerkasPanel({ assets, userRole = 'viewer', onSaveA
                               </td>
 
                               <td className="p-4 font-sans leading-normal">
-                                <span className="inline-flex items-center gap-1 text-[9px] font-black uppercase text-sky-800 bg-sky-50 border border-sky-200 px-2.5 py-1 rounded-full">
+                                <span className="inline-flex items-center gap-1 text-[9px] font-black uppercase text-sky-800 dark:text-sky-300 bg-sky-50 dark:bg-sky-950/50 border border-sky-200 dark:border-sky-800 px-2.5 py-1 rounded-full">
                                   ✔ KEMBALI
                                 </span>
                                 <p className="text-[10px] text-slate-400 mt-1.5 font-bold">
-                                  Petugas: <strong className="text-slate-800 font-bold">{p.namaPetugas}</strong>
+                                  Petugas: <strong className="text-slate-800 dark:text-slate-200 font-bold">{p.namaPetugas}</strong>
                                 </p>
                               </td>
                             </tr>

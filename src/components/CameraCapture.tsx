@@ -163,11 +163,11 @@ export default function CameraCapture({ label, photoDataUrl, onPhotoCaptured }: 
       />
 
       <div className="flex justify-between items-center">
-        <span className="text-[10px] font-black text-slate-700 uppercase tracking-wider block">
+        <span className="text-[10px] font-black text-slate-700 dark:text-slate-200 uppercase tracking-wider block">
           {label} <span className="text-rose-500">*</span>
         </span>
         {photoDataUrl && (
-          <span className="text-[9px] text-sky-700 font-extrabold flex items-center gap-1">
+          <span className="text-[9px] text-sky-700 dark:text-sky-300 font-extrabold flex items-center gap-1">
             <CheckCircle2 className="w-3.5 h-3.5" /> Foto Tersimpan
           </span>
         )}
@@ -275,21 +275,21 @@ export default function CameraCapture({ label, photoDataUrl, onPhotoCaptured }: 
             <button
               type="button"
               onClick={handleStartCamera}
-              className="flex-1 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-800 font-extrabold uppercase text-[9px] tracking-wide rounded-lg flex items-center justify-center gap-1 cursor-pointer transition-colors"
+              className="flex-1 py-1.5 bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-200 font-extrabold uppercase text-[9px] tracking-wide rounded-lg flex items-center justify-center gap-1 cursor-pointer transition-colors"
             >
               <RefreshCw className="w-3.5 h-3.5" /> Kamera Web Baru
             </button>
             <button
               type="button"
               onClick={handleTriggerFileInput}
-              className="flex-1 py-1.5 bg-sky-50 hover:bg-sky-100 text-sky-800 font-extrabold uppercase text-[9px] tracking-wide border border-sky-200 rounded-lg flex items-center justify-center gap-1 cursor-pointer transition-colors"
+              className="flex-1 py-1.5 bg-sky-50 dark:bg-sky-950/60 hover:bg-sky-100 dark:hover:bg-sky-900/60 text-sky-800 dark:text-sky-300 font-extrabold uppercase text-[9px] tracking-wide border border-sky-200 dark:border-sky-800 rounded-lg flex items-center justify-center gap-1 cursor-pointer transition-colors"
             >
               <Camera className="w-3.5 h-3.5" /> Kamera HP Baru
             </button>
             <button
               type="button"
               onClick={handleDeletePhoto}
-              className="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-700 font-extrabold uppercase text-[9px] tracking-wide rounded-lg flex items-center justify-center gap-1 cursor-pointer transition-colors"
+              className="px-3 py-1.5 bg-rose-50 dark:bg-rose-950/60 hover:bg-rose-100 dark:hover:bg-rose-900/60 border border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-300 font-extrabold uppercase text-[9px] tracking-wide rounded-lg flex items-center justify-center gap-1 cursor-pointer transition-colors"
             >
               <Trash2 className="w-3.5 h-3.5" /> Hapus Foto
             </button>

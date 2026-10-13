@@ -99,10 +99,10 @@ export default function ExportPanel({
     <div className="space-y-6 pb-24">
       {/* Title */}
       <div>
-        <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
-          <FileSpreadsheet className="w-5 h-5 text-sky-800" /> Ekspor &amp; Penyelarasan Dokumen
+        <h2 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
+          <FileSpreadsheet className="w-5 h-5 text-sky-800 dark:text-sky-400" /> Ekspor &amp; Penyelarasan Dokumen
         </h2>
-        <p className="text-gray-500 text-xs">
+        <p className="text-gray-500 dark:text-slate-400 text-xs">
           Keluarkan database aset Anda dalam format Excel / CSV, atau lakukan pencadangan data antar perangkat.
         </p>
       </div>
@@ -110,18 +110,18 @@ export default function ExportPanel({
       {/* CSV Category Cards */}
       <div className="grid grid-cols-1 gap-4">
         {/* 1. Tanah CSV */}
-        <div className="bg-white p-4.5 rounded-2xl border-2 border-slate-200 shadow-sm flex flex-col justify-between space-y-3 hover:border-sky-400 transition-colors">
+        <div className="bg-white dark:bg-slate-800 p-4.5 rounded-2xl border-2 border-slate-200 dark:border-slate-700 shadow-sm flex flex-col justify-between space-y-3 hover:border-sky-400 dark:hover:border-sky-500 transition-colors">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl bg-sky-50">
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl bg-sky-50 dark:bg-sky-950/60">
                 🏘️
               </div>
               <div>
-                <h3 className="text-xs font-black text-slate-800 leading-none">Format Aset Tanah</h3>
-                <span className="text-[10px] text-slate-400 font-mono mt-1.5 block">{tanahAssets.length} data tanah terdaftar</span>
+                <h3 className="text-xs font-black text-slate-800 dark:text-slate-100 leading-none">Format Aset Tanah</h3>
+                <span className="text-[10px] text-slate-400 dark:text-slate-400 font-mono mt-1.5 block">{tanahAssets.length} data tanah terdaftar</span>
               </div>
             </div>
-            <span className="text-[10px] font-black bg-sky-100 text-sky-800 px-2.5 py-0.5 rounded uppercase tracking-wider">CSV</span>
+            <span className="text-[10px] font-black bg-sky-100 dark:bg-sky-950 text-sky-800 dark:text-sky-300 border border-sky-200 dark:border-sky-800 px-2.5 py-0.5 rounded uppercase tracking-wider">CSV</span>
           </div>
           <div className="flex gap-2">
             <button
@@ -134,7 +134,7 @@ export default function ExportPanel({
             <button
               onClick={() => handleCopyToClipboard('tanah')}
               disabled={tanahAssets.length === 0}
-              className="flex-shrink-0 px-3.5 py-2.5 bg-slate-50 text-slate-700 hover:bg-slate-100 disabled:opacity-40 border border-slate-200 rounded-xl text-xs font-bold transition-all focus:outline-none cursor-pointer"
+              className="flex-shrink-0 px-3.5 py-2.5 bg-slate-50 dark:bg-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-600 disabled:opacity-40 border border-slate-200 dark:border-slate-600 rounded-xl text-xs font-bold transition-all focus:outline-none cursor-pointer"
             >
               {copyAck === 'tanah' ? <Check className="w-4 h-4 text-sky-600" /> : 'Salin Tabel'}
             </button>
@@ -142,18 +142,18 @@ export default function ExportPanel({
         </div>
 
         {/* 2. Kendaraan CSV */}
-        <div className="bg-white p-4.5 rounded-2xl border-2 border-slate-200 shadow-sm flex flex-col justify-between space-y-3 hover:border-amber-450 transition-colors">
+        <div className="bg-white dark:bg-slate-800 p-4.5 rounded-2xl border-2 border-slate-200 dark:border-slate-700 shadow-sm flex flex-col justify-between space-y-3 hover:border-amber-450 dark:hover:border-amber-500 transition-colors">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl bg-amber-50">
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl bg-amber-50 dark:bg-amber-950/60">
                 🚐
               </div>
               <div>
-                <h3 className="text-xs font-black text-slate-800 leading-none">Format Aset Kendaraan</h3>
-                <span className="text-[10px] text-slate-400 font-mono mt-1.5 block">{kendaraanAssets.length} unit kendaraan</span>
+                <h3 className="text-xs font-black text-slate-800 dark:text-slate-100 leading-none">Format Aset Kendaraan</h3>
+                <span className="text-[10px] text-slate-400 dark:text-slate-400 font-mono mt-1.5 block">{kendaraanAssets.length} unit kendaraan</span>
               </div>
             </div>
-            <span className="text-[10px] font-black bg-amber-100 text-amber-900 border border-amber-350 px-2.5 py-0.5 rounded uppercase tracking-wider">CSV</span>
+            <span className="text-[10px] font-black bg-amber-100 dark:bg-amber-950 text-amber-900 dark:text-amber-300 border border-amber-350 dark:border-amber-800 px-2.5 py-0.5 rounded uppercase tracking-wider">CSV</span>
           </div>
           <div className="flex gap-2">
             <button
@@ -166,7 +166,7 @@ export default function ExportPanel({
             <button
               onClick={() => handleCopyToClipboard('kendaraan')}
               disabled={kendaraanAssets.length === 0}
-              className="flex-shrink-0 px-3.5 py-2.5 bg-slate-50 text-slate-700 hover:bg-slate-100 disabled:opacity-40 border border-slate-200 rounded-xl text-xs font-bold transition-all focus:outline-none cursor-pointer"
+              className="flex-shrink-0 px-3.5 py-2.5 bg-slate-50 dark:bg-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-600 disabled:opacity-40 border border-slate-200 dark:border-slate-600 rounded-xl text-xs font-bold transition-all focus:outline-none cursor-pointer"
             >
               {copyAck === 'kendaraan' ? <Check className="w-4 h-4 text-sky-600" /> : 'Salin Tabel'}
             </button>
@@ -174,18 +174,18 @@ export default function ExportPanel({
         </div>
 
         {/* 3. Bangunan CSV */}
-        <div className="bg-white p-4.5 rounded-2xl border-2 border-slate-200 shadow-sm flex flex-col justify-between space-y-3 hover:border-purple-400 transition-colors">
+        <div className="bg-white dark:bg-slate-800 p-4.5 rounded-2xl border-2 border-slate-200 dark:border-slate-700 shadow-sm flex flex-col justify-between space-y-3 hover:border-purple-400 dark:hover:border-purple-500 transition-colors">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl bg-purple-50">
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl bg-purple-50 dark:bg-purple-950/60">
                 🏢
               </div>
               <div>
-                <h3 className="text-xs font-black text-slate-800 leading-none">Format Aset Bangunan</h3>
-                <span className="text-[10px] text-slate-400 font-mono mt-1.5 block">{bangunanAssets.length} bangunan terdaftar</span>
+                <h3 className="text-xs font-black text-slate-800 dark:text-slate-100 leading-none">Format Aset Bangunan</h3>
+                <span className="text-[10px] text-slate-400 dark:text-slate-400 font-mono mt-1.5 block">{bangunanAssets.length} bangunan terdaftar</span>
               </div>
             </div>
-            <span className="text-[10px] font-black bg-purple-100 text-purple-800 px-2.5 py-0.5 rounded uppercase tracking-wider">CSV</span>
+            <span className="text-[10px] font-black bg-purple-100 dark:bg-purple-950 text-purple-800 dark:text-purple-300 border border-purple-200 dark:border-purple-800 px-2.5 py-0.5 rounded uppercase tracking-wider">CSV</span>
           </div>
           <div className="flex gap-2">
             <button
@@ -198,7 +198,7 @@ export default function ExportPanel({
             <button
               onClick={() => handleCopyToClipboard('bangunan')}
               disabled={bangunanAssets.length === 0}
-              className="flex-shrink-0 px-3.5 py-2.5 bg-slate-50 text-slate-700 hover:bg-slate-100 disabled:opacity-40 border border-slate-200 rounded-xl text-xs font-bold transition-all focus:outline-none cursor-pointer"
+              className="flex-shrink-0 px-3.5 py-2.5 bg-slate-50 dark:bg-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-600 disabled:opacity-40 border border-slate-200 dark:border-slate-600 rounded-xl text-xs font-bold transition-all focus:outline-none cursor-pointer"
             >
               {copyAck === 'bangunan' ? <Check className="w-4 h-4 text-sky-600" /> : 'Salin Tabel'}
             </button>
@@ -231,10 +231,10 @@ export default function ExportPanel({
       </div>
 
       {/* JSON Backup & Device Sync */}
-      <div className="bg-white p-5 rounded-2xl border-2 border-slate-200 shadow-sm space-y-4">
+      <div className="bg-white dark:bg-slate-800 p-5 rounded-2xl border-2 border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
         <div>
-          <h3 className="text-xs font-black text-slate-850 uppercase tracking-wider">Device Sync / Pencadangan (.json)</h3>
-          <p className="text-[10px] text-slate-400 mt-1 leading-normal">
+          <h3 className="text-xs font-black text-slate-800 dark:text-slate-100 uppercase tracking-wider">Device Sync / Pencadangan (.json)</h3>
+          <p className="text-[10px] text-slate-400 dark:text-slate-400 mt-1 leading-normal">
             Pindahkan atau gabungkan seluruh data survei surveior lapangan secara instan antar perangkat tanpa perlu server internet.
           </p>
         </div>
@@ -242,9 +242,9 @@ export default function ExportPanel({
         <div className="flex flex-col gap-3">
           <button
             onClick={handleDownloadFullJSONBackup}
-            className="w-full py-2.5 border-2 border-dashed border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer focus:outline-none"
+            className="w-full py-2.5 border-2 border-dashed border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer focus:outline-none"
           >
-            <Download className="w-4 h-4 text-slate-500" /> Ekspor Berkas Cadangan (.json)
+            <Download className="w-4 h-4 text-slate-500 dark:text-slate-400" /> Ekspor Berkas Cadangan (.json)
           </button>
 
           {userRole === 'admin' ? (
@@ -259,7 +259,7 @@ export default function ExportPanel({
               />
               <label
                 htmlFor="json-file-input"
-                className="w-full py-2.5 bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer focus:outline-none border-b-2 border-slate-950 block text-center"
+                className="w-full py-2.5 bg-slate-800 dark:bg-slate-700 hover:bg-slate-900 dark:hover:bg-slate-600 text-white text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer focus:outline-none border-b-2 border-slate-950 dark:border-slate-800 block text-center"
               >
                 <Upload className="w-4 h-4 text-amber-400 inline-block mr-1" /> Impor &amp; Gabungkan Cadangan
               </label>

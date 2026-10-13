@@ -587,10 +587,10 @@ export default function Dashboard({
                       <span className="text-base sm:text-lg block leading-none mb-1">
                         {item.iconText}
                       </span>
-                      <h4 className="text-[10px] sm:text-xs font-black text-slate-800 line-clamp-2 leading-tight">
+                      <h4 className="text-[10px] sm:text-xs font-black text-slate-800 dark:text-slate-100 line-clamp-2 leading-tight">
                         {item.shortTitle}
                       </h4>
-                      <span className="text-[9px] text-slate-400 font-bold block mt-0.5">
+                      <span className="text-[9px] text-slate-400 dark:text-slate-400 font-bold block mt-0.5">
                         {item.percentOfTotal}%
                       </span>
                     </div>
@@ -609,12 +609,12 @@ export default function Dashboard({
               return (
                 <div 
                   key={item.id}
-                  className="p-3.5 bg-slate-50/80 border border-slate-200/90 rounded-2xl space-y-2 hover:bg-slate-100/60 transition-colors"
+                  className="p-3.5 bg-slate-50/80 dark:bg-slate-800/60 border border-slate-200/90 dark:border-slate-700/80 rounded-2xl space-y-2 hover:bg-slate-100/60 dark:hover:bg-slate-800 transition-colors"
                 >
-                  <div className="flex items-center justify-between text-xs font-bold text-slate-700">
+                  <div className="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-slate-200">
                     <div className="flex items-center gap-2">
                       <span className="text-base">{item.iconText}</span>
-                      <span className="font-extrabold text-slate-800">{item.title}</span>
+                      <span className="font-extrabold text-slate-800 dark:text-slate-100">{item.title}</span>
                       <span className="text-[10px] text-slate-400 font-normal hidden sm:inline">({item.category})</span>
                     </div>
                     <div className="flex items-center gap-2">
