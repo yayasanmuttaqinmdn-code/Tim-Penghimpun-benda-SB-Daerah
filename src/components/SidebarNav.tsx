@@ -126,20 +126,19 @@ export default function SidebarNav({
       {/* LOWER PART / FOOTER SECTION */}
       <div className="p-3 border-t border-sky-700/40 dark:border-slate-800 bg-sky-900/40 dark:bg-slate-950/60 space-y-2.5">
         {/* Role Status and Quick Switch */}
-        <div className="p-2 rounded-xl bg-sky-950/60 dark:bg-slate-900/80 border border-sky-700/50 dark:border-slate-800 flex items-center justify-between gap-1.5">
-          <div className="flex items-center gap-1.5 min-w-0">
-            <div className={`w-2 h-2 rounded-full shrink-0 ${userRole === 'admin' ? 'bg-amber-400 animate-pulse' : 'bg-emerald-400'}`} />
-            <div className="truncate">
-              <span className="block text-[9px] font-black uppercase text-sky-200 dark:text-slate-400 leading-none">
-                {userRole === 'admin' ? 'Mode Admin' : 'Mode Tamu'}
-              </span>
-              <span className="text-[8px] text-sky-300/70 dark:text-slate-500 font-medium">
-                {userRole === 'admin' ? 'Akses Penuh' : 'Input Kendaraan & Lihat'}
-              </span>
+        {userRole === 'admin' ? (
+          <div className="p-2 rounded-xl bg-sky-950/60 dark:bg-slate-900/80 border border-sky-700/50 dark:border-slate-800 flex items-center justify-between gap-1.5">
+            <div className="flex items-center gap-1.5 min-w-0">
+              <div className="w-2 h-2 rounded-full shrink-0 bg-amber-400 animate-pulse" />
+              <div className="truncate">
+                <span className="block text-[9px] font-black uppercase text-sky-200 dark:text-slate-400 leading-none">
+                  Mode Admin
+                </span>
+                <span className="text-[8px] text-sky-300/70 dark:text-slate-500 font-medium">
+                  Akses Penuh
+                </span>
+              </div>
             </div>
-          </div>
-
-          {userRole === 'admin' ? (
             <button
               type="button"
               onClick={onSwitchToViewer}
@@ -148,17 +147,19 @@ export default function SidebarNav({
             >
               Keluar
             </button>
-          ) : (
+          </div>
+        ) : (
+          <div className="flex items-center justify-center py-0.5">
             <button
               type="button"
               onClick={onSwitchToAdmin}
-              className="p-1.5 bg-amber-400 hover:bg-amber-500 text-sky-950 rounded-lg transition-colors cursor-pointer shadow-xs shrink-0 flex items-center justify-center"
-              title="Mode Terkunci (Mode Tamu) — Klik untuk Masuk PIN Admin"
+              className="w-full py-2 px-3 bg-sky-950/70 hover:bg-amber-400 hover:text-sky-950 text-amber-300 rounded-xl transition-all cursor-pointer border border-sky-700/50 dark:border-slate-800 shadow-xs flex items-center justify-center gap-2 active:scale-95"
+              title="Mode Terkunci (Mode Tamu) — Klik untuk Buka dengan PIN Admin"
             >
-              <Lock className="w-3.5 h-3.5 stroke-[2.5]" />
+              <Lock className="w-4 h-4 stroke-[2.5]" />
             </button>
-          )}
-        </div>
+          </div>
+        )}
 
         <div className="space-y-1 w-full">
           <div className="flex items-center justify-between text-[10px] text-sky-300 dark:text-sky-400 leading-tight">

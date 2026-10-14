@@ -187,6 +187,7 @@ export interface PembayaranTahunPbb {
   lunas: boolean;
   tanggalBayar?: string;
   nominalBayar?: number;
+  nominalKetetapan?: number; // Ketetapan beban SPPT tahun ini sesuai kebijakan pemerintah
   keterangan?: string;
 }
 

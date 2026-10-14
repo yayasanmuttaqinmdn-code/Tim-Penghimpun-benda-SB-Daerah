@@ -191,7 +191,8 @@ export default function Dashboard({
     { baik: 0, ringan: 0, berat: 0 }
   );
 
-  // Auto-play timer for Carousel (6 seconds interval)
+  // Auto-play timer for Carousel (4 slides)
+  const TOTAL_SLIDES = 4;
   useEffect(() => {
     if (!isAutoPlay) {
       if (autoPlayTimerRef.current) clearInterval(autoPlayTimerRef.current);
@@ -200,7 +201,7 @@ export default function Dashboard({
 
     autoPlayTimerRef.current = setInterval(() => {
       setSlideDirection(1);
-      setActiveSlide(prev => (prev + 1) % 3);
+      setActiveSlide(prev => (prev + 1) % TOTAL_SLIDES);
     }, 6500);
 
     return () => {
@@ -211,13 +212,13 @@ export default function Dashboard({
   const handlePrevSlide = () => {
     setIsAutoPlay(false);
     setSlideDirection(-1);
-    setActiveSlide(prev => (prev - 1 + 3) % 3);
+    setActiveSlide(prev => (prev - 1 + TOTAL_SLIDES) % TOTAL_SLIDES);
   };
 
   const handleNextSlide = () => {
     setIsAutoPlay(false);
     setSlideDirection(1);
-    setActiveSlide(prev => (prev + 1) % 3);
+    setActiveSlide(prev => (prev + 1) % TOTAL_SLIDES);
   };
 
   const handleSelectSlide = (idx: number) => {
@@ -403,6 +404,19 @@ export default function Dashboard({
         <div className="absolute -top-16 -right-16 w-60 h-60 bg-sky-500/10 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute -bottom-16 -left-16 w-60 h-60 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
 
+        {/* Auto-play Timer Indicator Line */}
+        {isAutoPlay && (
+          <div className="absolute top-0 inset-x-0 h-1 bg-white/10 overflow-hidden z-20 pointer-events-none">
+            <motion.div
+              key={`slide-progress-${activeSlide}`}
+              initial={{ width: '0%' }}
+              animate={{ width: '100%' }}
+              transition={{ duration: 6.5, ease: 'linear' }}
+              className="h-full bg-gradient-to-r from-amber-400 to-amber-300"
+            />
+          </div>
+        )}
+
         {/* Carousel Header & Controls Bar */}
         <div className="relative z-10 flex items-center justify-between pb-3.5 mb-2 border-b border-sky-800/60">
           <div className="flex items-center gap-2">
@@ -411,7 +425,7 @@ export default function Dashboard({
               <span>SOROTAN UTAMA</span>
             </span>
             <span className="text-[11px] text-sky-300/90 font-medium hidden sm:inline">
-              Geser kartu untuk melihat ringkasan kategori
+              Geser kartu atau pilih tab untuk melihat rincian kategori
             </span>
           </div>
 
@@ -436,8 +450,8 @@ export default function Dashboard({
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
-              <span className="text-[10px] font-mono font-bold px-1 text-amber-300">
-                {activeSlide + 1} / 3
+              <span className="text-[10px] font-mono font-bold px-1.5 text-amber-300 min-w-[32px] text-center">
+                {activeSlide + 1} / {TOTAL_SLIDES}
               </span>
               <button
                 type="button"
@@ -453,11 +467,11 @@ export default function Dashboard({
 
         {/* Swipeable Container */}
         <div 
-          className="relative min-h-[170px] overflow-hidden cursor-grab active:cursor-grabbing touch-pan-y"
+          className="relative min-h-[185px] overflow-hidden cursor-grab active:cursor-grabbing touch-pan-y"
           onMouseEnter={() => setIsAutoPlay(false)}
         >
           <AnimatePresence initial={false} custom={slideDirection} mode="wait">
-            {/* SLIDE 0: PORTOFOLIO TANAH */}
+            {/* SLIDE 0: REKAPITULASI SELURUH DATA ASET TERPADU */}
             {activeSlide === 0 && (
               <motion.div
                 key="slide-0"
@@ -468,7 +482,151 @@ export default function Dashboard({
                 exit="exit"
                 drag="x"
                 dragConstraints={{ left: 0, right: 0 }}
-                dragElastic={0.2}
+                dragElastic={0.25}
+                onDragEnd={handleSlideDragEnd}
+                className="w-full flex flex-col justify-between space-y-4"
+              >
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div>
+                    <span className="text-[11px] font-bold text-amber-300 uppercase tracking-wider flex items-center gap-1.5">
+                      <span>🌐 Rekapitulasi Menyeluruh Aplikasi</span>
+                      <span>·</span>
+                      <span className="text-white font-extrabold">{totalAssetsCount} Total Aset Terdata</span>
+                    </span>
+                    <div className="flex flex-wrap items-baseline gap-2.5 mt-1">
+                      <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+                        {totalAssetsCount} Aset Terpadu
+                      </h2>
+                      <span className="text-xs sm:text-sm font-bold text-sky-200 bg-sky-800/60 border border-sky-700/60 px-2.5 py-0.5 rounded-xl">
+                        {tanahCount} Tanah · {kendaraanCount} Kendaraan · {bangunanCount} Gedung
+                      </span>
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => onNavigateToTab('database')}
+                    className="self-start sm:self-auto px-4 py-2 bg-amber-400 hover:bg-amber-300 text-sky-950 font-black rounded-xl text-xs flex items-center gap-1.5 transition-all shadow-md active:scale-95 cursor-pointer"
+                  >
+                    <span>Buka Semua Data</span>
+                    <ArrowUpRight className="w-4 h-4" />
+                  </button>
+                </div>
+
+                {/* 4 Pillars of Data in App */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1">
+                  <div 
+                    onClick={() => handleOpenDrawer({
+                      id: 'all-tanah',
+                      title: 'Data Seluruh Bidang Tanah',
+                      category: 'Tanah & Lahan',
+                      iconText: '🏘️',
+                      count: tanahCount,
+                      luas: totalLuasTanah,
+                      matchingAssets: tanahAssets,
+                      desc: 'Seluruh bidang tanah milik atau kelolaan Yayasan PP Muttaqin Josenan Madiun'
+                    })}
+                    className="p-2.5 bg-white/10 hover:bg-white/15 rounded-xl border border-white/10 transition-colors cursor-pointer group"
+                  >
+                    <div className="text-[10px] text-sky-200 flex items-center justify-between">
+                      <span className="font-semibold">🏘️ Tanah ({tanahCount})</span>
+                      <Eye className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </div>
+                    <p className="text-sm sm:text-base font-black text-emerald-300 mt-0.5 truncate">
+                      {formatLuas(totalLuasTanah)}
+                    </p>
+                    <p className="text-[10px] text-sky-200/80 mt-0.5">
+                      {persentaseYayasan}% a.n. Yayasan
+                    </p>
+                  </div>
+
+                  <div 
+                    onClick={() => handleOpenDrawer({
+                      id: 'all-kendaraan',
+                      title: 'Data Seluruh Armada Kendaraan',
+                      category: 'Armada & Mobilisasi',
+                      iconText: '🚐',
+                      count: kendaraanCount,
+                      matchingAssets: kendaraanAssets,
+                      desc: 'Inventaris kendaraan mobil, bus, elf, dan sepeda motor operasional'
+                    })}
+                    className="p-2.5 bg-white/10 hover:bg-white/15 rounded-xl border border-white/10 transition-colors cursor-pointer group"
+                  >
+                    <div className="text-[10px] text-sky-200 flex items-center justify-between">
+                      <span className="font-semibold">🚐 Kendaraan ({kendaraanCount})</span>
+                      <Eye className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </div>
+                    <p className="text-sm sm:text-base font-black text-amber-300 mt-0.5">
+                      {kendaraanCount} <span className="text-[10px] font-medium text-slate-300">Unit</span>
+                    </p>
+                    <p className="text-[10px] text-sky-200/80 mt-0.5 truncate">
+                      {(kendaraanJenis['MOBIL'] || 0) + (kendaraanJenis['ELF'] || 0) + (kendaraanJenis['BUS'] || 0)} Mobil · {kendaraanJenis['MOTOR'] || 0} Motor
+                    </p>
+                  </div>
+
+                  <div 
+                    onClick={() => handleOpenDrawer({
+                      id: 'all-bangunan',
+                      title: 'Data Seluruh Fasilitas Gedung',
+                      category: 'Fasilitas & Bangunan',
+                      iconText: '🏢',
+                      count: bangunanCount,
+                      matchingAssets: bangunanAssets,
+                      desc: 'Fasilitas gedung pondok, asrama, sekolah, dan aula pertemuan'
+                    })}
+                    className="p-2.5 bg-white/10 hover:bg-white/15 rounded-xl border border-white/10 transition-colors cursor-pointer group"
+                  >
+                    <div className="text-[10px] text-sky-200 flex items-center justify-between">
+                      <span className="font-semibold">🏢 Gedung ({bangunanCount})</span>
+                      <Eye className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </div>
+                    <p className="text-sm sm:text-base font-black text-purple-300 mt-0.5">
+                      {bangunanCount} <span className="text-[10px] font-medium text-slate-300">Unit</span>
+                    </p>
+                    <p className="text-[10px] text-sky-200/80 mt-0.5 truncate">
+                      {bangunanKondisi.baik} Baik · {bangunanKondisi.ringan + bangunanKondisi.berat} Rawat
+                    </p>
+                  </div>
+
+                  <div 
+                    onClick={() => handleOpenDrawer({
+                      id: 'all-berkas',
+                      title: 'Data Brankas & Arsip Dokumen',
+                      category: 'Brankas & Peminjaman Berkas',
+                      iconText: '📁',
+                      count: totalAssetsCount,
+                      matchingAssets: assets,
+                      desc: 'Status penyimpanan berkas fisik sertifikat dan BPKB di brankas'
+                    })}
+                    className="p-2.5 bg-white/10 hover:bg-white/15 rounded-xl border border-white/10 transition-colors cursor-pointer group"
+                  >
+                    <div className="text-[10px] text-sky-200 flex items-center justify-between">
+                      <span className="font-semibold">📁 Brankas & Berkas</span>
+                      <Eye className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </div>
+                    <p className="text-sm sm:text-base font-black text-sky-300 mt-0.5">
+                      {totalAssetsCount - sedangDipinjamCount} <span className="text-[10px] font-medium text-slate-300">Aman</span>
+                    </p>
+                    <p className="text-[10px] text-amber-300 font-semibold mt-0.5 truncate">
+                      {sedangDipinjamCount} Sedang Dipinjam
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+
+            {/* SLIDE 1: PORTOFOLIO TANAH & LEGALITAS */}
+            {activeSlide === 1 && (
+              <motion.div
+                key="slide-1"
+                custom={slideDirection}
+                variants={slideVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.25}
                 onDragEnd={handleSlideDragEnd}
                 className="w-full flex flex-col justify-between space-y-4"
               >
@@ -501,8 +659,8 @@ export default function Dashboard({
                   </button>
                 </div>
 
-                {/* 3 Metric Pills */}
-                <div className="grid grid-cols-3 gap-2 pt-1">
+                {/* 4 Metric Pills for Tanah */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1">
                   <div 
                     onClick={() => handleOpenDrawer({
                       id: 'shm',
@@ -551,6 +709,29 @@ export default function Dashboard({
 
                   <div 
                     onClick={() => handleOpenDrawer({
+                      id: 'shgb',
+                      title: 'SHGB Yayasan',
+                      category: 'Hak Guna Bangunan',
+                      iconText: '📘',
+                      count: countSHGBYayasan,
+                      luas: luasSHGBYayasan,
+                      matchingAssets: shgbAssetsYayasan,
+                      desc: 'Sertifikat Hak Guna Bangunan resmi atas nama Yayasan'
+                    })}
+                    className="p-2.5 bg-white/10 hover:bg-white/15 rounded-xl border border-white/10 transition-colors cursor-pointer group"
+                  >
+                    <div className="text-[10px] text-sky-200 flex items-center justify-between">
+                      <span className="font-semibold">SHGB</span>
+                      <Eye className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </div>
+                    <p className="text-sm sm:text-base font-black text-indigo-300 mt-0.5">
+                      {countSHGBYayasan} <span className="text-[10px] font-medium text-slate-300">Unit</span>
+                    </p>
+                    <p className="text-[10px] text-sky-200/80 truncate">{formatLuas(luasSHGBYayasan)}</p>
+                  </div>
+
+                  <div 
+                    onClick={() => handleOpenDrawer({
                       id: 'belum',
                       title: 'Perlu Balik Nama',
                       category: 'Perlu Balik Nama',
@@ -575,10 +756,10 @@ export default function Dashboard({
               </motion.div>
             )}
 
-            {/* SLIDE 1: ARMADA & GEDUNG */}
-            {activeSlide === 1 && (
+            {/* SLIDE 2: ARMADA KENDARAAN & FISIK GEDUNG */}
+            {activeSlide === 2 && (
               <motion.div
-                key="slide-1"
+                key="slide-2"
                 custom={slideDirection}
                 variants={slideVariants}
                 initial="enter"
@@ -586,7 +767,7 @@ export default function Dashboard({
                 exit="exit"
                 drag="x"
                 dragConstraints={{ left: 0, right: 0 }}
-                dragElastic={0.2}
+                dragElastic={0.25}
                 onDragEnd={handleSlideDragEnd}
                 className="w-full flex flex-col justify-between space-y-4"
               >
@@ -616,31 +797,102 @@ export default function Dashboard({
                   </button>
                 </div>
 
-                <div className="grid grid-cols-2 gap-2 pt-1 text-xs">
-                  <div className="p-2.5 bg-white/10 rounded-xl border border-white/10 flex items-center justify-between">
-                    <div>
-                      <span className="text-[10px] text-amber-300 font-bold uppercase block">Mobil / Bus / Elf</span>
-                      <span className="font-extrabold text-white text-sm">
-                        {(kendaraanJenis['MOBIL'] || 0) + (kendaraanJenis['ELF'] || 0) + (kendaraanJenis['BUS'] || 0)} Unit
-                      </span>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 text-xs">
+                  <div 
+                    onClick={() => handleOpenDrawer({
+                      id: 'mobil-bus',
+                      title: 'Mobil, Bus & Elf',
+                      category: 'Kendaraan Roda 4+',
+                      iconText: '🚐',
+                      count: (kendaraanJenis['MOBIL'] || 0) + (kendaraanJenis['ELF'] || 0) + (kendaraanJenis['BUS'] || 0),
+                      matchingAssets: kendaraanAssets.filter(k => k.jenisKendaraan === 'MOBIL' || k.jenisKendaraan === 'ELF' || k.jenisKendaraan === 'BUS'),
+                      desc: 'Kendaraan roda 4 atau lebih untuk operasional yayasan dan pondok'
+                    })}
+                    className="p-2.5 bg-white/10 hover:bg-white/15 rounded-xl border border-white/10 transition-colors cursor-pointer group"
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] text-amber-300 font-bold uppercase">Mobil / Bus / Elf</span>
+                      <Car className="w-4 h-4 text-amber-300 opacity-80" />
                     </div>
-                    <Car className="w-5 h-5 text-amber-300 opacity-80" />
+                    <p className="font-extrabold text-white text-sm sm:text-base mt-1">
+                      {(kendaraanJenis['MOBIL'] || 0) + (kendaraanJenis['ELF'] || 0) + (kendaraanJenis['BUS'] || 0)} Unit
+                    </p>
+                    <span className="text-[10px] text-sky-200/80">Operasional Madiun</span>
                   </div>
-                  <div className="p-2.5 bg-white/10 rounded-xl border border-white/10 flex items-center justify-between">
-                    <div>
-                      <span className="text-[10px] text-emerald-300 font-bold uppercase block">Gedung Kondisi Baik</span>
-                      <span className="font-extrabold text-white text-sm">{bangunanKondisi.baik} Unit</span>
+
+                  <div 
+                    onClick={() => handleOpenDrawer({
+                      id: 'motor',
+                      title: 'Sepeda Motor',
+                      category: 'Kendaraan Roda 2',
+                      iconText: '🏍️',
+                      count: kendaraanJenis['MOTOR'] || 0,
+                      matchingAssets: kendaraanAssets.filter(k => k.jenisKendaraan === 'MOTOR'),
+                      desc: 'Sepeda motor dinas untuk mobilitas harian pengurus dan santri'
+                    })}
+                    className="p-2.5 bg-white/10 hover:bg-white/15 rounded-xl border border-white/10 transition-colors cursor-pointer group"
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] text-sky-300 font-bold uppercase">Sepeda Motor</span>
+                      <span className="text-xs">🏍️</span>
                     </div>
-                    <Building className="w-5 h-5 text-emerald-300 opacity-80" />
+                    <p className="font-extrabold text-white text-sm sm:text-base mt-1">
+                      {kendaraanJenis['MOTOR'] || 0} Unit
+                    </p>
+                    <span className="text-[10px] text-sky-200/80">Mobilisasi Rutin</span>
+                  </div>
+
+                  <div 
+                    onClick={() => handleOpenDrawer({
+                      id: 'gedung-baik',
+                      title: 'Gedung Kondisi Baik',
+                      category: 'Kondisi Bangunan Prima',
+                      iconText: '🏢',
+                      count: bangunanKondisi.baik,
+                      matchingAssets: bangunanAssets.filter(b => b.kondisi === 'BAIK'),
+                      desc: 'Fasilitas gedung dalam kondisi prima dan siap digunakan sepenuhnya'
+                    })}
+                    className="p-2.5 bg-white/10 hover:bg-white/15 rounded-xl border border-white/10 transition-colors cursor-pointer group"
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] text-emerald-300 font-bold uppercase">Kondisi Prima</span>
+                      <Building className="w-4 h-4 text-emerald-300 opacity-80" />
+                    </div>
+                    <p className="font-extrabold text-white text-sm sm:text-base mt-1">
+                      {bangunanKondisi.baik} Gedung
+                    </p>
+                    <span className="text-[10px] text-sky-200/80">Siap Operasional</span>
+                  </div>
+
+                  <div 
+                    onClick={() => handleOpenDrawer({
+                      id: 'gedung-rawat',
+                      title: 'Gedung Butuh Pemeliharaan',
+                      category: 'Pemeliharaan Fasilitas',
+                      iconText: '🛠️',
+                      count: bangunanKondisi.ringan + bangunanKondisi.berat,
+                      matchingAssets: bangunanAssets.filter(b => b.kondisi === 'RUSAK RINGAN' || b.kondisi === 'RUSAK BERAT'),
+                      desc: 'Fasilitas gedung dengan catatan perbaikan atau renovasi'
+                    })}
+                    className="p-2.5 bg-white/10 hover:bg-white/15 rounded-xl border border-white/10 transition-colors cursor-pointer group"
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] text-rose-300 font-bold uppercase">Perlu Rawat</span>
+                      <span className="text-xs">🛠️</span>
+                    </div>
+                    <p className="font-extrabold text-white text-sm sm:text-base mt-1">
+                      {bangunanKondisi.ringan + bangunanKondisi.berat} Gedung
+                    </p>
+                    <span className="text-[10px] text-rose-200/80">Dalam Agenda</span>
                   </div>
                 </div>
               </motion.div>
             )}
 
-            {/* SLIDE 2: LEGALITAS & DOKUMEN */}
-            {activeSlide === 2 && (
+            {/* SLIDE 3: MUTASI BALIK NAMA & BRANKAS BERKAS */}
+            {activeSlide === 3 && (
               <motion.div
-                key="slide-2"
+                key="slide-3"
                 custom={slideDirection}
                 variants={slideVariants}
                 initial="enter"
@@ -648,14 +900,14 @@ export default function Dashboard({
                 exit="exit"
                 drag="x"
                 dragConstraints={{ left: 0, right: 0 }}
-                dragElastic={0.2}
+                dragElastic={0.25}
                 onDragEnd={handleSlideDragEnd}
                 className="w-full flex flex-col justify-between space-y-4"
               >
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div>
                     <span className="text-[11px] font-bold text-sky-300 uppercase tracking-wider flex items-center gap-1.5">
-                      <span>🛡️ Legalitas Mutasi &amp; 📁 Brankas Dokumen</span>
+                      <span>🛡️ Legalitas Mutasi &amp; 📁 Brankas Dokumen Fisik</span>
                     </span>
                     <h2 className="text-xl sm:text-2xl font-black text-white mt-1">
                       {persentaseYayasan}% Sertifikat Resmi Yayasan
@@ -677,24 +929,55 @@ export default function Dashboard({
                   </button>
                 </div>
 
-                <div className="grid grid-cols-2 gap-2 pt-1 text-xs">
-                  <div className="p-2.5 bg-white/10 rounded-xl border border-white/10 flex items-center justify-between">
-                    <div>
-                      <span className="text-[10px] text-sky-300 font-bold uppercase block">Dokumen di Brankas</span>
-                      <span className="font-extrabold text-white text-sm">
-                        {totalAssetsCount - sedangDipinjamCount} Berkas Aman
-                      </span>
-                    </div>
-                    <CheckCircle2 className="w-5 h-5 text-emerald-400 opacity-80" />
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 text-xs">
+                  <div 
+                    onClick={() => onNavigateToTab('balik-nama')}
+                    className="p-2.5 bg-white/10 hover:bg-white/15 rounded-xl border border-white/10 transition-colors cursor-pointer"
+                  >
+                    <span className="text-[10px] text-emerald-300 font-bold uppercase block">Tuntas Yayasan</span>
+                    <span className="font-extrabold text-white text-sm sm:text-base mt-0.5 block">
+                      {countSHMYayasan + countWakafYayasan + countSHGBYayasan} Unit
+                    </span>
+                    <span className="text-[10px] text-sky-200/80">Sah Hukum</span>
                   </div>
-                  <div className="p-2.5 bg-white/10 rounded-xl border border-white/10 flex items-center justify-between">
-                    <div>
-                      <span className="text-[10px] text-amber-300 font-bold uppercase block">Peminjaman Berkas</span>
-                      <span className="font-extrabold text-amber-300 text-sm">
-                        {sedangDipinjamCount} Dokumen Keluar
-                      </span>
+
+                  <div 
+                    onClick={() => onNavigateToTab('balik-nama')}
+                    className="p-2.5 bg-white/10 hover:bg-white/15 rounded-xl border border-white/10 transition-colors cursor-pointer"
+                  >
+                    <span className="text-[10px] text-amber-300 font-bold uppercase block">Proses Mutasi</span>
+                    <span className="font-extrabold text-white text-sm sm:text-base mt-0.5 block">
+                      {sedangBalikNamaCount > 0 ? sedangBalikNamaCount : countBelumYayasan} Unit
+                    </span>
+                    <span className="text-[10px] text-amber-200/80">Dalam Agenda</span>
+                  </div>
+
+                  <div 
+                    onClick={() => onNavigateToTab('pinjam-berkas')}
+                    className="p-2.5 bg-white/10 hover:bg-white/15 rounded-xl border border-white/10 transition-colors cursor-pointer"
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] text-sky-300 font-bold uppercase">Di Brankas</span>
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
                     </div>
-                    <FolderOpen className="w-5 h-5 text-amber-400 opacity-80" />
+                    <span className="font-extrabold text-white text-sm sm:text-base mt-0.5 block">
+                      {totalAssetsCount - sedangDipinjamCount} Berkas
+                    </span>
+                    <span className="text-[10px] text-sky-200/80">Tersimpan Aman</span>
+                  </div>
+
+                  <div 
+                    onClick={() => onNavigateToTab('pinjam-berkas')}
+                    className="p-2.5 bg-white/10 hover:bg-white/15 rounded-xl border border-white/10 transition-colors cursor-pointer"
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] text-rose-300 font-bold uppercase">Dipinjam</span>
+                      <FolderOpen className="w-3.5 h-3.5 text-amber-400" />
+                    </div>
+                    <span className="font-extrabold text-white text-sm sm:text-base mt-0.5 block">
+                      {sedangDipinjamCount} Dokumen
+                    </span>
+                    <span className="text-[10px] text-rose-200/80">Peminjaman Aktif</span>
                   </div>
                 </div>
               </motion.div>
@@ -703,19 +986,27 @@ export default function Dashboard({
         </div>
 
         {/* Carousel Pagination Scrubber Dots */}
-        <div className="flex justify-center items-center gap-2 pt-3">
-          {['Tanah & Lahan', 'Armada & Gedung', 'Legalitas & Berkas'].map((label, idx) => (
+        <div className="flex flex-wrap justify-center items-center gap-2 pt-3">
+          {[
+            { label: 'Semua Data', icon: '🌐' },
+            { label: 'Tanah & Lahan', icon: '🏘️' },
+            { label: 'Armada & Gedung', icon: '🚐' },
+            { label: 'Mutasi & Brankas', icon: '🛡️' }
+          ].map((item, idx) => (
             <button
-              key={label}
+              key={item.label}
               type="button"
               onClick={() => handleSelectSlide(idx)}
-              className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer flex items-center gap-1.5 active:scale-95 ${
                 activeSlide === idx 
-                  ? 'w-7 bg-amber-400 shadow-xs' 
-                  : 'w-2 bg-sky-700/80 hover:bg-sky-600'
+                  ? 'bg-amber-400 text-sky-950 shadow-md font-black scale-102' 
+                  : 'bg-white/10 hover:bg-white/15 text-sky-200 hover:text-white'
               }`}
-              title={label}
-            />
+              title={item.label}
+            >
+              <span className="text-sm leading-none">{item.icon}</span>
+              <span className="text-[11px] font-semibold">{item.label}</span>
+            </button>
           ))}
         </div>
       </div>
