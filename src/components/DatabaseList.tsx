@@ -741,13 +741,8 @@ export default function DatabaseList({ assets, onEditAsset, onDeleteAsset, userR
                     </button>
                   </div>
                 ) : (
-                  <div className="p-3 bg-slate-100 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 text-center space-y-1">
-                    <p className="text-[11px] font-bold text-slate-700 dark:text-slate-300">
-                      🔒 Mode Tamu (Hanya Melihat Rincian)
-                    </p>
-                    <p className="text-[10px] text-slate-500 dark:text-slate-400">
-                      Untuk menyunting atau menghapus data aset ini, silakan beralih ke Mode Admin.
-                    </p>
+                  <div className="p-2.5 bg-slate-100 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center justify-center" title="Mode Terkunci (Khusus Admin)">
+                    <span className="text-base">🔒</span>
                   </div>
                 )}
               </div>

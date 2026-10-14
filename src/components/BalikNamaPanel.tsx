@@ -334,12 +334,12 @@ export default function BalikNamaPanel({ assets, onSaveAsset, userRole = 'viewer
               </span>
             </button>
           ) : (
-            <div className="p-3.5 bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs flex items-center justify-between font-medium">
-              <span className="flex items-center gap-2 font-bold">
-                <span>🔒</span> Mode Tamu: Memantau Progres Mutasi Balik Nama Sertifikat
+            <div className="p-3 bg-slate-50 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 text-xs flex items-center justify-between font-medium">
+              <span className="flex items-center gap-1.5 font-bold" title="Mode Tamu (Terkunci)">
+                <span className="text-sm">🔒</span>
               </span>
-              <span className="text-[10px] text-slate-500 dark:text-slate-400 font-bold bg-white dark:bg-slate-700 px-2.5 py-1 rounded-full border border-slate-200 dark:border-slate-600">
-                Pendaftaran Khusus Admin
+              <span className="text-sm cursor-help" title="Pendaftaran Khusus Admin (Mode Terkunci)">
+                🔒
               </span>
             </div>
           )}
@@ -952,8 +952,8 @@ export default function BalikNamaPanel({ assets, onSaveAsset, userRole = 'viewer
                           </button>
                         </div>
                       ) : (
-                        <div className="p-2 bg-slate-50 dark:bg-slate-800 rounded-lg text-center text-[10px] text-slate-500 dark:text-slate-400 font-bold border border-slate-200 dark:border-slate-700">
-                          🔒 Mode Tamu: Memantau Log Mutasi (Khusus Admin untuk Mengubah)
+                        <div className="p-2 bg-slate-50 dark:bg-slate-800 rounded-lg text-center text-xs text-slate-500 dark:text-slate-400 font-bold border border-slate-200 dark:border-slate-700" title="Mode Tamu: Khusus Admin untuk Mengubah">
+                          🔒
                         </div>
                       )}
                     </div>
