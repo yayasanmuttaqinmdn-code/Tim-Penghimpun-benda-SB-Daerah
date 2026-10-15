@@ -921,7 +921,7 @@ export default function Dashboard({
 
                   <button
                     type="button"
-                    onClick={() => onNavigateToTab('balik-nama')}
+                    onClick={() => onNavigateToTab('baliknama')}
                     className="self-start sm:self-auto px-3.5 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black rounded-xl text-xs flex items-center gap-1.5 transition-all shadow-md active:scale-95 cursor-pointer"
                   >
                     <span>Status Mutasi</span>
@@ -931,7 +931,7 @@ export default function Dashboard({
 
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 text-xs">
                   <div 
-                    onClick={() => onNavigateToTab('balik-nama')}
+                    onClick={() => onNavigateToTab('baliknama')}
                     className="p-2.5 bg-white/10 hover:bg-white/15 rounded-xl border border-white/10 transition-colors cursor-pointer"
                   >
                     <span className="text-[10px] text-emerald-300 font-bold uppercase block">Tuntas Yayasan</span>
@@ -942,7 +942,7 @@ export default function Dashboard({
                   </div>
 
                   <div 
-                    onClick={() => onNavigateToTab('balik-nama')}
+                    onClick={() => onNavigateToTab('baliknama')}
                     className="p-2.5 bg-white/10 hover:bg-white/15 rounded-xl border border-white/10 transition-colors cursor-pointer"
                   >
                     <span className="text-[10px] text-amber-300 font-bold uppercase block">Proses Mutasi</span>
@@ -953,7 +953,7 @@ export default function Dashboard({
                   </div>
 
                   <div 
-                    onClick={() => onNavigateToTab('pinjam-berkas')}
+                    onClick={() => onNavigateToTab('pinjamberkas')}
                     className="p-2.5 bg-white/10 hover:bg-white/15 rounded-xl border border-white/10 transition-colors cursor-pointer"
                   >
                     <div className="flex items-center justify-between">
@@ -967,7 +967,7 @@ export default function Dashboard({
                   </div>
 
                   <div 
-                    onClick={() => onNavigateToTab('pinjam-berkas')}
+                    onClick={() => onNavigateToTab('pinjamberkas')}
                     className="p-2.5 bg-white/10 hover:bg-white/15 rounded-xl border border-white/10 transition-colors cursor-pointer"
                   >
                     <div className="flex items-center justify-between">
@@ -1096,7 +1096,7 @@ export default function Dashboard({
 
         {/* Card 4: Dokumen & Mutasi */}
         <div 
-          onClick={() => onNavigateToTab('pinjam-berkas')}
+          onClick={() => onNavigateToTab('pinjamberkas')}
           className="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl border-2 border-slate-200/90 dark:border-slate-800 shadow-2xs hover:border-emerald-400 dark:hover:border-emerald-600 hover:shadow-md transition-all cursor-pointer group flex flex-col justify-between"
         >
           <div className="flex items-center justify-between">

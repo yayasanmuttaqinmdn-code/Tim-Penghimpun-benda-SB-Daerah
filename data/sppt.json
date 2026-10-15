@@ -1,74 +1,129 @@
 [
   {
-    "id": "sppt_sample_1",
-    "namaWajibPajak": "YAYASAN MUTTAQIN JOSENAN",
-    "lokasi": "Jl. Nogososro No. 26, Kel. Josenan, Kec. Taman, Kota Madiun",
-    "nop": "35.77.010.001.005-0023.0",
-    "pajakTerutang": 385000,
-    "totalBayarYayasanTahunan": 385000,
+    "id": "sppt_1792071773457_pxwc",
+    "nop": "94.82.027.400.289-9200.2",
+    "namaWajibPajak": "MAULANA DWI",
+    "lokasi": "GUNUNGSARI",
+    "pajakTerutang": 23400000,
+    "totalBayarYayasanTahunan": 23400000,
     "riwayatPembayaran": {
       "2025": {
         "tahun": 2025,
         "lunas": true,
-        "nominalBayar": 350000,
-        "tanggalBayar": "2025-06-20",
-        "keterangan": "Lunas via Mobile Banking"
+        "nominalKetetapan": 23400000,
+        "nominalBayar": 23400000,
+        "tanggalBayar": "2026-10-15"
       },
       "2026": {
         "tahun": 2026,
         "lunas": true,
-        "tanggalBayar": "2026-10-06",
-        "nominalBayar": 60000,
-        "keterangan": "Ketetapan SPPT 2026"
+        "nominalKetetapan": 234050,
+        "nominalBayar": 234050,
+        "tanggalBayar": "2026-10-15"
       },
       "2027": {
         "tahun": 2027,
         "lunas": false,
-        "nominalBayar": 385000
+        "nominalBayar": 10000
       },
       "2028": {
         "tahun": 2028,
-        "lunas": false,
-        "nominalBayar": 385000
+        "lunas": false
       },
       "2029": {
         "tahun": 2029,
-        "lunas": false,
-        "nominalBayar": 385000
+        "lunas": false
       },
       "2030": {
         "tahun": 2030,
-        "lunas": false,
-        "nominalBayar": 385000
+        "lunas": false
       },
       "2031": {
         "tahun": 2031,
-        "lunas": false,
-        "nominalBayar": 385000
+        "lunas": false
       },
       "2032": {
         "tahun": 2032,
-        "lunas": false,
-        "nominalBayar": 385000
+        "lunas": false
       },
       "2033": {
         "tahun": 2033,
-        "lunas": false,
-        "nominalBayar": 385000
+        "lunas": false
       },
       "2034": {
         "tahun": 2034,
-        "lunas": false,
-        "nominalBayar": 385000
+        "lunas": false
       },
       "2035": {
         "tahun": 2035,
-        "lunas": false,
-        "nominalBayar": 385000
+        "lunas": false
       }
     },
     "keteranganTambahan": "",
-    "createdAt": 1791254114599,
-    "updatedAt": 1791254114599
+    "createdAt": 1792071773457,
+    "updatedAt": 1792075095284
+  },
+  {
+    "id": "sppt_1792071635349_yhoi",
+    "nop": "23.21.122.334.466-7890.0",
+    "namaWajibPajak": "FAHMI MAULANA",
+    "lokasi": "TIRON",
+    "pajakTerutang": 456789,
+    "totalBayarYayasanTahunan": 456789,
+    "riwayatPembayaran": {
+      "2025": {
+        "tahun": 2025,
+        "lunas": true,
+        "nominalKetetapan": 456789,
+        "nominalBayar": 456789,
+        "tanggalBayar": "2026-10-15"
+      },
+      "2026": {
+        "tahun": 2026,
+        "lunas": true,
+        "nominalKetetapan": 456789,
+        "nominalBayar": 456789,
+        "tanggalBayar": "2026-10-15"
+      },
+      "2027": {
+        "tahun": 2027,
+        "lunas": false
+      },
+      "2028": {
+        "tahun": 2028,
+        "lunas": false
+      },
+      "2029": {
+        "tahun": 2029,
+        "lunas": false
+      },
+      "2030": {
+        "tahun": 2030,
+        "lunas": false
+      },
+      "2031": {
+        "tahun": 2031,
+        "lunas": false
+      },
+      "2032": {
+        "tahun": 2032,
+        "lunas": false
+      },
+      "2033": {
+        "tahun": 2033,
+        "lunas": false
+      },
+      "2034": {
+        "tahun": 2034,
+        "lunas": false
+      },
+      "2035": {
+        "tahun": 2035,
+        "lunas": false
+      }
+    },
+    "keteranganTambahan": "",
+    "createdAt": 1792071635349,
+    "updatedAt": 1792075095284
   }
 ]

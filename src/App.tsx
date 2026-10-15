@@ -418,13 +418,27 @@ export default function App() {
     setCurrentTab('input');
   };
 
+  const handleNavigateTab = (rawTab: string) => {
+    let normalized = rawTab;
+    if (rawTab === 'balik-nama') normalized = 'baliknama';
+    else if (rawTab === 'pinjam-berkas') normalized = 'pinjamberkas';
+    else if (rawTab === 'sppt' || rawTab === 'pbb') normalized = 'sppt-pbb';
+    if (normalized !== 'input' && editingAsset) {
+      setEditingAsset(null);
+    }
+    setCurrentTab(normalized);
+  };
+
   const getTabInfo = (tab: string) => {
     switch (tab) {
       case 'dashboard': return { title: 'Dashboard Utama', subtitle: 'Statistik & Ringkasan Aset' };
       case 'input': return { title: editingAsset ? 'Edit Data Aset' : 'Pendaftaran Aset', subtitle: 'Formulir Tanah, Kendaraan & Bangunan' };
       case 'database': return { title: 'Lihat & Cari Aset', subtitle: 'Database Inventaris Lengkap' };
+      case 'sppt':
       case 'sppt-pbb': return { title: 'Pengelolaan SPPT PBB', subtitle: 'Pencatatan NOP & Ceklis Bayar 2025-2035' };
+      case 'balik-nama':
       case 'baliknama': return { title: 'Balik Nama Sertifikat', subtitle: 'Monitoring Pengurusan Mutasi BPN' };
+      case 'pinjam-berkas':
       case 'pinjamberkas': return { title: 'Peminjaman Berkas', subtitle: 'Pengawasan Berkas Asli & Dokumen' };
       case 'export': return { title: 'Ekspor & Cetak', subtitle: 'Unduh Format Google Sheets & CSV' };
       case 'settings': return { title: 'Pengaturan', subtitle: 'Konfigurasi Spreadsheet & Keamanan' };
@@ -439,13 +453,7 @@ export default function App() {
       {/* Visual Government-Inspired Left Sidebar Navigation */}
       <SidebarNav 
         currentTab={currentTab} 
-        onChangeTab={(tab) => {
-          // Reset edit state if user moves away from input tab manually
-          if (tab !== 'input' && editingAsset) {
-            setEditingAsset(null);
-          }
-          setCurrentTab(tab);
-        }}
+        onChangeTab={handleNavigateTab}
         syncStatus={syncStatus}
         totalCount={assets.length}
         isOpen={sidebarOpen}
@@ -593,7 +601,7 @@ export default function App() {
             >
               <Dashboard 
                 assets={assets} 
-                onNavigateToTab={(tab) => setCurrentTab(tab)} 
+                onNavigateToTab={handleNavigateTab} 
                 syncStatus={syncStatus}
                 onSyncManual={handleManualSync}
                 googleUser={googleUser}
@@ -647,7 +655,7 @@ export default function App() {
             </motion.div>
           )}
 
-          {currentTab === 'sppt-pbb' && (
+          {(currentTab === 'sppt-pbb' || currentTab === 'sppt') && (
             <motion.div
               key="sppt-pbb"
               initial={{ opacity: 0, scale: 0.98 }}
@@ -664,7 +672,7 @@ export default function App() {
             </motion.div>
           )}
 
-          {currentTab === 'baliknama' && (
+          {(currentTab === 'baliknama' || currentTab === 'balik-nama') && (
             <motion.div
               key="baliknama"
               initial={{ opacity: 0, y: 10 }}
@@ -675,14 +683,14 @@ export default function App() {
               <BalikNamaPanel 
                 assets={assets} 
                 onSaveAsset={handleSaveAsset}
-                onNavigateToTab={(tab) => setCurrentTab(tab)}
+                onNavigateToTab={handleNavigateTab}
                 googleUser={googleUser}
                 userRole={userRole}
               />
             </motion.div>
           )}
 
-          {currentTab === 'pinjamberkas' && (
+          {(currentTab === 'pinjamberkas' || currentTab === 'pinjam-berkas') && (
             <motion.div
               key="pinjamberkas"
               initial={{ opacity: 0, y: 10 }}

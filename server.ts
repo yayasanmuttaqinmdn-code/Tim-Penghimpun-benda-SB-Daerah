@@ -560,8 +560,33 @@ async function startServer() {
     ];
   }
 
+  function normalizeRecordPayments(item: SpptPbbRecord): SpptPbbRecord {
+    if (!item.riwayatPembayaran || typeof item.riwayatPembayaran !== 'object') {
+      return item;
+    }
+    const normPayments: Record<number, any> = {};
+    const base = Number(item.totalBayarYayasanTahunan) || Number(item.pajakTerutang) || 0;
+    for (const [key, val] of Object.entries(item.riwayatPembayaran)) {
+      const yr = Number(key);
+      if (!yr) continue;
+      const p = typeof val === 'object' && val !== null ? { ...val } : { tahun: yr, lunas: false };
+      p.tahun = yr;
+      const ketetapan = Number(p.nominalKetetapan) || base;
+      const bayar = Number(p.nominalBayar) || 0;
+      if (p.lunas === true || (typeof p.lunas === 'string' && String(p.lunas).toLowerCase() === 'true')) {
+        p.lunas = true;
+      } else if (bayar > 0 && ketetapan > 0 && bayar >= ketetapan * 0.95) {
+        p.lunas = true;
+      } else if (p.tanggalBayar && bayar > 0 && (ketetapan === 0 || bayar >= ketetapan * 0.95)) {
+        p.lunas = true;
+      }
+      normPayments[yr] = p;
+    }
+    return { ...item, riwayatPembayaran: normPayments };
+  }
+
   function extractSpptData(records: SpptPbbRecord[]) {
-    return records.map(r => {
+    return records.map(normalizeRecordPayments).map(r => {
       const p2025 = r.riwayatPembayaran?.[2025]?.lunas ? `LUNAS (${r.riwayatPembayaran?.[2025]?.nominalBayar || 0})` : 'BELUM';
       const p2026 = r.riwayatPembayaran?.[2026]?.lunas ? `LUNAS (${r.riwayatPembayaran?.[2026]?.nominalBayar || 0})` : 'BELUM';
       const p2027 = r.riwayatPembayaran?.[2027]?.lunas ? `LUNAS (${r.riwayatPembayaran?.[2027]?.nominalBayar || 0})` : 'BELUM';
@@ -720,6 +745,17 @@ async function startServer() {
           } catch (e) {}
         }
         if (item.id || item.nop) {
+          let payments: Record<number, any> = {};
+          if (item.riwayatPembayaran) {
+            if (typeof item.riwayatPembayaran === 'object' && item.riwayatPembayaran !== null) {
+              payments = item.riwayatPembayaran;
+            } else if (typeof item.riwayatPembayaran === 'string') {
+              try {
+                payments = JSON.parse(item.riwayatPembayaran);
+              } catch (e) {}
+            }
+          }
+
           records.push({
             id: item.id || `sppt_${Date.now()}`,
             nop: item.nop || '',
@@ -727,14 +763,14 @@ async function startServer() {
             lokasi: item.lokasi || '',
             pajakTerutang: Number(item.pajakTerutang) || 0,
             totalBayarYayasanTahunan: Number(item.totalBayarYayasan) || Number(item.pajakTerutang) || 0,
-            riwayatPembayaran: {},
+            riwayatPembayaran: payments,
             keteranganTambahan: item.keterangan || '',
-            createdAt: Date.now(),
-            updatedAt: Date.now()
+            createdAt: item.createdAt || Date.now(),
+            updatedAt: item.updatedAt || Date.now()
           });
         }
       }
-      return records;
+      return records.map(normalizeRecordPayments);
     } catch (err) {
       console.error("Error fetching SPPT from Apps Script:", err);
       return null;
@@ -1262,10 +1298,10 @@ async function startServer() {
           }
         }
       }
-      return res.json(spptDb);
+      return res.json(spptDb.map(normalizeRecordPayments));
     } catch (err) {
       console.error("Error in /api/sppt:", err);
-      return res.json(spptDb || []);
+      return res.json((spptDb || []).map(normalizeRecordPayments));
     }
   });
 
