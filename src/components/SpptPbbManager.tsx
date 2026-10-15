@@ -966,19 +966,6 @@ export default function SpptPbbManager({ userRole = 'viewer', googleToken, googl
       r.isFullyPaid ? '100% LUNAS' : r.isPartiallyPaid ? 'SEBAGIAN TERBAYAR' : 'BELUM BAYAR'
     ]);
 
-    // Grand total row
-    rows.push([
-      'TOTAL KESELURUHAN (2025-2035)',
-      totalObjek,
-      grandTotalTarget,
-      grandTotalTerbayar,
-      grandTotalSisa,
-      '-',
-      '-',
-      `${grandTotalPersen}%`,
-      grandTotalPersen === 100 ? 'LUNAS SEMUA' : 'PROSES'
-    ]);
-
     const csvContent = 'data:text/csv;charset=utf-8,\uFEFF' + 
       [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
 
@@ -1047,7 +1034,7 @@ export default function SpptPbbManager({ userRole = 'viewer', googleToken, googl
             </span>
           </button>
 
-          {/* Menu 2: Rekapan Tahunan */}
+          {/* Menu 2: Perkiraan Pembayaran Tiap Tahun */}
           <button
             type="button"
             onClick={() => setActiveSubTab('recap')}
@@ -1057,12 +1044,12 @@ export default function SpptPbbManager({ userRole = 'viewer', googleToken, googl
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-200/60 dark:hover:bg-slate-700/50'
             }`}
           >
-            <BarChart3 className="w-4 h-4 stroke-[2.5]" />
-            <span>Rekapitulasi Tahunan</span>
+            <Calendar className="w-4 h-4 stroke-[2.5]" />
+            <span>Perkiraan Pembayaran Tiap Tahun</span>
             <span className={`text-[10px] font-black px-2 py-0.5 rounded-full ${
-              activeSubTab === 'recap' ? 'bg-emerald-500 text-slate-950 font-extrabold' : 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300'
+              activeSubTab === 'recap' ? 'bg-amber-400 text-sky-950 font-extrabold' : 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300'
             }`}>
-              2025–{availableYears[availableYears.length - 1]}
+              Tahunan
             </span>
           </button>
 
@@ -1945,7 +1932,8 @@ export default function SpptPbbManager({ userRole = 'viewer', googleToken, googl
       )}
 
       {/* ========================================================= */}
-      {/* VIEW C: REKAPITULASI TOTAL BAYAR TIAP TAHUN (2025 - 2035) */}
+      {/* ========================================================= */}
+      {/* VIEW C: PERKIRAAN PEMBAYARAN TIAP TAHUN                   */}
       {/* ========================================================= */}
       {activeSubTab === 'recap' && (
         <motion.div
@@ -1955,84 +1943,160 @@ export default function SpptPbbManager({ userRole = 'viewer', googleToken, googl
           exit={{ opacity: 0, y: -8 }}
           className="space-y-4"
         >
-          {/* 1. Executive Snapshot Strip (Grand Total Multi-Tahun 2025-2035) */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-            {/* Card 1: Total Beban Kewajiban */}
-            <div className="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl border-2 border-slate-200/90 dark:border-slate-800 shadow-2xs flex flex-col justify-between space-y-2">
-              <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-                <span className="font-black text-[10px] uppercase tracking-wider flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-sky-500" />
-                  <span>Total Beban Ketetapan</span>
-                </span>
-                <span className="font-mono font-bold text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-2 py-0.5 rounded-md">
-                  {availableYears.length} Periode Tahun
-                </span>
-              </div>
+          {/* 1. Bar Sorotan & Pemilihan Tahun: Estimasi Beban Per Tahun (Bukan Akumulasi 11 Tahun) */}
+          <div className="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-3xl border-2 border-slate-200/90 dark:border-slate-800 shadow-2xs space-y-4">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-slate-100 dark:border-slate-800">
               <div>
-                <p className="text-2xl font-black text-slate-900 dark:text-slate-100 font-mono tracking-tight">
-                  {formatRupiah(grandTotalTarget)}
+                <h3 className="text-sm font-black text-slate-900 dark:text-white flex items-center gap-2">
+                  <Calendar className="w-4 h-4 text-sky-600 dark:text-sky-400" />
+                  <span>Perkiraan Pembayaran: Tahun {focusRecapYear}</span>
+                  {focusRecapYear === CURRENT_YEAR && (
+                    <span className="text-[10px] font-black uppercase tracking-wider bg-amber-400 text-sky-950 px-2 py-0.5 rounded-md shadow-2xs">
+                      Tahun Berjalan
+                    </span>
+                  )}
+                </h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                  Pilih tahun di bawah untuk melihat rincian estimasi beban dan realisasi pembayaran tahun tersebut
                 </p>
-                <p className="text-[11px] text-slate-400 mt-1 font-medium">
-                  {totalObjek} Objek Pajak (2025–{availableYears[availableYears.length - 1]})
-                </p>
+              </div>
+
+              <div className="flex items-center gap-2 self-start md:self-auto">
+                {userRole === 'admin' && (
+                  <button
+                    type="button"
+                    onClick={() => handleOpenPolicyModal(focusRecapYear)}
+                    className="px-3 py-1.5 bg-sky-50 hover:bg-sky-100 dark:bg-sky-950/60 dark:hover:bg-sky-900 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800 rounded-xl text-xs font-bold transition-colors inline-flex items-center gap-1.5 cursor-pointer shadow-2xs"
+                    title={`Sesuaikan Kebijakan Tarif Pemerintah Tahun ${focusRecapYear}`}
+                  >
+                    <SlidersHorizontal className="w-3.5 h-3.5 text-sky-600" />
+                    <span>Kebijakan Pemda {focusRecapYear}</span>
+                  </button>
+                )}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSelectedYearFilter(focusRecapYear);
+                    setActiveSubTab('list');
+                  }}
+                  className="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-sky-800 hover:text-white dark:hover:bg-sky-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-bold transition-colors inline-flex items-center gap-1.5 cursor-pointer shadow-2xs"
+                >
+                  <span>Buka NOP {focusRecapYear}</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
               </div>
             </div>
 
-            {/* Card 2: Sudah Terbayar */}
-            <div className="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl border-2 border-emerald-200/90 dark:border-emerald-800/60 shadow-2xs flex flex-col justify-between space-y-2 bg-gradient-to-br from-emerald-50/20 to-transparent">
-              <div className="flex items-center justify-between text-xs">
-                <span className="font-black text-[10px] uppercase tracking-wider text-emerald-800 dark:text-emerald-300 flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                  <span>Realisasi Sudah Terbayar</span>
-                </span>
-                <span className="font-mono font-black text-[10px] bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 px-2 py-0.5 rounded-md">
-                  {grandTotalPersen}% Lunas
-                </span>
-              </div>
-              <div>
-                <p className="text-2xl font-black text-emerald-700 dark:text-emerald-400 font-mono tracking-tight">
-                  {formatRupiah(grandTotalTerbayar)}
-                </p>
-                <div className="w-full h-1.5 bg-emerald-100 dark:bg-emerald-950 rounded-full overflow-hidden mt-2">
-                  <div 
-                    className="h-full bg-emerald-500 rounded-full transition-all duration-300" 
-                    style={{ width: `${Math.min(100, grandTotalPersen)}%` }}
-                  />
+            {/* Quick Year Selector Pills */}
+            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-thin">
+              {availableYears.map(yr => {
+                const yrData = yearlyRecapData.find(d => d.tahun === yr);
+                const isSelected = yr === focusRecapYear;
+                const isCur = yr === CURRENT_YEAR;
+
+                return (
+                  <button
+                    key={yr}
+                    type="button"
+                    onClick={() => setFocusRecapYear(yr)}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap flex items-center gap-1.5 cursor-pointer border ${
+                      isSelected
+                        ? 'bg-sky-800 text-white border-sky-900 shadow-xs'
+                        : isCur
+                        ? 'bg-amber-50 dark:bg-amber-950/40 text-amber-900 dark:text-amber-200 border-amber-300 dark:border-amber-700 hover:bg-amber-100'
+                        : 'bg-slate-50 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-100'
+                    }`}
+                  >
+                    <span className={`w-2 h-2 rounded-full ${
+                      yrData?.isFullyPaid ? 'bg-emerald-500' : yrData?.isPartiallyPaid ? 'bg-amber-500' : isSelected ? 'bg-sky-300' : 'bg-slate-300 dark:bg-slate-600'
+                    }`} />
+                    <span>{yr}</span>
+                    {isCur && <span className="text-[9px] font-black uppercase">(Ini)</span>}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* 3 Cards for Selected Focus Year */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1">
+              {/* Card 1: Perkiraan Beban Pembayaran */}
+              <div className="bg-slate-50 dark:bg-slate-850/70 p-4 rounded-2xl border border-slate-200/90 dark:border-slate-800 flex flex-col justify-between space-y-2">
+                <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+                  <span className="font-black text-[10px] uppercase tracking-wider flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-sky-500" />
+                    <span>Perkiraan Beban ({focusRecapYear})</span>
+                  </span>
+                  <span className="font-mono text-[10px] bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-2 py-0.5 rounded-md border border-slate-200 dark:border-slate-700 font-bold">
+                    {focusYearRecap.totalObjek} NOP
+                  </span>
+                </div>
+                <div>
+                  <p className="text-2xl font-black text-slate-900 dark:text-white font-mono tracking-tight">
+                    {formatRupiah(focusYearRecap.targetNominal)}
+                  </p>
+                  <p className="text-[11px] text-slate-400 mt-1 font-medium">
+                    Estimasi ketetapan pembayaran tahun {focusRecapYear}
+                  </p>
                 </div>
               </div>
-            </div>
 
-            {/* Card 3: Sisa Belum Bayar */}
-            <div className="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl border-2 border-slate-200/90 dark:border-slate-800 shadow-2xs flex flex-col justify-between space-y-2">
-              <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-                <span className="font-black text-[10px] uppercase tracking-wider flex items-center gap-1.5">
-                  <span className={`w-2 h-2 rounded-full ${grandTotalSisa === 0 ? 'bg-emerald-500' : 'bg-rose-500'}`} />
-                  <span>Sisa Belum Dibayar</span>
-                </span>
-                <span className={`font-black text-[10px] px-2 py-0.5 rounded-md ${
-                  grandTotalSisa === 0 
-                    ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300' 
-                    : 'bg-rose-100 text-rose-800 dark:bg-rose-950/60 dark:text-rose-300'
-                }`}>
-                  {grandTotalSisa === 0 ? 'LUNAS SEMUA' : 'SISA TAGIHAN'}
-                </span>
+              {/* Card 2: Sudah Terbayar */}
+              <div className="bg-emerald-50/40 dark:bg-emerald-950/20 p-4 rounded-2xl border border-emerald-200/90 dark:border-emerald-800/60 flex flex-col justify-between space-y-2">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="font-black text-[10px] uppercase tracking-wider text-emerald-800 dark:text-emerald-300 flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                    <span>Sudah Terbayar ({focusRecapYear})</span>
+                  </span>
+                  <span className="font-mono font-black text-[10px] bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 px-2 py-0.5 rounded-md">
+                    {focusYearRecap.persentase}% Lunas
+                  </span>
+                </div>
+                <div>
+                  <p className="text-2xl font-black text-emerald-700 dark:text-emerald-400 font-mono tracking-tight">
+                    {formatRupiah(focusYearRecap.terbayarNominal)}
+                  </p>
+                  <div className="w-full h-1.5 bg-emerald-100 dark:bg-emerald-950 rounded-full overflow-hidden mt-2">
+                    <div 
+                      className="h-full bg-emerald-500 rounded-full transition-all duration-300" 
+                      style={{ width: `${Math.min(100, focusYearRecap.persentase)}%` }}
+                    />
+                  </div>
+                </div>
               </div>
-              <div>
-                <p className={`text-2xl font-black font-mono tracking-tight ${grandTotalSisa > 0 ? 'text-rose-600 dark:text-rose-400' : 'text-emerald-600 dark:text-emerald-400'}`}>
-                  {formatRupiah(grandTotalSisa)}
-                </p>
-                <p className="text-[11px] text-slate-400 mt-1 font-medium">
-                  {grandTotalSisa === 0 ? '✓ Tidak ada tunggakan kas' : 'Akumulasi seluruh tahun anggaran'}
-                </p>
+
+              {/* Card 3: Sisa Belum Bayar */}
+              <div className="bg-slate-50 dark:bg-slate-850/70 p-4 rounded-2xl border border-slate-200/90 dark:border-slate-800 flex flex-col justify-between space-y-2">
+                <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+                  <span className="font-black text-[10px] uppercase tracking-wider flex items-center gap-1.5">
+                    <span className={`w-2 h-2 rounded-full ${focusYearRecap.sisaNominal === 0 ? 'bg-emerald-500' : 'bg-rose-500'}`} />
+                    <span>Sisa Belum Bayar ({focusRecapYear})</span>
+                  </span>
+                  <span className={`font-black text-[10px] px-2 py-0.5 rounded-md ${
+                    focusYearRecap.sisaNominal === 0 
+                      ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300' 
+                      : 'bg-rose-100 text-rose-800 dark:bg-rose-950/60 dark:text-rose-300'
+                  }`}>
+                    {focusYearRecap.sisaNominal === 0 ? 'LUNAS' : `${focusYearRecap.belumCount} NOP BELUM`}
+                  </span>
+                </div>
+                <div>
+                  <p className={`text-2xl font-black font-mono tracking-tight ${
+                    focusYearRecap.sisaNominal > 0 ? 'text-rose-600 dark:text-rose-400' : 'text-emerald-600 dark:text-emerald-400'
+                  }`}>
+                    {formatRupiah(focusYearRecap.sisaNominal)}
+                  </p>
+                  <p className="text-[11px] text-slate-400 mt-1 font-medium">
+                    {focusYearRecap.sisaNominal === 0 ? '✓ Tidak ada sisa tagihan pada tahun ini' : `Tersisa ${focusYearRecap.belumCount} NOP perlu pelunasan`}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* 2. Unified Ledger & Table Card */}
+          {/* 2. Jadwal Perkiraan Pembayaran Tiap Tahun */}
           <div className="bg-white dark:bg-slate-900 rounded-3xl border-2 border-slate-200/90 dark:border-slate-800 shadow-2xs overflow-hidden">
-            {/* Single Clean Filter Toolbar */}
+            {/* Filter Toolbar */}
             <div className="p-3 sm:p-3.5 border-b border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50/70 dark:bg-slate-850/60">
-              {/* Scope Pills */}
               <div className="flex flex-wrap items-center gap-1.5">
                 <button
                   type="button"
@@ -2068,7 +2132,7 @@ export default function SpptPbbManager({ userRole = 'viewer', googleToken, googl
                       : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-100'
                   }`}
                 >
-                  Riwayat ({yearlyRecapData.filter(r => r.tahun < CURRENT_YEAR).length})
+                  Tahun Lampau ({yearlyRecapData.filter(r => r.tahun < CURRENT_YEAR).length})
                 </button>
 
                 <button
@@ -2080,7 +2144,7 @@ export default function SpptPbbManager({ userRole = 'viewer', googleToken, googl
                       : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-100'
                   }`}
                 >
-                  Proyeksi ({yearlyRecapData.filter(r => r.tahun > CURRENT_YEAR).length})
+                  Tahun Mendatang ({yearlyRecapData.filter(r => r.tahun > CURRENT_YEAR).length})
                 </button>
               </div>
 
@@ -2095,7 +2159,7 @@ export default function SpptPbbManager({ userRole = 'viewer', googleToken, googl
                         ? 'bg-white dark:bg-slate-700 text-sky-950 dark:text-white shadow-2xs'
                         : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
                     }`}
-                    title="Tampilan Tabel Buku Kas"
+                    title="Tampilan Tabel Buku Jadwal"
                   >
                     <TableIcon className="w-3.5 h-3.5" />
                     <span>Tabel</span>
@@ -2119,7 +2183,7 @@ export default function SpptPbbManager({ userRole = 'viewer', googleToken, googl
                   type="button"
                   onClick={handleExportYearlyRecapCSV}
                   className="px-3 py-1.5 bg-sky-800 hover:bg-sky-900 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-xs"
-                  title="Unduh laporan rekapan ke file CSV"
+                  title="Unduh jadwal & perkiraan pembayaran ke CSV"
                 >
                   <Download className="w-3.5 h-3.5" />
                   <span>Ekspor CSV</span>
@@ -2127,30 +2191,36 @@ export default function SpptPbbManager({ userRole = 'viewer', googleToken, googl
               </div>
             </div>
 
-            {/* TABEL VIEW: Super Clean, Financial Ledger with Distinct Columns */}
+            {/* TABEL VIEW: Perkiraan Pembayaran Tiap Tahun (Tanpa Akumulasi 11 Tahun) */}
             {recapViewMode === 'table' ? (
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs">
                   <thead className="bg-slate-50 dark:bg-slate-800/80 border-b border-slate-200/80 dark:border-slate-700 text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 tracking-wider">
                     <tr>
                       <th className="py-3 px-4">Tahun Pajak</th>
-                      <th className="py-3 px-4">Beban Ketetapan (Rp)</th>
+                      <th className="py-3 px-4">Perkiraan Beban (Rp)</th>
                       <th className="py-3 px-4">Sudah Terbayar (Rp)</th>
                       <th className="py-3 px-4">Belum Bayar (Rp)</th>
                       <th className="py-3 px-4 text-center">Status Pelunasan</th>
-                      <th className="py-3 px-4 text-center w-36">Aksi</th>
+                      <th className="py-3 px-4 text-center w-44">Aksi</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
                     {filteredYearlyRecap.map((item) => {
                       const isCurrentYear = item.tahun === CURRENT_YEAR;
                       const isFuture = item.tahun > CURRENT_YEAR;
+                      const isFocused = item.tahun === focusRecapYear;
 
                       return (
                         <tr 
                           key={item.tahun} 
-                          className={`transition-colors hover:bg-slate-50/80 dark:hover:bg-slate-800/50 ${
-                            isCurrentYear ? 'bg-sky-50/40 dark:bg-sky-950/20' : ''
+                          onClick={() => setFocusRecapYear(item.tahun)}
+                          className={`transition-colors cursor-pointer hover:bg-slate-50/80 dark:hover:bg-slate-800/50 ${
+                            isFocused 
+                              ? 'bg-sky-50/60 dark:bg-sky-950/40 ring-1 ring-inset ring-sky-300 dark:ring-sky-800' 
+                              : isCurrentYear 
+                              ? 'bg-amber-50/30 dark:bg-amber-950/10' 
+                              : ''
                           }`}
                         >
                           {/* 1. Tahun Pajak */}
@@ -2174,16 +2244,21 @@ export default function SpptPbbManager({ userRole = 'viewer', googleToken, googl
                                   Proyeksi
                                 </span>
                               )}
+                              {!isCurrentYear && !isFuture && (
+                                <span className="text-[9px] font-medium text-slate-400">
+                                  Lampau
+                                </span>
+                              )}
                             </div>
                           </td>
 
-                          {/* 2. Beban Ketetapan (Rp) */}
+                          {/* 2. Perkiraan Beban Pembayaran (Rp) */}
                           <td className="py-3.5 px-4 whitespace-nowrap">
                             <div className="font-mono font-black text-sm text-slate-900 dark:text-white">
                               {formatRupiah(item.targetNominal)}
                             </div>
                             <span className="text-[10px] text-slate-400">
-                              {item.totalObjek} NOP
+                              {item.totalObjek} NOP terdaftar
                             </span>
                           </td>
 
@@ -2247,7 +2322,7 @@ export default function SpptPbbManager({ userRole = 'viewer', googleToken, googl
                           </td>
 
                           {/* 6. Aksi */}
-                          <td className="py-3.5 px-4 text-center whitespace-nowrap">
+                          <td className="py-3.5 px-4 text-center whitespace-nowrap" onClick={(e) => e.stopPropagation()}>
                             <div className="flex items-center justify-center gap-1.5">
                               {userRole === 'admin' && (
                                 <button
@@ -2269,7 +2344,7 @@ export default function SpptPbbManager({ userRole = 'viewer', googleToken, googl
                                 className="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-sky-800 hover:text-white dark:hover:bg-sky-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-bold transition-colors inline-flex items-center gap-1 cursor-pointer shadow-2xs"
                                 title={`Buka Rincian NOP Tahun ${item.tahun}`}
                               >
-                                <span>Buka NOP</span>
+                                <span>Rincian NOP</span>
                                 <ArrowRight className="w-3.5 h-3.5" />
                               </button>
                             </div>
@@ -2278,48 +2353,34 @@ export default function SpptPbbManager({ userRole = 'viewer', googleToken, googl
                       );
                     })}
                   </tbody>
-
-                  {/* Grand Total Footer */}
-                  <tfoot className="bg-slate-900 dark:bg-slate-950 text-white font-mono text-xs border-t-2 border-slate-950">
-                    <tr>
-                      <td className="py-3.5 px-4 font-black uppercase text-amber-400">
-                        TOTAL REKAPITULASI
-                      </td>
-                      <td className="py-3.5 px-4 font-black text-slate-100 whitespace-nowrap">
-                        {formatRupiah(filteredYearlyRecap.reduce((acc, c) => acc + c.targetNominal, 0))}
-                      </td>
-                      <td className="py-3.5 px-4 font-black text-emerald-400 whitespace-nowrap">
-                        {formatRupiah(filteredYearlyRecap.reduce((acc, c) => acc + c.terbayarNominal, 0))}
-                      </td>
-                      <td className="py-3.5 px-4 font-black text-rose-300 whitespace-nowrap">
-                        {formatRupiah(filteredYearlyRecap.reduce((acc, c) => acc + c.sisaNominal, 0))}
-                      </td>
-                      <td className="py-3.5 px-4 text-center font-sans font-black text-emerald-400 text-xs">
-                        {filteredYearlyRecap.reduce((acc, c) => acc + c.targetNominal, 0) > 0 
-                          ? `${Math.round((filteredYearlyRecap.reduce((acc, c) => acc + c.terbayarNominal, 0) / filteredYearlyRecap.reduce((acc, c) => acc + c.targetNominal, 0)) * 100)}% Terbayar` 
-                          : '0%'}
-                      </td>
-                      <td className="py-3.5 px-4 text-center font-sans text-[11px] text-slate-400">
-                        {filteredYearlyRecap.length} Tahun
-                      </td>
-                    </tr>
-                  </tfoot>
                 </table>
+
+                {/* Catatan Kebijakan Pemda di bawah tabel */}
+                <div className="p-3.5 bg-slate-50/80 dark:bg-slate-850/80 border-t border-slate-200/80 dark:border-slate-800 flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+                  <Info className="w-4 h-4 text-sky-600 flex-shrink-0" />
+                  <span>
+                    Estimasi beban pembayaran tiap tahun dapat disesuaikan sewaktu-waktu sesuai kebijakan penetapan/stimulus Pemda dengan mengklik tombol <strong>Kebijakan</strong>.
+                  </span>
+                </div>
               </div>
             ) : (
-              /* KARTU VIEW: Clean Bento Cards */
+              /* KARTU VIEW: Bento Cards Per Tahun */
               <div className="p-4 sm:p-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                 {filteredYearlyRecap.map((item) => {
                   const isCurrentYear = item.tahun === CURRENT_YEAR;
                   const isFuture = item.tahun > CURRENT_YEAR;
+                  const isFocused = item.tahun === focusRecapYear;
 
                   return (
                     <div
                       key={item.tahun}
-                      className={`p-4 rounded-2xl border-2 transition-all flex flex-col justify-between space-y-3 ${
-                        isCurrentYear
-                          ? 'bg-sky-50/40 dark:bg-sky-950/30 border-sky-500 shadow-xs'
-                          : 'bg-white dark:bg-slate-800/80 border-slate-200/90 dark:border-slate-700'
+                      onClick={() => setFocusRecapYear(item.tahun)}
+                      className={`p-4 rounded-2xl border-2 transition-all flex flex-col justify-between space-y-3 cursor-pointer ${
+                        isFocused
+                          ? 'bg-sky-50/50 dark:bg-sky-950/40 border-sky-500 shadow-xs ring-1 ring-sky-400'
+                          : isCurrentYear
+                          ? 'bg-amber-50/20 dark:bg-amber-950/20 border-amber-300 dark:border-amber-700'
+                          : 'bg-white dark:bg-slate-850 border-slate-200/90 dark:border-slate-700'
                       }`}
                     >
                       <div className="flex items-center justify-between">
@@ -2341,33 +2402,33 @@ export default function SpptPbbManager({ userRole = 'viewer', googleToken, googl
                           </span>
                         ) : (
                           <span className="text-[10px] font-bold text-slate-500 bg-slate-100 dark:bg-slate-700 px-2 py-0.5 rounded-md">
-                            Riwayat
+                            Lampau
                           </span>
                         )}
                       </div>
 
                       <div className="space-y-1.5 text-xs">
                         <div className="flex items-center justify-between">
-                          <span className="text-slate-500 font-medium">Beban:</span>
+                          <span className="text-slate-500 font-medium">Perkiraan Beban:</span>
                           <span className="font-mono font-black text-slate-900 dark:text-white">
                             {formatRupiah(item.targetNominal)}
                           </span>
                         </div>
                         <div className="flex items-center justify-between">
-                          <span className="text-slate-500 font-medium">Terbayar:</span>
+                          <span className="text-slate-500 font-medium">Sudah Terbayar:</span>
                           <span className="font-mono font-bold text-emerald-700 dark:text-emerald-400">
                             {formatRupiah(item.terbayarNominal)} ({item.persentase}%)
                           </span>
                         </div>
                         <div className="flex items-center justify-between">
-                          <span className="text-slate-500 font-medium">Sisa:</span>
+                          <span className="text-slate-500 font-medium">Sisa Belum Bayar:</span>
                           <span className={`font-mono font-bold ${item.sisaNominal === 0 ? 'text-emerald-600' : 'text-rose-600 dark:text-rose-400'}`}>
                             {formatRupiah(item.sisaNominal)}
                           </span>
                         </div>
                       </div>
 
-                      <div className="flex items-center gap-1.5 pt-2 border-t border-slate-100 dark:border-slate-700">
+                      <div className="flex items-center gap-1.5 pt-2 border-t border-slate-100 dark:border-slate-700" onClick={(e) => e.stopPropagation()}>
                         {userRole === 'admin' && (
                           <button
                             type="button"
