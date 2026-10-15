@@ -1955,94 +1955,84 @@ export default function SpptPbbManager({ userRole = 'viewer', googleToken, googl
           exit={{ opacity: 0, y: -8 }}
           className="space-y-4"
         >
-          {/* 1. Grand Total Summary Cards (All Periods 2025-2035) */}
+          {/* 1. Executive Snapshot Strip (Grand Total Multi-Tahun 2025-2035) */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-            {/* Grand Total Target Beban */}
-            <div className="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl border-2 border-slate-200/90 dark:border-slate-800 shadow-2xs flex flex-col justify-between space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="text-[11px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+            {/* Card 1: Total Beban Kewajiban */}
+            <div className="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl border-2 border-slate-200/90 dark:border-slate-800 shadow-2xs flex flex-col justify-between space-y-2">
+              <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+                <span className="font-black text-[10px] uppercase tracking-wider flex items-center gap-1.5">
                   <span className="w-2 h-2 rounded-full bg-sky-500" />
-                  <span>Total Beban Ketetapan ({availableYears.length} Tahun)</span>
+                  <span>Total Beban Ketetapan</span>
                 </span>
-                <span className="p-1 bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 rounded-md text-xs font-bold px-2 py-0.5">
-                  2025–{availableYears[availableYears.length - 1]}
+                <span className="font-mono font-bold text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-2 py-0.5 rounded-md">
+                  {availableYears.length} Periode Tahun
                 </span>
               </div>
               <div>
                 <p className="text-2xl font-black text-slate-900 dark:text-slate-100 font-mono tracking-tight">
                   {formatRupiah(grandTotalTarget)}
                 </p>
-                <div className="flex items-center justify-between mt-1.5 text-xs text-slate-500 dark:text-slate-400">
-                  <span>{totalObjek} Objek Pajak (NOP)</span>
-                  <span className="text-[10px] bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded font-medium text-slate-600 dark:text-slate-300">
-                    Kewajiban Pokok &amp; Pemda
-                  </span>
-                </div>
+                <p className="text-[11px] text-slate-400 mt-1 font-medium">
+                  {totalObjek} Objek Pajak (2025–{availableYears[availableYears.length - 1]})
+                </p>
               </div>
             </div>
 
-            {/* Grand Total Sudah Terbayar */}
-            <div className="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl border-2 border-emerald-200/90 dark:border-emerald-800/60 shadow-2xs flex flex-col justify-between space-y-3 bg-gradient-to-br from-emerald-50/20 to-transparent">
-              <div className="flex items-center justify-between">
-                <span className="text-[11px] font-black text-emerald-800 dark:text-emerald-300 uppercase tracking-wider flex items-center gap-1.5">
+            {/* Card 2: Sudah Terbayar */}
+            <div className="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl border-2 border-emerald-200/90 dark:border-emerald-800/60 shadow-2xs flex flex-col justify-between space-y-2 bg-gradient-to-br from-emerald-50/20 to-transparent">
+              <div className="flex items-center justify-between text-xs">
+                <span className="font-black text-[10px] uppercase tracking-wider text-emerald-800 dark:text-emerald-300 flex items-center gap-1.5">
                   <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                  <span>Akumulasi Realisasi Terbayar</span>
+                  <span>Realisasi Sudah Terbayar</span>
                 </span>
-                <span className="p-1 bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 rounded-md text-xs font-bold px-2 py-0.5">
-                  {grandTotalPersen}% Terbayar
+                <span className="font-mono font-black text-[10px] bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 px-2 py-0.5 rounded-md">
+                  {grandTotalPersen}% Lunas
                 </span>
               </div>
               <div>
                 <p className="text-2xl font-black text-emerald-700 dark:text-emerald-400 font-mono tracking-tight">
                   {formatRupiah(grandTotalTerbayar)}
                 </p>
-                <div className="mt-2 space-y-1">
-                  <div className="flex items-center justify-between text-xs font-bold text-emerald-800 dark:text-emerald-300">
-                    <span>Kas Pembayaran Masuk</span>
-                    <span>{grandTotalPersen}%</span>
-                  </div>
-                  <div className="w-full h-1.5 bg-emerald-100 dark:bg-emerald-950 rounded-full overflow-hidden">
-                    <div 
-                      className="h-full bg-emerald-500 rounded-full transition-all duration-300" 
-                      style={{ width: `${Math.min(100, grandTotalPersen)}%` }}
-                    />
-                  </div>
+                <div className="w-full h-1.5 bg-emerald-100 dark:bg-emerald-950 rounded-full overflow-hidden mt-2">
+                  <div 
+                    className="h-full bg-emerald-500 rounded-full transition-all duration-300" 
+                    style={{ width: `${Math.min(100, grandTotalPersen)}%` }}
+                  />
                 </div>
               </div>
             </div>
 
-            {/* Grand Total Sisa Tunggakan */}
-            <div className="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl border-2 border-slate-200/90 dark:border-slate-800 shadow-2xs flex flex-col justify-between space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="text-[11px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+            {/* Card 3: Sisa Belum Bayar */}
+            <div className="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl border-2 border-slate-200/90 dark:border-slate-800 shadow-2xs flex flex-col justify-between space-y-2">
+              <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+                <span className="font-black text-[10px] uppercase tracking-wider flex items-center gap-1.5">
                   <span className={`w-2 h-2 rounded-full ${grandTotalSisa === 0 ? 'bg-emerald-500' : 'bg-rose-500'}`} />
-                  <span>Total Sisa Belum Bayar</span>
+                  <span>Sisa Belum Dibayar</span>
                 </span>
-                <span className={`text-[10px] font-black px-2 py-0.5 rounded-md ${
+                <span className={`font-black text-[10px] px-2 py-0.5 rounded-md ${
                   grandTotalSisa === 0 
                     ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300' 
                     : 'bg-rose-100 text-rose-800 dark:bg-rose-950/60 dark:text-rose-300'
                 }`}>
-                  {grandTotalSisa === 0 ? '100% LUNAS' : 'SISA TAGIHAN'}
+                  {grandTotalSisa === 0 ? 'LUNAS SEMUA' : 'SISA TAGIHAN'}
                 </span>
               </div>
               <div>
                 <p className={`text-2xl font-black font-mono tracking-tight ${grandTotalSisa > 0 ? 'text-rose-600 dark:text-rose-400' : 'text-emerald-600 dark:text-emerald-400'}`}>
                   {formatRupiah(grandTotalSisa)}
                 </p>
-                <div className="flex items-center justify-between mt-1.5 text-xs text-slate-500 dark:text-slate-400">
-                  <span>{grandTotalSisa === 0 ? '✓ Seluruh periode lunas' : 'Total tagihan belum terbayar'}</span>
-                  <span className="text-[10px] font-medium text-slate-400">Akumulasi multi-tahun</span>
-                </div>
+                <p className="text-[11px] text-slate-400 mt-1 font-medium">
+                  {grandTotalSisa === 0 ? '✓ Tidak ada tunggakan kas' : 'Akumulasi seluruh tahun anggaran'}
+                </p>
               </div>
             </div>
           </div>
 
-          {/* 2. Simplified Recap Table Section */}
+          {/* 2. Unified Ledger & Table Card */}
           <div className="bg-white dark:bg-slate-900 rounded-3xl border-2 border-slate-200/90 dark:border-slate-800 shadow-2xs overflow-hidden">
-            {/* Filter Toolbar & Actions */}
-            <div className="p-3.5 sm:p-4 border-b border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50/70 dark:bg-slate-850/60">
-              {/* Filter Scope Pills */}
+            {/* Single Clean Filter Toolbar */}
+            <div className="p-3 sm:p-3.5 border-b border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50/70 dark:bg-slate-850/60">
+              {/* Scope Pills */}
               <div className="flex flex-wrap items-center gap-1.5">
                 <button
                   type="button"
@@ -2053,19 +2043,20 @@ export default function SpptPbbManager({ userRole = 'viewer', googleToken, googl
                       : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-100'
                   }`}
                 >
-                  Semua Periode ({yearlyRecapData.length})
+                  Semua Tahun ({yearlyRecapData.length})
                 </button>
 
                 <button
                   type="button"
                   onClick={() => setRecapScopeFilter('current')}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1 ${
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
                     recapScopeFilter === 'current'
                       ? 'bg-amber-400 text-sky-950 font-black shadow-xs'
                       : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-100'
                   }`}
                 >
-                  <span>🎯 Tahun Berjalan ({CURRENT_YEAR})</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-sky-900 animate-pulse" />
+                  <span>Tahun Berjalan ({CURRENT_YEAR})</span>
                 </button>
 
                 <button
@@ -2077,7 +2068,7 @@ export default function SpptPbbManager({ userRole = 'viewer', googleToken, googl
                       : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-100'
                   }`}
                 >
-                  📜 Riwayat Lalu ({yearlyRecapData.filter(r => r.tahun < CURRENT_YEAR).length})
+                  Riwayat ({yearlyRecapData.filter(r => r.tahun < CURRENT_YEAR).length})
                 </button>
 
                 <button
@@ -2089,11 +2080,11 @@ export default function SpptPbbManager({ userRole = 'viewer', googleToken, googl
                       : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-100'
                   }`}
                 >
-                  🔮 Proyeksi ({yearlyRecapData.filter(r => r.tahun > CURRENT_YEAR).length})
+                  Proyeksi ({yearlyRecapData.filter(r => r.tahun > CURRENT_YEAR).length})
                 </button>
               </div>
 
-              {/* View Switcher & CSV Download */}
+              {/* View Toggle & CSV Export */}
               <div className="flex items-center gap-2 self-start sm:self-auto">
                 <div className="flex items-center bg-slate-100 dark:bg-slate-800 p-0.5 rounded-xl border border-slate-200 dark:border-slate-700">
                   <button
@@ -2101,10 +2092,10 @@ export default function SpptPbbManager({ userRole = 'viewer', googleToken, googl
                     onClick={() => setRecapViewMode('table')}
                     className={`px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1 cursor-pointer ${
                       recapViewMode === 'table'
-                        ? 'bg-white dark:bg-slate-700 text-sky-900 dark:text-white shadow-2xs'
+                        ? 'bg-white dark:bg-slate-700 text-sky-950 dark:text-white shadow-2xs'
                         : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
                     }`}
-                    title="Tampilan Tabel"
+                    title="Tampilan Tabel Buku Kas"
                   >
                     <TableIcon className="w-3.5 h-3.5" />
                     <span>Tabel</span>
@@ -2114,10 +2105,10 @@ export default function SpptPbbManager({ userRole = 'viewer', googleToken, googl
                     onClick={() => setRecapViewMode('cards')}
                     className={`px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1 cursor-pointer ${
                       recapViewMode === 'cards'
-                        ? 'bg-white dark:bg-slate-700 text-sky-900 dark:text-white shadow-2xs'
+                        ? 'bg-white dark:bg-slate-700 text-sky-950 dark:text-white shadow-2xs'
                         : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
                     }`}
-                    title="Tampilan Kartu"
+                    title="Tampilan Kartu Ringkas"
                   >
                     <LayoutGrid className="w-3.5 h-3.5" />
                     <span>Kartu</span>
@@ -2128,99 +2119,44 @@ export default function SpptPbbManager({ userRole = 'viewer', googleToken, googl
                   type="button"
                   onClick={handleExportYearlyRecapCSV}
                   className="px-3 py-1.5 bg-sky-800 hover:bg-sky-900 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-xs"
-                  title="Unduh rekapan tabel dalam format CSV"
+                  title="Unduh laporan rekapan ke file CSV"
                 >
                   <Download className="w-3.5 h-3.5" />
-                  <span>Unduh CSV</span>
+                  <span>Ekspor CSV</span>
                 </button>
               </div>
             </div>
 
-            {/* Filter Scope Pills (Semua, Tahun Berjalan, Riwayat, Proyeksi) */}
-            <div className="px-4 py-3 bg-slate-50/70 dark:bg-slate-850/60 border-b border-slate-100 dark:border-slate-800 flex flex-wrap items-center gap-2">
-              <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mr-1 flex items-center gap-1">
-                <span>Filter Periode:</span>
-              </span>
-
-              <button
-                type="button"
-                onClick={() => setRecapScopeFilter('all')}
-                className={`px-3 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                  recapScopeFilter === 'all'
-                    ? 'bg-sky-800 text-white shadow-2xs'
-                    : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-100'
-                }`}
-              >
-                Semua Tahun ({yearlyRecapData.length})
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setRecapScopeFilter('current')}
-                className={`px-3 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1 ${
-                  recapScopeFilter === 'current'
-                    ? 'bg-amber-400 text-sky-950 font-black shadow-2xs'
-                    : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-100'
-                }`}
-              >
-                <span>🎯 Tahun Berjalan ({CURRENT_YEAR})</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setRecapScopeFilter('history')}
-                className={`px-3 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                  recapScopeFilter === 'history'
-                    ? 'bg-sky-800 text-white shadow-2xs'
-                    : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-100'
-                }`}
-              >
-                📜 Riwayat ({yearlyRecapData.filter(r => r.tahun < CURRENT_YEAR).length})
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setRecapScopeFilter('projection')}
-                className={`px-3 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                  recapScopeFilter === 'projection'
-                    ? 'bg-sky-800 text-white shadow-2xs'
-                    : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-100'
-                }`}
-              >
-                🔮 Proyeksi Masa Depan ({yearlyRecapData.filter(r => r.tahun > CURRENT_YEAR).length})
-              </button>
-            </div>
-
-            {/* TABEL VIEW (Simple 5 Clean Columns) */}
+            {/* TABEL VIEW: Super Clean, Financial Ledger with Distinct Columns */}
             {recapViewMode === 'table' ? (
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs">
                   <thead className="bg-slate-50 dark:bg-slate-800/80 border-b border-slate-200/80 dark:border-slate-700 text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 tracking-wider">
                     <tr>
                       <th className="py-3 px-4">Tahun Pajak</th>
-                      <th className="py-3 px-4">Target Beban Yayasan</th>
-                      <th className="py-3 px-4">Realisasi &amp; Status Pelunasan</th>
-                      <th className="py-3 px-4">Sisa Kewajiban</th>
-                      <th className="py-3 px-4 text-center w-28">Aksi</th>
+                      <th className="py-3 px-4">Beban Ketetapan (Rp)</th>
+                      <th className="py-3 px-4">Sudah Terbayar (Rp)</th>
+                      <th className="py-3 px-4">Belum Bayar (Rp)</th>
+                      <th className="py-3 px-4 text-center">Status Pelunasan</th>
+                      <th className="py-3 px-4 text-center w-36">Aksi</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
                     {filteredYearlyRecap.map((item) => {
                       const isCurrentYear = item.tahun === CURRENT_YEAR;
                       const isFuture = item.tahun > CURRENT_YEAR;
-                      const isPast = item.tahun < CURRENT_YEAR;
 
                       return (
                         <tr 
                           key={item.tahun} 
                           className={`transition-colors hover:bg-slate-50/80 dark:hover:bg-slate-800/50 ${
-                            isCurrentYear ? 'bg-sky-50/50 dark:bg-sky-950/25' : ''
+                            isCurrentYear ? 'bg-sky-50/40 dark:bg-sky-950/20' : ''
                           }`}
                         >
                           {/* 1. Tahun Pajak */}
                           <td className="py-3.5 px-4 whitespace-nowrap">
                             <div className="flex items-center gap-2">
-                              <span className={`font-mono text-sm font-black px-2.5 py-1 rounded-xl border ${
+                              <span className={`font-mono text-xs font-black px-2.5 py-1 rounded-xl border ${
                                 isCurrentYear 
                                   ? 'bg-sky-800 text-white border-sky-900 shadow-2xs'
                                   : 'bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border-slate-200 dark:border-slate-700'
@@ -2229,90 +2165,50 @@ export default function SpptPbbManager({ userRole = 'viewer', googleToken, googl
                               </span>
 
                               {isCurrentYear && (
-                                <span className="text-[10px] font-black uppercase tracking-wider bg-amber-400 text-slate-950 px-2 py-0.5 rounded-lg shadow-2xs">
-                                  Tahun Berjalan
-                                </span>
-                              )}
-                              {isPast && (
-                                <span className="text-[9px] font-bold uppercase tracking-wider bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 px-1.5 py-0.5 rounded">
-                                  Riwayat
+                                <span className="text-[9px] font-black uppercase tracking-wider bg-amber-400 text-sky-950 px-2 py-0.5 rounded-md shadow-2xs">
+                                  Tahun Ini
                                 </span>
                               )}
                               {isFuture && (
-                                <span className="text-[9px] font-bold uppercase tracking-wider bg-sky-50 dark:bg-sky-950/50 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800 px-1.5 py-0.5 rounded">
+                                <span className="text-[9px] font-semibold text-slate-400">
                                   Proyeksi
                                 </span>
                               )}
                             </div>
                           </td>
 
-                          {/* 2. Target Beban Yayasan */}
+                          {/* 2. Beban Ketetapan (Rp) */}
                           <td className="py-3.5 px-4 whitespace-nowrap">
-                            <div className="font-mono font-extrabold text-sm text-slate-900 dark:text-white">
+                            <div className="font-mono font-black text-sm text-slate-900 dark:text-white">
                               {formatRupiah(item.targetNominal)}
                             </div>
-                            <span className="text-[10px] text-slate-400 font-medium">
-                              {item.totalObjek} Bidang Objek Pajak
+                            <span className="text-[10px] text-slate-400">
+                              {item.totalObjek} NOP
                             </span>
                           </td>
 
-                          {/* 3. Realisasi Terbayar & Progres */}
-                          <td className="py-3.5 px-4 min-w-[220px]">
-                            <div className="space-y-1.5">
-                              <div className="flex items-center justify-between text-xs">
-                                <span className="font-mono font-black text-slate-800 dark:text-slate-200">
-                                  {formatRupiah(item.terbayarNominal)}
-                                </span>
-                                <span className={`text-[10px] font-mono font-bold px-1.5 py-0.2 rounded ${
-                                  item.persentase === 100
-                                    ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300'
-                                    : item.persentase > 0
-                                    ? 'bg-amber-100 dark:bg-amber-950 text-amber-900 dark:text-amber-300'
-                                    : 'bg-slate-100 dark:bg-slate-800 text-slate-400'
-                                }`}>
-                                  {item.persentase}% Lunas
-                                </span>
-                              </div>
-
-                              {/* Progress bar */}
-                              <div className="w-full h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden border border-slate-200/60 dark:border-slate-700">
-                                <div 
-                                  className={`h-full rounded-full transition-all duration-300 ${
-                                    item.persentase === 100 
-                                      ? 'bg-emerald-500' 
-                                      : item.persentase > 0 
-                                      ? 'bg-amber-500' 
-                                      : 'bg-transparent'
-                                  }`}
-                                  style={{ width: `${item.persentase}%` }}
-                                />
-                              </div>
-
-                              {/* Status Tag */}
-                              <div className="flex items-center gap-1.5 pt-0.5">
-                                {isFuture ? (
-                                  <span className="text-[10px] text-sky-700 dark:text-sky-300 font-medium flex items-center gap-1">
-                                    <span>🔮 Belum Jatuh Tempo</span>
-                                  </span>
-                                ) : item.isFullyPaid ? (
-                                  <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-700 dark:text-emerald-400">
-                                    <CheckCircle2 className="w-3 h-3 text-emerald-600" />
-                                    <span>Lengkap ({item.lunasCount}/{item.totalObjek} NOP Lunas)</span>
-                                  </span>
-                                ) : item.isPartiallyPaid ? (
-                                  <span className="text-[10px] font-bold text-amber-700 dark:text-amber-400">
-                                    ⚡ {item.lunasCount} Lunas · {item.belumCount} Belum
-                                  </span>
-                                ) : (
-                                  <span className="text-[10px] font-bold text-rose-600 dark:text-rose-400">
-                                    ○ Belum Lunas ({item.belumCount} NOP)
-                                  </span>
-                                )}
-                              </div>
+                          {/* 3. Sudah Terbayar (Rp) */}
+                          <td className="py-3.5 px-4 whitespace-nowrap">
+                            <div className="flex items-center gap-1.5">
+                              <span className="font-mono font-black text-sm text-emerald-700 dark:text-emerald-400">
+                                {formatRupiah(item.terbayarNominal)}
+                              </span>
+                              <span className={`text-[10px] font-mono font-bold px-1.5 py-0.2 rounded ${
+                                item.persentase === 100
+                                  ? 'bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300'
+                                  : item.persentase > 0
+                                  ? 'bg-amber-100 dark:bg-amber-950/80 text-amber-900 dark:text-amber-300'
+                                  : 'bg-slate-100 dark:bg-slate-800 text-slate-400'
+                              }`}>
+                                {item.persentase}%
+                              </span>
                             </div>
+                            <span className="text-[10px] text-slate-400">
+                              {item.lunasCount} dari {item.totalObjek} NOP Lunas
+                            </span>
                           </td>
 
-                          {/* 4. Sisa Kewajiban */}
+                          {/* 4. Belum Bayar (Rp) */}
                           <td className="py-3.5 px-4 whitespace-nowrap">
                             <div className={`font-mono font-black text-sm ${
                               item.sisaNominal === 0 
@@ -2323,16 +2219,34 @@ export default function SpptPbbManager({ userRole = 'viewer', googleToken, googl
                             }`}>
                               {formatRupiah(item.sisaNominal)}
                             </div>
-                            <span className="text-[10px] text-slate-400 block mt-0.5">
-                              {item.sisaNominal === 0 
-                                ? '✓ Tidak ada sisa tagihan' 
-                                : isFuture 
-                                ? 'Estimasi Proyeksi Beban' 
-                                : 'Tunggakan / Harus Dibayar'}
+                            <span className="text-[10px] text-slate-400">
+                              {item.sisaNominal === 0 ? '✓ Lunas' : `${item.belumCount} NOP Tertunda`}
                             </span>
                           </td>
 
-                          {/* 5. Aksi */}
+                          {/* 5. Status Pelunasan */}
+                          <td className="py-3.5 px-4 text-center whitespace-nowrap">
+                            {item.isFullyPaid ? (
+                              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                                <span>100% LUNAS</span>
+                              </span>
+                            ) : item.isPartiallyPaid ? (
+                              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-amber-50 dark:bg-amber-950/50 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
+                                <span>⚡ SEBAGIAN</span>
+                              </span>
+                            ) : isFuture ? (
+                              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400">
+                                <span>○ Belum Masuk</span>
+                              </span>
+                            ) : (
+                              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-rose-50 dark:bg-rose-950/50 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800">
+                                <span>○ BELUM BAYAR</span>
+                              </span>
+                            )}
+                          </td>
+
+                          {/* 6. Aksi */}
                           <td className="py-3.5 px-4 text-center whitespace-nowrap">
                             <div className="flex items-center justify-center gap-1.5">
                               {userRole === 'admin' && (
@@ -2340,10 +2254,10 @@ export default function SpptPbbManager({ userRole = 'viewer', googleToken, googl
                                   type="button"
                                   onClick={() => handleOpenPolicyModal(item.tahun)}
                                   className="px-2.5 py-1.5 bg-sky-50 hover:bg-sky-100 dark:bg-sky-950/60 dark:hover:bg-sky-900 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800 rounded-xl text-xs font-bold transition-colors inline-flex items-center gap-1 cursor-pointer"
-                                  title={`Sesuaikan Kebijakan Pemerintah untuk Tahun ${item.tahun}`}
+                                  title={`Sesuaikan Kebijakan Tarif Pemerintah Tahun ${item.tahun}`}
                                 >
                                   <SlidersHorizontal className="w-3.5 h-3.5" />
-                                  <span className="hidden xl:inline">Kebijakan</span>
+                                  <span>Kebijakan</span>
                                 </button>
                               )}
                               <button
@@ -2352,7 +2266,7 @@ export default function SpptPbbManager({ userRole = 'viewer', googleToken, googl
                                   setSelectedYearFilter(item.tahun);
                                   setActiveSubTab('list');
                                 }}
-                                className="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-sky-50 dark:hover:bg-sky-950/60 text-slate-700 dark:text-slate-200 hover:text-sky-800 dark:hover:text-sky-300 border border-slate-200 dark:border-slate-700 hover:border-sky-300 dark:hover:border-sky-700 rounded-xl text-xs font-bold transition-colors inline-flex items-center gap-1.5 cursor-pointer shadow-2xs"
+                                className="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-sky-800 hover:text-white dark:hover:bg-sky-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-bold transition-colors inline-flex items-center gap-1 cursor-pointer shadow-2xs"
                                 title={`Buka Rincian NOP Tahun ${item.tahun}`}
                               >
                                 <span>Buka NOP</span>
@@ -2369,28 +2283,31 @@ export default function SpptPbbManager({ userRole = 'viewer', googleToken, googl
                   <tfoot className="bg-slate-900 dark:bg-slate-950 text-white font-mono text-xs border-t-2 border-slate-950">
                     <tr>
                       <td className="py-3.5 px-4 font-black uppercase text-amber-400">
-                        TOTAL DITAMPILKAN
+                        TOTAL REKAPITULASI
                       </td>
                       <td className="py-3.5 px-4 font-black text-slate-100 whitespace-nowrap">
                         {formatRupiah(filteredYearlyRecap.reduce((acc, c) => acc + c.targetNominal, 0))}
                       </td>
                       <td className="py-3.5 px-4 font-black text-emerald-400 whitespace-nowrap">
-                        <div className="flex items-center gap-1.5">
-                          <span>{formatRupiah(filteredYearlyRecap.reduce((acc, c) => acc + c.terbayarNominal, 0))}</span>
-                        </div>
+                        {formatRupiah(filteredYearlyRecap.reduce((acc, c) => acc + c.terbayarNominal, 0))}
                       </td>
                       <td className="py-3.5 px-4 font-black text-rose-300 whitespace-nowrap">
                         {formatRupiah(filteredYearlyRecap.reduce((acc, c) => acc + c.sisaNominal, 0))}
                       </td>
+                      <td className="py-3.5 px-4 text-center font-sans font-black text-emerald-400 text-xs">
+                        {filteredYearlyRecap.reduce((acc, c) => acc + c.targetNominal, 0) > 0 
+                          ? `${Math.round((filteredYearlyRecap.reduce((acc, c) => acc + c.terbayarNominal, 0) / filteredYearlyRecap.reduce((acc, c) => acc + c.targetNominal, 0)) * 100)}% Terbayar` 
+                          : '0%'}
+                      </td>
                       <td className="py-3.5 px-4 text-center font-sans text-[11px] text-slate-400">
-                        {filteredYearlyRecap.length} Periode Tahun
+                        {filteredYearlyRecap.length} Tahun
                       </td>
                     </tr>
                   </tfoot>
                 </table>
               </div>
             ) : (
-              /* KARTU VIEW (Bento Card Mode) */
+              /* KARTU VIEW: Clean Bento Cards */
               <div className="p-4 sm:p-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                 {filteredYearlyRecap.map((item) => {
                   const isCurrentYear = item.tahun === CURRENT_YEAR;
@@ -2401,7 +2318,7 @@ export default function SpptPbbManager({ userRole = 'viewer', googleToken, googl
                       key={item.tahun}
                       className={`p-4 rounded-2xl border-2 transition-all flex flex-col justify-between space-y-3 ${
                         isCurrentYear
-                          ? 'bg-sky-50/50 dark:bg-sky-950/30 border-sky-400 dark:border-sky-600 shadow-sm'
+                          ? 'bg-sky-50/40 dark:bg-sky-950/30 border-sky-500 shadow-xs'
                           : 'bg-white dark:bg-slate-800/80 border-slate-200/90 dark:border-slate-700'
                       }`}
                     >
@@ -2416,10 +2333,10 @@ export default function SpptPbbManager({ userRole = 'viewer', googleToken, googl
 
                         {isCurrentYear ? (
                           <span className="text-[10px] font-black uppercase bg-amber-400 text-sky-950 px-2 py-0.5 rounded-md shadow-2xs">
-                            Tahun Berjalan
+                            Tahun Ini
                           </span>
                         ) : isFuture ? (
-                          <span className="text-[10px] font-bold text-sky-600 dark:text-sky-300 bg-sky-50 dark:bg-sky-950/50 px-2 py-0.5 rounded-md">
+                          <span className="text-[10px] font-semibold text-slate-400">
                             Proyeksi
                           </span>
                         ) : (
@@ -2429,65 +2346,55 @@ export default function SpptPbbManager({ userRole = 'viewer', googleToken, googl
                         )}
                       </div>
 
-                      <div>
-                        <span className="text-[10px] font-bold text-slate-400 uppercase block">Target Beban:</span>
-                        <p className="text-lg font-black font-mono text-slate-900 dark:text-white">
-                          {formatRupiah(item.targetNominal)}
-                        </p>
-                        <span className="text-[11px] text-slate-500 dark:text-slate-400">
-                          {item.totalObjek} Objek Pajak (NOP)
-                        </span>
-                      </div>
-
-                      <div className="space-y-1.5 pt-1 border-t border-slate-100 dark:border-slate-700">
-                        <div className="flex items-center justify-between text-xs">
-                          <span className="text-slate-500 font-medium">Realisasi:</span>
+                      <div className="space-y-1.5 text-xs">
+                        <div className="flex items-center justify-between">
+                          <span className="text-slate-500 font-medium">Beban:</span>
+                          <span className="font-mono font-black text-slate-900 dark:text-white">
+                            {formatRupiah(item.targetNominal)}
+                          </span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-slate-500 font-medium">Terbayar:</span>
                           <span className="font-mono font-bold text-emerald-700 dark:text-emerald-400">
                             {formatRupiah(item.terbayarNominal)} ({item.persentase}%)
                           </span>
                         </div>
-                        <div className="w-full h-1.5 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
-                          <div 
-                            className={`h-full rounded-full ${
-                              item.persentase === 100 ? 'bg-emerald-500' : item.persentase > 0 ? 'bg-amber-500' : 'bg-transparent'
-                            }`}
-                            style={{ width: `${item.persentase}%` }}
-                          />
-                        </div>
-                        <div className="flex items-center justify-between text-xs pt-0.5">
+                        <div className="flex items-center justify-between">
                           <span className="text-slate-500 font-medium">Sisa:</span>
-                          <span className={`font-mono font-bold ${
-                            item.sisaNominal === 0 ? 'text-emerald-600' : isFuture ? 'text-slate-600 dark:text-slate-300' : 'text-rose-600 dark:text-rose-400'
-                          }`}>
+                          <span className={`font-mono font-bold ${item.sisaNominal === 0 ? 'text-emerald-600' : 'text-rose-600 dark:text-rose-400'}`}>
                             {formatRupiah(item.sisaNominal)}
                           </span>
                         </div>
                       </div>
 
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setSelectedYearFilter(item.tahun);
-                          setActiveSubTab('list');
-                        }}
-                        className="w-full py-2 bg-slate-100 dark:bg-slate-700 hover:bg-sky-800 hover:text-white dark:hover:bg-sky-700 text-slate-800 dark:text-slate-200 font-bold rounded-xl text-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs"
-                      >
-                        <span>Ceklis NOP Tahun {item.tahun}</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </button>
+                      <div className="flex items-center gap-1.5 pt-2 border-t border-slate-100 dark:border-slate-700">
+                        {userRole === 'admin' && (
+                          <button
+                            type="button"
+                            onClick={() => handleOpenPolicyModal(item.tahun)}
+                            className="p-2 bg-sky-50 hover:bg-sky-100 dark:bg-sky-950/60 dark:hover:bg-sky-900 text-sky-700 dark:text-sky-300 rounded-xl text-xs font-bold transition-colors border border-sky-200 dark:border-sky-800"
+                            title={`Kebijakan Pemda ${item.tahun}`}
+                          >
+                            <SlidersHorizontal className="w-3.5 h-3.5" />
+                          </button>
+                        )}
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setSelectedYearFilter(item.tahun);
+                            setActiveSubTab('list');
+                          }}
+                          className="flex-1 py-2 bg-slate-100 dark:bg-slate-700 hover:bg-sky-800 hover:text-white dark:hover:bg-sky-700 text-slate-800 dark:text-slate-200 font-bold rounded-xl text-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs"
+                        >
+                          <span>Rincian NOP {item.tahun}</span>
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
                     </div>
                   );
                 })}
               </div>
             )}
-
-            {/* Note banner for clarity */}
-            <div className="p-3.5 bg-slate-50 dark:bg-slate-850 border-t border-slate-200/80 dark:border-slate-800 flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-              <span className="text-base shrink-0">💡</span>
-              <p>
-                <strong>Catatan Panduan:</strong> Tahun <strong>{CURRENT_YEAR}</strong> adalah tahun pajak berjalan yang aktif untuk diverifikasi pembayarannya. Tahun setelahnya merupakan estimasi proyeksi beban tahunan dan belum jatuh tempo.
-              </p>
-            </div>
           </div>
         </motion.div>
       )}
