@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { 
   Car, 
   Building, 
@@ -16,7 +16,17 @@ import {
   Eye,
   Pause,
   Play,
-  ExternalLink
+  ExternalLink,
+  Archive,
+  ShieldCheck,
+  Landmark,
+  FileText,
+  Database,
+  MapPin,
+  Box,
+  Lock,
+  Filter,
+  Layers
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Asset, AsetTanah, AsetKendaraan, AsetBangunan } from '../types';
@@ -190,6 +200,88 @@ export default function Dashboard({
     },
     { baik: 0, ringan: 0, berat: 0 }
   );
+
+  // Search & Filter for Tempat Simpan section
+  const [tempatSimpanSearch, setTempatSimpanSearch] = useState<string>('');
+  const [selectedStorageLocation, setSelectedStorageLocation] = useState<string>('all');
+  const [showAllStorageRows, setShowAllStorageRows] = useState<boolean>(false);
+
+  // Tempat Simpan Berkas breakdown & statistics
+  const tempatSimpanStats = useMemo(() => {
+    const map = new Map<string, Asset[]>();
+    
+    assets.forEach(a => {
+      const loc = ((a as any).tempatSimpanBerkas || '').trim();
+      const cleanLoc = loc && loc !== '-' ? loc : 'Belum Ditentukan / Belum Diisi';
+      if (!map.has(cleanLoc)) {
+        map.set(cleanLoc, []);
+      }
+      map.get(cleanLoc)!.push(a);
+    });
+
+    const locations = Array.from(map.entries()).map(([name, items]) => {
+      const dipinjam = items.filter(i => i.sedangDipinjam).length;
+      const aman = items.length - dipinjam;
+      return {
+        name,
+        items,
+        total: items.length,
+        aman,
+        dipinjam,
+        isUnknown: name === 'Belum Ditentukan / Belum Diisi'
+      };
+    }).sort((a, b) => {
+      if (a.isUnknown) return 1;
+      if (b.isUnknown) return -1;
+      return b.total - a.total;
+    });
+
+    const totalTerdata = assets.filter(a => {
+      const loc = ((a as any).tempatSimpanBerkas || '').trim();
+      return loc && loc !== '-';
+    }).length;
+
+    const totalLokasi = locations.filter(l => !l.isUnknown).length;
+
+    return {
+      locations,
+      totalTerdata,
+      totalLokasi,
+      totalAssets: assets.length
+    };
+  }, [assets]);
+
+  // Filtered assets for Tempat Simpan table
+  const filteredTempatSimpanAssets = useMemo(() => {
+    return assets.filter(asset => {
+      const loc = ((asset as any).tempatSimpanBerkas || '').trim();
+      const cleanLoc = loc && loc !== '-' ? loc : 'Belum Ditentukan / Belum Diisi';
+      
+      if (selectedStorageLocation !== 'all') {
+        if (selectedStorageLocation === 'belum') {
+          if (cleanLoc !== 'Belum Ditentukan / Belum Diisi') return false;
+        } else if (cleanLoc !== selectedStorageLocation) {
+          return false;
+        }
+      }
+
+      if (tempatSimpanSearch.trim()) {
+        const q = tempatSimpanSearch.toLowerCase();
+        const nama = asset.type === 'tanah' ? `${asset.jenisSertifikat} ${asset.nomerSertifikat} ${asset.atasNamaSertifikat}` :
+                     asset.type === 'kendaraan' ? `${asset.merk} ${asset.nomorPolisi} ${asset.atasNama}` :
+                     `${asset.namaBangunan}`;
+        const locSimpan = (asset as any).tempatSimpanBerkas || '';
+        const lokasiFisik = asset.type === 'kendaraan' ? (asset as any).penanggungJawabDaerah || '' : asset.lokasi || '';
+        return (
+          nama.toLowerCase().includes(q) ||
+          locSimpan.toLowerCase().includes(q) ||
+          lokasiFisik.toLowerCase().includes(q)
+        );
+      }
+
+      return true;
+    });
+  }, [assets, selectedStorageLocation, tempatSimpanSearch]);
 
   // Auto-play timer for Carousel (4 slides)
   const TOTAL_SLIDES = 4;
@@ -980,6 +1072,40 @@ export default function Dashboard({
                     <span className="text-[10px] text-rose-200/80">Peminjaman Aktif</span>
                   </div>
                 </div>
+
+                {/* Storage Locations Quick Access Pills */}
+                {tempatSimpanStats.locations.filter(l => !l.isUnknown).length > 0 && (
+                  <div className="pt-2 border-t border-white/10 flex flex-wrap items-center gap-1.5 text-xs">
+                    <span className="text-[10px] font-bold text-sky-200 uppercase tracking-wider flex items-center gap-1">
+                      <Archive className="w-3 h-3 text-amber-300" />
+                      <span>Brankas Simpan:</span>
+                    </span>
+                    {tempatSimpanStats.locations.filter(l => !l.isUnknown).slice(0, 4).map(loc => (
+                      <button
+                        key={loc.name}
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleOpenDrawer({
+                            id: `loc-${loc.name}`,
+                            title: loc.name,
+                            category: 'Tempat Simpan Berkas Fisik',
+                            iconText: '🗄️',
+                            count: loc.total,
+                            matchingAssets: loc.items,
+                            badgeBg: 'bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border-amber-200 dark:border-amber-800',
+                            desc: `Rincian ${loc.total} dokumen fisik yang disimpan di ${loc.name}`
+                          });
+                        }}
+                        className="px-2 py-0.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-[10px] font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
+                        title={`Lihat berkas di ${loc.name}`}
+                      >
+                        <span className="truncate max-w-[150px] sm:max-w-[180px]">{loc.name}</span>
+                        <span className="px-1.5 py-0.2 rounded-full bg-amber-400 text-sky-950 font-black text-[9px]">{loc.total}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
               </motion.div>
             )}
           </AnimatePresence>
@@ -1094,9 +1220,16 @@ export default function Dashboard({
           </span>
         </div>
 
-        {/* Card 4: Dokumen & Mutasi */}
+        {/* Card 4: Dokumen & Tempat Simpan Berkas */}
         <div 
-          onClick={() => onNavigateToTab('pinjamberkas')}
+          onClick={() => {
+            const el = document.getElementById('section-tempat-simpan');
+            if (el) {
+              el.scrollIntoView({ behavior: 'smooth' });
+            } else {
+              onNavigateToTab('pinjamberkas');
+            }
+          }}
           className="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl border-2 border-slate-200/90 dark:border-slate-800 shadow-2xs hover:border-emerald-400 dark:hover:border-emerald-600 hover:shadow-md transition-all cursor-pointer group flex flex-col justify-between"
         >
           <div className="flex items-center justify-between">
@@ -1104,19 +1237,19 @@ export default function Dashboard({
               📁
             </span>
             <span className="text-[10px] font-mono font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/70 px-2 py-0.5 rounded-full border border-emerald-200/60 dark:border-emerald-800">
-              Arsip
+              Tempat Simpan
             </span>
           </div>
           <div className="my-2">
             <h3 className="text-2xl font-black text-slate-900 dark:text-white">
-              {sedangDipinjamCount} <span className="text-xs font-normal text-slate-400">Dipinjam</span>
+              {totalAssetsCount - sedangDipinjamCount} <span className="text-xs font-normal text-slate-400">Berkas</span>
             </h3>
-            <p className="text-xs font-bold text-emerald-700 dark:text-emerald-400 mt-0.5">
-              {totalAssetsCount - sedangDipinjamCount} Berkas di Brankas
+            <p className="text-xs font-bold text-emerald-700 dark:text-emerald-400 mt-0.5 truncate">
+              {tempatSimpanStats.totalLokasi} Lokasi Brankas Fisik
             </p>
           </div>
           <span className="text-[10px] text-slate-500 dark:text-slate-400 flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800">
-            <span>Monitoring Fisik</span>
+            <span>{sedangDipinjamCount > 0 ? `${sedangDipinjamCount} Sedang Dipinjam` : 'Semua Berkas Tersimpan'}</span>
             <ArrowRight className="w-3 h-3 text-slate-400 group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-transform" />
           </span>
         </div>
@@ -1210,7 +1343,301 @@ export default function Dashboard({
         </div>
       </div>
 
-      {/* 5. Aktivitas Input Terakhir (Recent Activity) */}
+      {/* 5. Informasi Tempat Simpan Berkas Fisik (Hasil Input Brankas & Lokasi Dokumen Asli) */}
+      <div id="section-tempat-simpan" className="bg-white dark:bg-slate-900 p-5 sm:p-6 rounded-3xl border-2 border-slate-200/90 dark:border-slate-800 shadow-2xs space-y-5">
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-4 border-b border-slate-100 dark:border-slate-800">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-2xl bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 flex items-center justify-center font-bold shrink-0">
+              <Archive className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-wider bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-700/60">
+                  📁 HASIL INPUT BERKAS
+                </span>
+                <span className="text-[10px] text-slate-400 font-mono hidden sm:inline">
+                  {tempatSimpanStats.totalTerdata} dari {totalAssetsCount} berkas terdata
+                </span>
+              </div>
+              <h3 className="text-sm sm:text-base font-black text-slate-900 dark:text-white uppercase tracking-wide mt-0.5">
+                Informasi Tempat Simpan Berkas Fisik
+              </h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                Monitoring lokasi brankas dan lemari penyimpanan berkas asli sertifikat hasil input data aset.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="px-3 py-1 bg-emerald-50 dark:bg-emerald-950/70 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 rounded-xl text-xs font-bold flex items-center gap-1.5">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+              <span>{totalAssetsCount - sedangDipinjamCount} Aman di Brankas</span>
+            </span>
+            <button
+              type="button"
+              onClick={() => onNavigateToTab('pinjamberkas')}
+              className="px-3 py-1 bg-sky-50 dark:bg-sky-950/70 hover:bg-sky-100 dark:hover:bg-sky-900 text-sky-800 dark:text-sky-300 border border-sky-200 dark:border-sky-800 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-colors cursor-pointer"
+            >
+              <span>Peminjaman Berkas</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        </div>
+
+        {/* 1. Grid of Storage Locations Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          {tempatSimpanStats.locations.map((loc) => {
+            const isUnknown = loc.isUnknown;
+            return (
+              <div
+                key={loc.name}
+                onClick={() => {
+                  handleOpenDrawer({
+                    id: `drawer-simpan-${loc.name}`,
+                    title: loc.name,
+                    category: 'Tempat Simpan Berkas Fisik',
+                    iconText: isUnknown ? '❓' : '🗄️',
+                    count: loc.total,
+                    matchingAssets: loc.items,
+                    badgeBg: isUnknown 
+                      ? 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-300' 
+                      : 'bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border-amber-200 dark:border-amber-800',
+                    desc: isUnknown 
+                      ? 'Aset yang belum ditentukan lokasi fisik penyimpanan berkas aslinya'
+                      : `Seluruh dokumen dan berkas sertifikat yang disimpan di ${loc.name}`
+                  });
+                }}
+                className={`p-4 rounded-2xl border transition-all cursor-pointer group flex flex-col justify-between ${
+                  isUnknown 
+                    ? 'bg-slate-50 dark:bg-slate-800/40 border-slate-200 dark:border-slate-700/80 hover:border-slate-400' 
+                    : 'bg-gradient-to-br from-amber-50/40 via-white to-sky-50/20 dark:from-slate-800/80 dark:to-slate-800/40 border-amber-200/80 dark:border-slate-700 hover:border-amber-400 dark:hover:border-amber-500 hover:shadow-md'
+                }`}
+              >
+                <div>
+                  <div className="flex items-center justify-between">
+                    <span className="p-2 rounded-xl bg-amber-100/80 dark:bg-amber-950 text-amber-800 dark:text-amber-300 text-base">
+                      {isUnknown ? '⚠️' : '🗄️'}
+                    </span>
+                    <span className="text-[11px] font-black font-mono px-2 py-0.5 rounded-full bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-800 dark:text-slate-100 shadow-2xs">
+                      {loc.total} Berkas
+                    </span>
+                  </div>
+
+                  <h4 className="text-xs font-black text-slate-900 dark:text-white mt-2.5 line-clamp-2 leading-snug group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                    {loc.name}
+                  </h4>
+
+                  {/* Sample Document Tags Preview */}
+                  <div className="flex flex-wrap gap-1 mt-2">
+                    {loc.items.slice(0, 2).map((item) => (
+                      <span 
+                        key={item.id} 
+                        className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-700/80 text-slate-600 dark:text-slate-300 truncate max-w-[130px]"
+                      >
+                        {item.type === 'tanah' ? item.nomerSertifikat : (item as any).nomorPolisi || (item as any).namaBangunan}
+                      </span>
+                    ))}
+                    {loc.items.length > 2 && (
+                      <span className="text-[9px] text-slate-400 font-mono self-center">
+                        +{loc.items.length - 2} lagi
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                <div className="pt-3 mt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px]">
+                  <span className={`font-semibold flex items-center gap-1 ${
+                    loc.dipinjam > 0 ? 'text-amber-600 dark:text-amber-400' : 'text-emerald-600 dark:text-emerald-400'
+                  }`}>
+                    <CheckCircle2 className="w-3.5 h-3.5" />
+                    <span>{loc.aman} di Tempat</span>
+                  </span>
+                  <span className="text-slate-400 group-hover:text-amber-600 group-hover:translate-x-0.5 transition-all flex items-center gap-0.5 text-[10px] font-bold">
+                    <span>Lihat</span>
+                    <ArrowRight className="w-3 h-3" />
+                  </span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* 2. Interactive Search & Detailed Listing Table of Tempat Simpan Berkas */}
+        <div className="pt-2 space-y-3">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 bg-slate-50 dark:bg-slate-800/60 p-3 rounded-2xl border border-slate-200/80 dark:border-slate-700/80">
+            <div className="flex flex-wrap items-center gap-2 flex-1 min-w-0">
+              {/* Location Filter Dropdown */}
+              <div className="flex items-center gap-1.5 shrink-0">
+                <Filter className="w-3.5 h-3.5 text-slate-400" />
+                <select
+                  value={selectedStorageLocation}
+                  onChange={(e) => setSelectedStorageLocation(e.target.value)}
+                  className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-2.5 py-1.5 text-xs font-semibold text-slate-800 dark:text-slate-200 focus:outline-none focus:border-amber-500 cursor-pointer"
+                >
+                  <option value="all">Semua Lokasi Simpan ({totalAssetsCount})</option>
+                  {tempatSimpanStats.locations.map(l => (
+                    <option key={l.name} value={l.isUnknown ? 'belum' : l.name}>
+                      {l.name} ({l.total})
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Quick Search */}
+              <div className="relative flex-1 min-w-[200px]">
+                <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  placeholder="Cari nomor sertifikat, nama berkas, tempat simpan..."
+                  value={tempatSimpanSearch}
+                  onChange={(e) => setTempatSimpanSearch(e.target.value)}
+                  className="w-full pl-8 pr-3 py-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs text-slate-800 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-amber-500"
+                />
+              </div>
+            </div>
+
+            <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium shrink-0 self-end sm:self-center">
+              Menampilkan {Math.min(filteredTempatSimpanAssets.length, showAllStorageRows ? filteredTempatSimpanAssets.length : 6)} dari {filteredTempatSimpanAssets.length} aset
+            </span>
+          </div>
+
+          {/* Table Container */}
+          <div className="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800">
+            <table className="w-full text-left text-xs border-collapse">
+              <thead>
+                <tr className="bg-slate-50 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-700 text-[10px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                  <th className="py-2.5 px-3">No</th>
+                  <th className="py-2.5 px-3">Aset &amp; Sertifikat</th>
+                  <th className="py-2.5 px-3">Atas Nama &amp; Lokasi Aset</th>
+                  <th className="py-2.5 px-3 bg-amber-50/60 dark:bg-amber-950/30 text-amber-900 dark:text-amber-300">
+                    Tempat Simpan Berkas Asli (Hasil Input)
+                  </th>
+                  <th className="py-2.5 px-3 text-center">Status Berkas</th>
+                  <th className="py-2.5 px-3 text-right">Aksi</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+                {filteredTempatSimpanAssets.length === 0 ? (
+                  <tr>
+                    <td colSpan={6} className="py-8 text-center text-slate-400 text-xs">
+                      Tidak ada aset yang cocok dengan filter tempat simpan berkas.
+                    </td>
+                  </tr>
+                ) : (
+                  (showAllStorageRows ? filteredTempatSimpanAssets : filteredTempatSimpanAssets.slice(0, 6)).map((asset, idx) => {
+                    const simpanLoc = (asset as any).tempatSimpanBerkas;
+                    const hasSimpan = simpanLoc && simpanLoc !== '-';
+
+                    return (
+                      <tr 
+                        key={asset.id}
+                        className="hover:bg-slate-50/80 dark:hover:bg-slate-800/50 transition-colors group cursor-pointer"
+                        onClick={() => {
+                          handleOpenDrawer({
+                            id: `single-${asset.id}`,
+                            title: asset.type === 'tanah' ? `${asset.jenisSertifikat} - ${asset.nomerSertifikat}` :
+                                   asset.type === 'kendaraan' ? `${asset.merk} (${asset.nomorPolisi})` : asset.namaBangunan,
+                            category: `Aset ${asset.type}`,
+                            iconText: asset.type === 'tanah' ? '🏘️' : asset.type === 'kendaraan' ? '🚐' : '🏢',
+                            count: 1,
+                            matchingAssets: [asset],
+                            desc: `Detail tempat simpan berkas fisik untuk aset ini.`
+                          });
+                        }}
+                      >
+                        <td className="py-2.5 px-3 font-mono text-[11px] text-slate-400">
+                          {idx + 1}
+                        </td>
+                        <td className="py-2.5 px-3">
+                          <div className="flex items-center gap-2">
+                            <span className="text-base shrink-0">
+                              {asset.type === 'tanah' ? '📗' : asset.type === 'kendaraan' ? '🚐' : '🏢'}
+                            </span>
+                            <div className="min-w-0">
+                              <span className="font-black text-slate-900 dark:text-white block truncate">
+                                {asset.type === 'tanah' ? `${asset.jenisSertifikat} - No. ${asset.nomerSertifikat}` :
+                                 asset.type === 'kendaraan' ? `${asset.merk} (${asset.nomorPolisi})` : asset.namaBangunan}
+                              </span>
+                              <span className="text-[10px] text-slate-400 font-mono uppercase">
+                                Tipe: {asset.type}
+                              </span>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="py-2.5 px-3">
+                          <span className="font-semibold text-slate-800 dark:text-slate-200 block truncate max-w-[200px]">
+                            {asset.type === 'tanah' ? `a.n. ${asset.atasNamaSertifikat}` :
+                             asset.type === 'kendaraan' ? `a.n. ${(asset as any).atasNama}` : '-'}
+                          </span>
+                          <span className="text-[10px] text-slate-400 truncate block max-w-[220px]">
+                            {asset.type === 'kendaraan' ? (asset as any).penanggungJawabDaerah || 'Madiun' : asset.lokasi}
+                          </span>
+                        </td>
+                        <td className="py-2.5 px-3 bg-amber-50/40 dark:bg-amber-950/20">
+                          {hasSimpan ? (
+                            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-100/80 dark:bg-amber-950 border border-amber-300 dark:border-amber-700/80 text-amber-950 dark:text-amber-200 font-bold text-xs shadow-2xs">
+                              <Archive className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400 shrink-0" />
+                              <span className="truncate max-w-[250px]">{simpanLoc}</span>
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center gap-1 text-[11px] text-slate-400 italic">
+                              <span>Belum ditentukan</span>
+                            </span>
+                          )}
+                        </td>
+                        <td className="py-2.5 px-3 text-center">
+                          {asset.sedangDipinjam ? (
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-rose-50 dark:bg-rose-950/70 border border-rose-200 dark:border-rose-800 text-[10px] font-bold text-rose-700 dark:text-rose-300">
+                              <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse" />
+                              <span>Dipinjam</span>
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/70 border border-emerald-200 dark:border-emerald-800 text-[10px] font-bold text-emerald-700 dark:text-emerald-300">
+                              <CheckCircle2 className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
+                              <span>Aman di Brankas</span>
+                            </span>
+                          )}
+                        </td>
+                        <td className="py-2.5 px-3 text-right">
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              onNavigateToTab('database');
+                            }}
+                            className="p-1.5 rounded-lg text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+                            title="Buka di Database"
+                          >
+                            <ExternalLink className="w-3.5 h-3.5" />
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })
+                )}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Toggle View All */}
+          {filteredTempatSimpanAssets.length > 6 && (
+            <div className="text-center pt-1">
+              <button
+                type="button"
+                onClick={() => setShowAllStorageRows(!showAllStorageRows)}
+                className="px-4 py-1.5 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 hover:bg-amber-100 dark:hover:bg-amber-950/60 text-slate-700 dark:text-slate-300 hover:text-amber-900 dark:hover:text-amber-200 border border-slate-200 dark:border-slate-700 transition-all cursor-pointer"
+              >
+                {showAllStorageRows 
+                  ? 'Tampilkan Lebih Sedikit (6 Berkas)' 
+                  : `Tampilkan Semua (${filteredTempatSimpanAssets.length} Berkas Fisik)`}
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* 6. Aktivitas Input Terakhir (Recent Activity) */}
       <div className="bg-white dark:bg-slate-900 p-5 sm:p-6 rounded-3xl border-2 border-slate-200/90 dark:border-slate-800 shadow-2xs space-y-4">
         <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
           <div className="flex items-center gap-2">
@@ -1263,10 +1690,18 @@ export default function Dashboard({
                       {asset.type === 'kendaraan' && `${asset.merk} (${asset.nomorPolisi})`}
                       {asset.type === 'bangunan' && asset.namaBangunan}
                     </h4>
-                    <span className="text-[10px] text-slate-400 font-mono block truncate mt-0.5">
-                      Lokasi: {asset.type === 'kendaraan' ? (asset as any).atasNama : asset.lokasi}
-                      {asset.type === 'tanah' && (asset as any).luasTanah ? ` • Luas: ${Number((asset as any).luasTanah).toLocaleString('id-ID')} m²` : ''}
-                    </span>
+                    <div className="flex flex-wrap items-center gap-1.5 mt-1">
+                      <span className="text-[10px] text-slate-400 font-mono">
+                        Lokasi: {asset.type === 'kendaraan' ? (asset as any).atasNama : asset.lokasi}
+                        {asset.type === 'tanah' && (asset as any).luasTanah ? ` • ${Number((asset as any).luasTanah).toLocaleString('id-ID')} m²` : ''}
+                      </span>
+                      {(asset as any).tempatSimpanBerkas && (asset as any).tempatSimpanBerkas !== '-' && (
+                        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-amber-50 dark:bg-amber-950/70 border border-amber-200 dark:border-amber-800 text-[10px] font-bold text-amber-800 dark:text-amber-200">
+                          <Archive className="w-3 h-3 text-amber-600 dark:text-amber-400 shrink-0" />
+                          <span>Simpan: {(asset as any).tempatSimpanBerkas}</span>
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </div>
 
@@ -1386,6 +1821,12 @@ export default function Dashboard({
                             {asset.type === 'kendaraan' && `a.n. ${(asset as any).atasNama} · ${(asset as any).penanggungJawabDaerah || 'Daerah Madiun'}`}
                             {asset.type === 'bangunan' && `${asset.lokasi} · Kondisi: ${asset.kondisi}`}
                           </p>
+                          {(asset as any).tempatSimpanBerkas && (asset as any).tempatSimpanBerkas !== '-' && (
+                            <div className="mt-1 flex items-center gap-1 text-[10px] font-bold text-amber-800 dark:text-amber-200 bg-amber-50 dark:bg-amber-950/60 px-2 py-0.5 rounded-md border border-amber-200/80 dark:border-amber-800 w-fit">
+                              <Archive className="w-3 h-3 text-amber-600 dark:text-amber-400 shrink-0" />
+                              <span>Tempat Simpan: {(asset as any).tempatSimpanBerkas}</span>
+                            </div>
+                          )}
                         </div>
                       </div>
 

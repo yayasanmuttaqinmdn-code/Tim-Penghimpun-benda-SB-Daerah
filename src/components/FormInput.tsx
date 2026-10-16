@@ -135,6 +135,7 @@ export default function FormInput({
         setAtasNama(editingAsset.atasNama);
         setTahunPembuatan(editingAsset.tahunPembuatan);
         setKondisiKendaraan(editingAsset.kondisiKendaraan);
+        setTempatSimpanBerkas(editingAsset.tempatSimpanBerkas || '');
         
         if (editingAsset.tanggalBulanPajak) {
           const parts = editingAsset.tanggalBulanPajak.split(' ');
@@ -152,6 +153,7 @@ export default function FormInput({
         setPenanggungJawabDaerah(editingAsset.penanggungJawabDaerah || '');
       } else if (editingAsset.type === 'bangunan') {
         setNamaBangunan(editingAsset.namaBangunan);
+        setTempatSimpanBerkas((editingAsset as any).tempatSimpanBerkas || '');
         
         // Split subdistrict and village
         const loc = editingAsset.lokasi;
@@ -300,6 +302,7 @@ export default function FormInput({
         kondisiKendaraan,
         tanggalBulanPajak: `${pajakHari} ${pajakBulan}`,
         penanggungJawabDaerah,
+        tempatSimpanBerkas: tempatSimpanBerkas || '-',
         createdAt: originalCreatedAt,
         sedangBalikNama: editingAsset?.type === 'kendaraan' ? editingAsset.sedangBalikNama : undefined,
         namaPemilikBaru: editingAsset?.type === 'kendaraan' ? editingAsset.namaPemilikBaru : undefined,
@@ -333,6 +336,7 @@ export default function FormInput({
         penggunaanBangunan,
         nomerPBG: nomerPBG || '-',
         nomerSLF: nomerSLF || '-',
+        tempatSimpanBerkas: tempatSimpanBerkas || '-',
         kondisi: kondisiBangunan,
         keteranganKerusakan: kondisiBangunan === 'BAIK' ? '-' : (keteranganKerusakan || '-'),
         createdAt: originalCreatedAt,
@@ -768,6 +772,18 @@ export default function FormInput({
                   ))}
                 </select>
               </div>
+
+              {/* Tempat Simpan Berkas Kendaraan (BPKB / STNK) */}
+              <div className="flex flex-col space-y-1">
+                <label className="text-xs font-extrabold text-gray-700 dark:text-slate-200">Tempat Simpan Berkas Asli (BPKB / STNK)</label>
+                <input
+                  type="text"
+                  placeholder="Contoh: Brankas Kantor Pusat (Madiun) / Map Aset Kendaraan"
+                  className="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:ring-2 focus:ring-sky-500 focus:bg-white dark:focus:bg-slate-800 transition-all focus:outline-none h-11"
+                  value={tempatSimpanBerkas}
+                  onChange={(e) => setTempatSimpanBerkas(e.target.value)}
+                />
+              </div>
             </div>
           )}
 
@@ -924,6 +940,18 @@ export default function FormInput({
                   />
                 </motion.div>
               )}
+
+              {/* Tempat Simpan Berkas Asli Bangunan */}
+              <div className="flex flex-col space-y-1">
+                <label className="text-xs font-extrabold text-gray-700 dark:text-slate-200">Tempat Simpan Berkas Asli (Dokumen PBG/SLF/Sertifikat)</label>
+                <input
+                  type="text"
+                  placeholder="Contoh: Lemari Arsip Gedung Pondok / Brankas Kantor"
+                  className="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:ring-2 focus:ring-amber-500 focus:bg-white dark:focus:bg-slate-800 transition-all focus:outline-none h-11"
+                  value={tempatSimpanBerkas}
+                  onChange={(e) => setTempatSimpanBerkas(e.target.value)}
+                />
+              </div>
             </div>
           )}
 

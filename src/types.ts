@@ -71,6 +71,7 @@ export interface AsetKendaraan {
   kondisiKendaraan: KondisiType;
   tanggalBulanPajak?: string; // Tanggal & Bulan Pajak
   penanggungJawabDaerah?: string; // Penanggung Jawab Daerah Dropdown (Desa / Kelompok)
+  tempatSimpanBerkas?: string; // Lokasi Brankas / Simpan BPKB & STNK
   createdAt: number;
   sedangBalikNama?: boolean;
   namaPemilikBaru?: string;
@@ -141,6 +142,7 @@ export interface AsetBangunan {
   nomerSLF: string;
   kondisi: KondisiType;
   keteranganKerusakan: string;
+  tempatSimpanBerkas?: string; // Lokasi Simpan Dokumen PBG/SLF
   createdAt: number;
   sedangBalikNama?: boolean;
   namaPemilikBaru?: string;

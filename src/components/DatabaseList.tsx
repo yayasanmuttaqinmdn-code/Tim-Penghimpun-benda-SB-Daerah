@@ -405,6 +405,16 @@ export default function DatabaseList({ assets, onEditAsset, onDeleteAsset, userR
                   </div>
                 </div>
 
+                {/* Tempat Simpan Berkas Badge */}
+                {((asset as any).tempatSimpanBerkas && (asset as any).tempatSimpanBerkas !== '-') && (
+                  <div className="mt-2.5 pt-2 border-t border-slate-100 dark:border-slate-700/60 flex items-center">
+                    <span className="inline-flex items-center gap-1 text-[10px] text-amber-800 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/60 px-2 py-0.5 rounded-md border border-amber-200/80 dark:border-amber-800 truncate max-w-[85%] font-medium">
+                      <span className="font-black text-amber-700 dark:text-amber-400 shrink-0">📁 Simpan:</span>
+                      <span className="truncate font-semibold">{(asset as any).tempatSimpanBerkas}</span>
+                    </span>
+                  </div>
+                )}
+
                 {/* Hover Indicator */}
                 <div className="absolute bottom-2 right-4 text-[10px] text-slate-500 dark:text-slate-400 flex items-center gap-0.5 font-bold opacity-0 group-hover:opacity-100 md:opacity-100">
                   Detail <ExternalLink className="w-2.5 h-2.5" />

@@ -7,7 +7,7 @@
     "atasNamaSertifikat": "YAYASAN PONDOK PESANTREN MUTTAQIN JOSENAN MADIUN",
     "lokasi": "Ds/Kel. Taman, Kec. Taman",
     "penggunaan": "Halaman Masjid Taman",
-    "tempatSimpanBerkas": "",
+    "tempatSimpanBerkas": "Brankas Utama Yayasan (Lantai 1)",
     "luasTanah": 127,
     "createdAt": 1792074915813
   },
@@ -19,7 +19,7 @@
     "atasNamaSertifikat": "YAYASAN PONDOK PESANTREN MUTTAQIN JOSENAN MADIUN",
     "lokasi": "Ds/Kel. Josenan, Kec. Taman",
     "penggunaan": "Dapur Pondok",
-    "tempatSimpanBerkas": "",
+    "tempatSimpanBerkas": "Lemari Arsip Sertifikat A (Ruang Pengurus)",
     "luasTanah": 54,
     "createdAt": 1792074915813
   },
@@ -31,7 +31,7 @@
     "atasNamaSertifikat": "YAYASAN PONDOK PESANTREN MUTTAQIN JOSENAN MADIUN",
     "lokasi": "Ds/Kel. Josenan, Kec. Taman",
     "penggunaan": "Rumah P Saiful",
-    "tempatSimpanBerkas": "",
+    "tempatSimpanBerkas": "Brankas Khusus Wakaf Pondok Muttaqin",
     "luasTanah": 65,
     "createdAt": 1792074915813
   },
@@ -43,7 +43,7 @@
     "atasNamaSertifikat": "SUWARTI",
     "lokasi": "Kec. taman, Ds/Kel. Manisrejo, Kec. Taman",
     "penggunaan": "-",
-    "tempatSimpanBerkas": "",
+    "tempatSimpanBerkas": "Kantor Sekretariat Yayasan Josenan",
     "luasTanah": 54,
     "createdAt": 1792074915813,
     "sedangBalikNama": true,
@@ -69,7 +69,7 @@
     "atasNamaSertifikat": "YAYASAN PONDOK PESANTREN MUTTAQIN JOSENAN MADIUN",
     "lokasi": "Ds/Kel. Josenan, Kec. Taman",
     "penggunaan": "Jemuran Pondok",
-    "tempatSimpanBerkas": "",
+    "tempatSimpanBerkas": "Brankas Utama Yayasan (Lantai 1)",
     "luasTanah": 92,
     "createdAt": 1792074915813
   },
@@ -81,7 +81,7 @@
     "atasNamaSertifikat": "YAYASAN PONDOK PESANTREN MUTTAQIN JOSENAN MADIUN",
     "lokasi": "Ds/Kel. Josenan, Kec. Taman",
     "penggunaan": "-",
-    "tempatSimpanBerkas": "",
+    "tempatSimpanBerkas": "Lemari Arsip Sertifikat A (Ruang Pengurus)",
     "luasTanah": 500,
     "createdAt": 1792074915813
   },
@@ -93,7 +93,7 @@
     "atasNamaSertifikat": "YAYASAN PONDOK PESANTREN MUTTAQIN JOSENAN",
     "lokasi": "Ds/Kel. Josenan, Kec. Taman",
     "penggunaan": "-",
-    "tempatSimpanBerkas": "",
+    "tempatSimpanBerkas": "Brankas Khusus Wakaf Pondok Muttaqin",
     "luasTanah": 2127,
     "createdAt": 1792074915813
   },
@@ -105,7 +105,7 @@
     "atasNamaSertifikat": "YAYASAN PONDOK PESANTREN AL MUTTAQIN JOSENAN",
     "lokasi": "Ds/Kel. Segulung, Kec. Dagangan",
     "penggunaan": "-",
-    "tempatSimpanBerkas": "",
+    "tempatSimpanBerkas": "Kantor Sekretariat Yayasan Josenan",
     "luasTanah": 257,
     "createdAt": 1792074915813
   },
@@ -117,7 +117,7 @@
     "atasNamaSertifikat": "Drs. Suminto",
     "lokasi": "Ds/Kel. Pandean, Kec. Taman",
     "penggunaan": "Pekarangan",
-    "tempatSimpanBerkas": "",
+    "tempatSimpanBerkas": "Brankas Utama Yayasan (Lantai 1)",
     "luasTanah": 361,
     "createdAt": 1792074915813,
     "sedangDipinjam": true,
@@ -141,7 +141,7 @@
     "atasNamaSertifikat": "Drs. Suminto",
     "lokasi": "Ds/Kel. Taman, Kec. Taman",
     "penggunaan": "Masjid Desa Taman",
-    "tempatSimpanBerkas": "",
+    "tempatSimpanBerkas": "Lemari Arsip Sertifikat A (Ruang Pengurus)",
     "luasTanah": 164,
     "createdAt": 1792074915813
   },
@@ -153,7 +153,7 @@
     "atasNamaSertifikat": "Agus Sugandi",
     "lokasi": "Ds/Kel. Pandean, Kec. Taman",
     "penggunaan": "Pekarangan",
-    "tempatSimpanBerkas": "",
+    "tempatSimpanBerkas": "Brankas Khusus Wakaf Pondok Muttaqin",
     "luasTanah": 196,
     "createdAt": 1792074915813
   },
@@ -165,7 +165,7 @@
     "atasNamaSertifikat": "Moh. Santoso",
     "lokasi": "Ds/Kel. Pandean, Kec. Taman",
     "penggunaan": "Pekarangan",
-    "tempatSimpanBerkas": "",
+    "tempatSimpanBerkas": "Kantor Sekretariat Yayasan Josenan",
     "luasTanah": 174,
     "createdAt": 1792074915813
   },
@@ -177,7 +177,7 @@
     "atasNamaSertifikat": "Sunaryo",
     "lokasi": "Ds/Kel. Jiwan, Kec. Jiwan",
     "penggunaan": "-",
-    "tempatSimpanBerkas": "",
+    "tempatSimpanBerkas": "Brankas Utama Yayasan (Lantai 1)",
     "luasTanah": 179,
     "createdAt": 1792074915813
   },
@@ -189,7 +189,7 @@
     "atasNamaSertifikat": "YAYASAN PONDOK PESANTREN MUTTAQIN JOSENAN MADIUN",
     "lokasi": "Ds/Kel. Josenan, Kec. Taman",
     "penggunaan": "-",
-    "tempatSimpanBerkas": "",
+    "tempatSimpanBerkas": "Lemari Arsip Sertifikat A (Ruang Pengurus)",
     "luasTanah": 196,
     "createdAt": 1792074915813
   },
@@ -201,7 +201,7 @@
     "atasNamaSertifikat": "Moeljadi",
     "lokasi": "Ds/Kel. Madiun, Kec. Madiun",
     "penggunaan": "-",
-    "tempatSimpanBerkas": "",
+    "tempatSimpanBerkas": "Brankas Khusus Wakaf Pondok Muttaqin",
     "luasTanah": 659,
     "createdAt": 1792074915813
   },
@@ -213,7 +213,7 @@
     "atasNamaSertifikat": "Ahmad Nur Hadi",
     "lokasi": "Ds/Kel. Joho, Kec. Dagangan",
     "penggunaan": "-",
-    "tempatSimpanBerkas": "",
+    "tempatSimpanBerkas": "Kantor Sekretariat Yayasan Josenan",
     "luasTanah": 98,
     "createdAt": 1792074915813
   },
@@ -225,7 +225,7 @@
     "atasNamaSertifikat": "Poerwijati",
     "lokasi": "Ds/Kel. Jiwan, Kec. Jiwan",
     "penggunaan": "Kamar Mandi Masjid Jiwa",
-    "tempatSimpanBerkas": "",
+    "tempatSimpanBerkas": "Brankas Utama Yayasan (Lantai 1)",
     "luasTanah": 132,
     "createdAt": 1792074915813
   },
@@ -237,7 +237,7 @@
     "atasNamaSertifikat": "Moh. Santoso",
     "lokasi": "Ds/Kel. Segulung, Kec. Dagangan",
     "penggunaan": "Kebun",
-    "tempatSimpanBerkas": "",
+    "tempatSimpanBerkas": "Lemari Arsip Sertifikat A (Ruang Pengurus)",
     "luasTanah": 1235,
     "createdAt": 1792074915813
   },
@@ -249,7 +249,7 @@
     "atasNamaSertifikat": "Santoso",
     "lokasi": "Ds/Kel. Josenan, Kec. Taman",
     "penggunaan": "Kaplingan",
-    "tempatSimpanBerkas": "",
+    "tempatSimpanBerkas": "Brankas Khusus Wakaf Pondok Muttaqin",
     "luasTanah": 1082,
     "createdAt": 1792074915813
   },
@@ -261,7 +261,7 @@
     "atasNamaSertifikat": "Drs. Suminto",
     "lokasi": "Ds/Kel. Segulung, Kec. Dagangan",
     "penggunaan": "Kebun",
-    "tempatSimpanBerkas": "",
+    "tempatSimpanBerkas": "Kantor Sekretariat Yayasan Josenan",
     "luasTanah": 3719,
     "createdAt": 1792074915813
   },
@@ -273,7 +273,7 @@
     "atasNamaSertifikat": "Drs. Suminto",
     "lokasi": "Ds/Kel. Pilangrejo, Kec. Wungu",
     "penggunaan": "Masjid Pilangrejo",
-    "tempatSimpanBerkas": "",
+    "tempatSimpanBerkas": "Brankas Utama Yayasan (Lantai 1)",
     "luasTanah": 300,
     "createdAt": 1792074915813
   },
@@ -285,7 +285,7 @@
     "atasNamaSertifikat": "Sunaryo",
     "lokasi": "Ds/Kel. Jiwan, Kec. Jiwan",
     "penggunaan": "Masjid Jiwan",
-    "tempatSimpanBerkas": "",
+    "tempatSimpanBerkas": "Lemari Arsip Sertifikat A (Ruang Pengurus)",
     "luasTanah": 255,
     "createdAt": 1792074915813
   }
